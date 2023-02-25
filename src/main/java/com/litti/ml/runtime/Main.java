@@ -1,10 +1,11 @@
 package com.litti.ml.runtime;
 
-import com.litti.ml.entities.ModelMetadata;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.google.common.io.Resources;
+import com.litti.ml.entities.ModelMetadata;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -24,7 +25,7 @@ public class Main {
     }
     try {
       final String modelJson =
-              Files.readString(Paths.get(Resources.getResource("dream11-model-meta.json").toURI()));
+          Files.readString(Paths.get(Resources.getResource("dream11-model-meta.json").toURI()));
       dream11ModelMetadata = objectMapper.readValue(modelJson, ModelMetadata.class);
     } catch (Exception e) {
       e.printStackTrace();
