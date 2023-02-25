@@ -1,0 +1,66 @@
+{
+  "name": "test_model",
+  "version": "v1",
+  "modelLocation": "/home/abhay/work/kaggle/spaceship-titanic/HistGradientBoostingClassifier.pmml",
+  "modelFramework": "PMML",
+  "features": [
+    {
+      "name": "HomePlanet",
+      "dataType": "STRING"
+    },
+    {
+      "name": "CryoSleep",
+      "dataType": "Double"
+    },
+    {
+      "name": "Destination",
+      "dataType": "STRING"
+    },
+    {
+      "name": "Age",
+      "dataType": "DOUBLE"
+    },
+    {
+      "name": "VIP",
+      "dataType": "DOUBLE"
+    },
+    {
+      "name": "RoomService",
+      "dataType": "DOUBLE"
+    },
+    {
+      "name": "FoodCourt",
+      "dataType": "DOUBLE"
+    },
+    {
+      "name": "ShoppingMall",
+      "dataType": "DOUBLE"
+    },
+    {
+      "name": "Spa",
+      "dataType": "DOUBLE"
+    },
+    {
+      "name": "VRDeck",
+      "dataType": "DOUBLE"
+    },
+    {
+      "name": "Cabin_0",
+      "dataType": "STRING"
+    },
+    {
+      "name": "Cabin_1",
+      "dataType": "STRING"
+    },
+    {
+      "name": "Cabin_2",
+      "dataType": "DOUBLE"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Transported",
+      "dataType": "DOUBLE"
+    }
+  ]
+}
