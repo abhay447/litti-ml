@@ -30,7 +30,6 @@ public class MyHttpHandler implements HttpHandler {
       logger.info("Received request {}", httpExchange);
       if (httpExchange.getRequestMethod().equals("POST")) {
         final String requestBody = new String(httpExchange.getRequestBody().readAllBytes());
-        logger.info("request body {}", requestBody);
         final Set<PredictionRequest> predictionRequest =
             gson.fromJson(requestBody, new TypeToken<Set<PredictionRequest>>() {}.getType());
         logger.info("prediction request: {}", predictionRequest);

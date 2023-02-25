@@ -44,6 +44,10 @@ public class PMMLPredictor extends AbstractPredictor {
           EvaluatorUtil.decodeAll(evaluator.evaluate(input.getInputs())).entrySet().stream()
               .filter(entry -> outputFieldsMap.containsKey(entry.getKey()))
               .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+      if(!outputs.keySet().equals(outputFieldsMap.keySet())) {
+        throw new RuntimeException("Unable to retrieve all output fields, please check the " +
+                "prediction request for missing params");
+      }
       return new PredictionResponse(input.getId(), outputs, null);
     } catch (Exception e) {
       logger.error(e);
