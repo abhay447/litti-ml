@@ -1,4 +1,4 @@
-package com.litti.ml.entities;
+package com.litti.ml.feature.entities;
 
 import autovalue.shaded.org.checkerframework.checker.nullness.qual.Nullable;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

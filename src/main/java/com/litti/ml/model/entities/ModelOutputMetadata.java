@@ -1,4 +1,4 @@
-package com.litti.ml.entities;
+package com.litti.ml.model.entities;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;

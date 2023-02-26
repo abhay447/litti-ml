@@ -1,9 +1,10 @@
-package com.litti.ml.entities;
+package com.litti.ml.model.entities;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
+import com.litti.ml.feature.entities.FeatureMetadata;
 
 @AutoValue
 @JsonDeserialize(builder = AutoValue_ModelMetadata.Builder.class)

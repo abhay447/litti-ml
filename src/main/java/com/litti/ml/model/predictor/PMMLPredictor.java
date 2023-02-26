@@ -1,9 +1,9 @@
 package com.litti.ml.model.predictor;
 
-import com.litti.ml.entities.ModelMetadata;
-import com.litti.ml.entities.ModelOutputMetadata;
-import com.litti.ml.entities.PredictionRequest;
-import com.litti.ml.entities.PredictionResponse;
+import com.litti.ml.model.entities.ModelMetadata;
+import com.litti.ml.model.entities.ModelOutputMetadata;
+import com.litti.ml.model.entities.PredictionRequest;
+import com.litti.ml.model.entities.PredictionResponse;
 import jakarta.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;

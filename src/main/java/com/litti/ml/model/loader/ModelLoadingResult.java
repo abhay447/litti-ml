@@ -1,6 +1,6 @@
 package com.litti.ml.model.loader;
 
-import com.litti.ml.entities.ModelMetadata;
+import com.litti.ml.model.entities.ModelMetadata;
 import java.util.Collections;
 import java.util.Set;
 
@@ -12,7 +12,6 @@ public class ModelLoadingResult {
   public ModelLoadingResult(Set<ModelMetadata> modelsLoaded, Set<String> modelSourcesFailed) {
     this.modelsLoaded = Collections.unmodifiableSet(modelsLoaded);
     this.modelSourcesFailed = Collections.unmodifiableSet(modelSourcesFailed);
-    ;
   }
 
   public Set<ModelMetadata> getModelsLoaded() {
