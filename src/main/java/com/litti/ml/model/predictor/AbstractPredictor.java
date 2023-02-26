@@ -1,4 +1,4 @@
-package com.litti.ml.predictor;
+package com.litti.ml.model.predictor;
 
 import com.litti.ml.entities.ModelMetadata;
 import com.litti.ml.entities.PredictionRequest;
