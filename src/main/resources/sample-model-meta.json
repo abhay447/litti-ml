@@ -8,91 +8,78 @@
       "name": "HomePlanet",
       "version": "v1",
       "defaultValue": "0.0",
-      "isFetchedFromStore": false,
       "dataType": "STRING"
     },
     {
       "name": "CryoSleep",
       "version": "v1",
       "defaultValue": "0.0",
-      "isFetchedFromStore": false,
       "dataType": "Double"
     },
     {
       "name": "Destination",
       "version": "v1",
       "defaultValue": "0.0",
-      "isFetchedFromStore": false,
       "dataType": "STRING"
     },
     {
       "name": "Age",
       "version": "v1",
       "defaultValue": "0.0",
-      "isFetchedFromStore": false,
       "dataType": "DOUBLE"
     },
     {
       "name": "VIP",
       "version": "v1",
       "defaultValue": "0.0",
-      "isFetchedFromStore": false,
       "dataType": "DOUBLE"
     },
     {
       "name": "RoomService",
       "version": "v1",
       "defaultValue": "0.0",
-      "isFetchedFromStore": false,
       "dataType": "DOUBLE"
     },
     {
       "name": "FoodCourt",
       "version": "v1",
       "defaultValue": "0.0",
-      "isFetchedFromStore": false,
       "dataType": "DOUBLE"
     },
     {
       "name": "ShoppingMall",
       "version": "v1",
       "defaultValue": "0.0",
-      "isFetchedFromStore": false,
       "dataType": "DOUBLE"
     },
     {
       "name": "Spa",
       "version": "v1",
       "defaultValue": "0.0",
-      "isFetchedFromStore": false,
       "dataType": "DOUBLE"
     },
     {
       "name": "VRDeck",
       "version": "v1",
       "defaultValue": "0.0",
-      "isFetchedFromStore": false,
       "dataType": "DOUBLE"
     },
     {
       "name": "Cabin_0",
       "version": "v1",
       "defaultValue": "0.0",
-      "isFetchedFromStore": false,
       "dataType": "STRING"
     },
     {
       "name": "Cabin_1",
       "version": "v1",
       "defaultValue": "0.0",
-      "isFetchedFromStore": false,
       "dataType": "STRING"
     },
     {
       "name": "Cabin_2",
       "version": "v1",
       "defaultValue": "0.0",
-      "isFetchedFromStore": false,
       "dataType": "DOUBLE"
     }
   ],

@@ -1,9 +1,11 @@
 package com.litti.ml.entities;
 
+import autovalue.shaded.org.checkerframework.checker.nullness.qual.Nullable;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
+import java.util.Optional;
 
 @AutoValue
 @JsonDeserialize(builder = AutoValue_FeatureMetadata.Builder.class)
@@ -23,7 +25,8 @@ public abstract class FeatureMetadata {
 
   public abstract ImmutableList<String> dimensions();
 
-  public abstract boolean isFetchedFromStore();
+  @Nullable
+  public abstract Optional<String> featureStoreLabel();
 
   @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "")
   @AutoValue.Builder
@@ -44,7 +47,7 @@ public abstract class FeatureMetadata {
       return this;
     }
 
-    public abstract FeatureMetadata.Builder isFetchedFromStore(boolean value);
+    public abstract FeatureMetadata.Builder featureStoreLabel(@Nullable String value);
 
     public abstract FeatureMetadata build();
   }
