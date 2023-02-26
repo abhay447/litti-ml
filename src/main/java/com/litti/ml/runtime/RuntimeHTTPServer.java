@@ -10,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 public class RuntimeHTTPServer {
 
-  static Logger logger = LogManager.getLogger(RuntimeHTTPServer.class);
+  private final static Logger logger = LogManager.getLogger(RuntimeHTTPServer.class);
 
   private final HttpServer server;
   private final ThreadPoolExecutor threadPoolExecutor;
