@@ -3,7 +3,6 @@ package com.litti.ml.model.predictor;
 import com.litti.ml.entities.ModelMetadata;
 import com.litti.ml.entities.PredictionRequest;
 import com.litti.ml.entities.PredictionResponse;
-
 import java.util.Set;
 
 public abstract class AbstractPredictor {
