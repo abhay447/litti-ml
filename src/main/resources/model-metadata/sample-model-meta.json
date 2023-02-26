@@ -1,7 +1,7 @@
 {
   "name": "test_model",
   "version": "v1",
-  "modelLocation": "src/main/resources/HistGradientBoostingClassifier.pmml",
+  "modelLocation": "src/main/resources/model-artifacts/HistGradientBoostingClassifier.pmml",
   "modelFramework": "PMML",
   "features": [
     {

@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.google.common.io.Resources;
 import com.litti.ml.model.entities.ModelMetadata;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.AbstractMap.SimpleEntry;
@@ -13,15 +16,13 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class StaticResourcesModelLoader implements ModelLoader {
 
   private static final Logger logger = LogManager.getLogger(StaticResourcesModelLoader.class);
 
   private static final List<String> modelFileNames =
-      List.of("sample-model-meta.json", "dream11-model-meta.json");
+      List.of("model-metadata/sample-model-meta.json", "model-metadata/dream11-model-meta.json");
   final ObjectMapper objectMapper = JsonMapper.builder().addModule(new GuavaModule()).build();
 
   @Override
