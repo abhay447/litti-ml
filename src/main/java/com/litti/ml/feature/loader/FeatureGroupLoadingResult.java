@@ -1,7 +1,6 @@
 package com.litti.ml.feature.loader;
 
 import com.litti.ml.feature.entities.FeatureGroup;
-
 import java.util.Collections;
 import java.util.Set;
 

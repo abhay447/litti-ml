@@ -3,6 +3,6 @@
   "dimensions": [
     "player_id",
     "dt",
-    "venue"
+    "venue_name"
   ]
 }

@@ -500,6 +500,13 @@
       "defaultValue": "0.0",
       "featureGroup": "dream11_fg_player_date_venue",
       "dataType": "DOUBLE"
+    },
+    {
+      "name": "fielding_wicket_sum",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "DOUBLE"
     }
   ],
   "outputs": [

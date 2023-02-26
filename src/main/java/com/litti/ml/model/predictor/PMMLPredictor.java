@@ -6,6 +6,7 @@ import com.litti.ml.model.entities.ModelOutputMetadata;
 import com.litti.ml.model.entities.PredictionRequest;
 import com.litti.ml.model.entities.PredictionResponse;
 import jakarta.xml.bind.JAXBException;
+import net.minidev.json.JSONObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jpmml.evaluator.Evaluator;
@@ -24,6 +25,9 @@ public class PMMLPredictor extends AbstractPredictor {
 
   static Logger logger = LogManager.getLogger(PMMLPredictor.class);
   private final ModelMetadata modelMetadata;
+
+  // TODO: find a better abstraction for feature fetch, it should happen before model predictor
+  private final FeatureFetchRouter featureFetchRouter;
   private final Evaluator evaluator;
   private final Map<String, ModelOutputMetadata> outputFieldsMap;
 
@@ -31,6 +35,7 @@ public class PMMLPredictor extends AbstractPredictor {
       throws JAXBException, IOException, ParserConfigurationException, SAXException {
     super(modelMetadata, featureFetchRouter);
     this.modelMetadata = modelMetadata;
+    this.featureFetchRouter = featureFetchRouter;
     this.evaluator =
         new LoadingModelEvaluatorBuilder().load(new File(modelMetadata.modelLocation())).build();
     evaluator.verify();
@@ -44,8 +49,16 @@ public class PMMLPredictor extends AbstractPredictor {
   @Override
   public PredictionResponse predictSingle(PredictionRequest input) {
     try {
+      final Map<String, String> dimensions =
+          input.getInputs().entrySet().stream()
+              .map(entry -> Map.entry(entry.getKey(), entry.getValue().toString()))
+              .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+      final Map<String, ?> features =
+          this.featureFetchRouter.fetchFeatures(modelMetadata.features(), dimensions);
+
+      logger.info(new JSONObject(features));
       final Map<String, ?> outputs =
-          EvaluatorUtil.decodeAll(evaluator.evaluate(input.getInputs())).entrySet().stream()
+          EvaluatorUtil.decodeAll(evaluator.evaluate(features)).entrySet().stream()
               .filter(entry -> outputFieldsMap.containsKey(entry.getKey()))
               .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
       if (!outputs.keySet().equals(outputFieldsMap.keySet())) {
@@ -55,6 +68,7 @@ public class PMMLPredictor extends AbstractPredictor {
       }
       return new PredictionResponse(input.getId(), outputs, null);
     } catch (Exception e) {
+      e.printStackTrace();
       logger.error(e);
       return new PredictionResponse(input.getId(), null, e.getMessage());
     }

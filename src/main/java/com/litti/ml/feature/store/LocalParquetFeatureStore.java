@@ -3,12 +3,6 @@ package com.litti.ml.feature.store;
 import com.google.common.io.Resources;
 import com.litti.ml.feature.entities.FeatureGroup;
 import com.litti.ml.feature.entities.FeatureMetadata;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.time.LocalDate;
-import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -16,6 +10,13 @@ import org.apache.parquet.avro.AvroParquetReader;
 import org.apache.parquet.hadoop.ParquetReader;
 import org.apache.parquet.hadoop.util.HadoopInputFile;
 import org.apache.parquet.io.InputFile;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class LocalParquetFeatureStore implements FeatureStore {
 
@@ -71,7 +72,11 @@ public class LocalParquetFeatureStore implements FeatureStore {
                   return features;
                 })
             .collect(Collectors.toList());
-    return featureValues.get(0);
+    Map<String, Object> defaultFeatures =
+        featureMetadataList.stream()
+            .map(f -> Map.entry(f.name(), Double.valueOf(f.defaultValue())))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    return featureValues.isEmpty() ? defaultFeatures : featureValues.get(0);
   }
 
   private List<GenericRecord> readAllLocalRecords() {

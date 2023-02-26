@@ -23,6 +23,8 @@ public abstract class FeatureGroup {
 
     public abstract FeatureGroup.Builder name(String value);
 
+    public abstract Builder dimensions(ImmutableList<String> value);
+
     public abstract ImmutableList.Builder<String> dimensionsBuilder();
 
     public final Builder addDimension(String output) {
