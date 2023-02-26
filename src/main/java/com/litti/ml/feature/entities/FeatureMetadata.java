@@ -4,7 +4,6 @@ import autovalue.shaded.org.checkerframework.checker.nullness.qual.Nullable;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.auto.value.AutoValue;
-import com.google.common.collect.ImmutableList;
 import java.util.Optional;
 
 @AutoValue
@@ -23,8 +22,6 @@ public abstract class FeatureMetadata {
 
   public abstract String defaultValue();
 
-  public abstract ImmutableList<String> dimensions();
-
   @Nullable
   public abstract Optional<String> featureGroup();
 
@@ -39,13 +36,6 @@ public abstract class FeatureMetadata {
     public abstract FeatureMetadata.Builder dataType(String value);
 
     public abstract FeatureMetadata.Builder defaultValue(String value);
-
-    public abstract ImmutableList.Builder<String> dimensionsBuilder();
-
-    public final Builder addDimension(String output) {
-      dimensionsBuilder().add(output);
-      return this;
-    }
 
     public abstract FeatureMetadata.Builder featureGroup(@Nullable String value);
 
