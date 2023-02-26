@@ -21,7 +21,7 @@ public abstract class ModelMetadata {
 
   public abstract String modelFramework();
 
-  public abstract ImmutableList<ModelOutputMetadata> features();
+  public abstract ImmutableList<FeatureMetadata> features();
 
   public abstract ImmutableList<ModelOutputMetadata> outputs();
 
@@ -38,11 +38,11 @@ public abstract class ModelMetadata {
     public abstract Builder modelFramework(String value);
 
     // convenience method for json parsing
-    public abstract Builder features(ImmutableList<ModelOutputMetadata> value);
+    public abstract Builder features(ImmutableList<FeatureMetadata> value);
 
-    public abstract ImmutableList.Builder<ModelOutputMetadata> featuresBuilder();
+    public abstract ImmutableList.Builder<FeatureMetadata> featuresBuilder();
 
-    public final Builder addFeature(ModelOutputMetadata feature) {
+    public final Builder addFeature(FeatureMetadata feature) {
       featuresBuilder().add(feature);
       return this;
     }
