@@ -7,14 +7,13 @@ import com.google.auto.value.AutoValue;
 @AutoValue
 @JsonDeserialize(builder = AutoValue_ModelOutputMetadata.Builder.class)
 public abstract class ModelOutputMetadata {
+  public static ModelOutputMetadata.Builder builder() {
+    return new AutoValue_ModelOutputMetadata.Builder();
+  }
 
   public abstract String name();
 
   public abstract String dataType();
-
-  public static ModelOutputMetadata.Builder builder() {
-    return new AutoValue_ModelOutputMetadata.Builder();
-  }
 
   @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "")
   @AutoValue.Builder

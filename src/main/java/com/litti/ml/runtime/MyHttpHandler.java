@@ -1,18 +1,19 @@
 package com.litti.ml.runtime;
 
-import com.litti.ml.entities.PredictionRequest;
-import com.litti.ml.entities.PredictionResponse;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.litti.ml.entities.PredictionRequest;
+import com.litti.ml.entities.PredictionResponse;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
 import java.util.Set;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class MyHttpHandler implements HttpHandler {
   static Logger logger = LogManager.getLogger(MyHttpHandler.class);

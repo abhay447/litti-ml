@@ -9,6 +9,10 @@ import com.google.common.collect.ImmutableList;
 @JsonDeserialize(builder = AutoValue_ModelMetadata.Builder.class)
 public abstract class ModelMetadata {
 
+  public static Builder builder() {
+    return new AutoValue_ModelMetadata.Builder();
+  }
+
   public abstract String name();
 
   public abstract String version();
@@ -20,10 +24,6 @@ public abstract class ModelMetadata {
   public abstract ImmutableList<ModelOutputMetadata> features();
 
   public abstract ImmutableList<ModelOutputMetadata> outputs();
-
-  public static Builder builder() {
-    return new AutoValue_ModelMetadata.Builder();
-  }
 
   @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "")
   @AutoValue.Builder

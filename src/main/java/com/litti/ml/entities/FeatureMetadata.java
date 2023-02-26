@@ -9,6 +9,10 @@ import com.google.common.collect.ImmutableList;
 @JsonDeserialize(builder = AutoValue_FeatureMetadata.Builder.class)
 public abstract class FeatureMetadata {
 
+  public static Builder builder() {
+    return new AutoValue_FeatureMetadata.Builder();
+  }
+
   public abstract String name();
 
   public abstract String version();
@@ -20,10 +24,6 @@ public abstract class FeatureMetadata {
   public abstract ImmutableList<String> dimensions();
 
   public abstract boolean isFetchedFromStore();
-
-  public static Builder builder() {
-    return new AutoValue_FeatureMetadata.Builder();
-  }
 
   @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "")
   @AutoValue.Builder
