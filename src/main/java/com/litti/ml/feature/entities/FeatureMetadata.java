@@ -4,7 +4,6 @@ import autovalue.shaded.org.checkerframework.checker.nullness.qual.Nullable;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.auto.value.AutoValue;
-import java.util.Optional;
 
 @AutoValue
 @JsonDeserialize(builder = AutoValue_FeatureMetadata.Builder.class)
@@ -23,7 +22,7 @@ public abstract class FeatureMetadata {
   public abstract String defaultValue();
 
   @Nullable
-  public abstract Optional<String> featureGroup();
+  public abstract String featureGroup();
 
   @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "")
   @AutoValue.Builder

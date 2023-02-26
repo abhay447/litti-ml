@@ -1,12 +1,15 @@
 package com.litti.ml.feature;
 
 import com.litti.ml.feature.entities.FeatureGroup;
+import com.litti.ml.feature.entities.FeatureMetadata;
 import com.litti.ml.feature.store.FeatureStore;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class FeatureFetchRouter {
   private static final Logger logger = LogManager.getLogger(FeatureFetchRouter.class);
@@ -25,5 +28,28 @@ public class FeatureFetchRouter {
     this.inferenceFeatureGroups.put(featureGroup.name(), featureGroup);
     this.inferenceFeatureStores.put(featureStore.name(), featureStore);
     this.featureGroupStoreMap.put(featureGroup.name(), featureStore.name());
+  }
+
+  public Map<String, ?> fetchFeatures(
+      List<FeatureMetadata> featureMetadataList, Map<String, String> inputDimensions) {
+    Map<String, List<FeatureMetadata>> groupedFeatures =
+        featureMetadataList.stream()
+            .collect(Collectors.groupingBy(FeatureMetadata::featureGroup, Collectors.toList()));
+    Map<String, ?> fetchedFeatures =
+        groupedFeatures.entrySet().stream()
+            .flatMap(
+                groupedEntry -> {
+                  final FeatureGroup featureGroup =
+                      this.inferenceFeatureGroups.get(groupedEntry.getKey());
+                  final FeatureStore featureStore =
+                      this.inferenceFeatureStores.get(
+                          this.featureGroupStoreMap.get(featureGroup.name()));
+                  return featureStore
+                      .fetchFeatures(groupedEntry.getValue(), featureGroup, inputDimensions)
+                      .entrySet()
+                      .stream();
+                })
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    return fetchedFeatures;
   }
 }
