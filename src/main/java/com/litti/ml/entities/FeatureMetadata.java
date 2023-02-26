@@ -26,7 +26,7 @@ public abstract class FeatureMetadata {
   public abstract ImmutableList<String> dimensions();
 
   @Nullable
-  public abstract Optional<String> featureStoreLabel();
+  public abstract Optional<String> featureGroup();
 
   @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "")
   @AutoValue.Builder
@@ -47,7 +47,7 @@ public abstract class FeatureMetadata {
       return this;
     }
 
-    public abstract FeatureMetadata.Builder featureStoreLabel(@Nullable String value);
+    public abstract FeatureMetadata.Builder featureGroup(@Nullable String value);
 
     public abstract FeatureMetadata build();
   }
