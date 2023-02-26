@@ -27,17 +27,17 @@ public class MyHttpHandler implements HttpHandler {
   public void handle(HttpExchange httpExchange) throws IOException {
     final Gson gson = new Gson();
     try {
-      logger.info("Received request {}", httpExchange);
+      logger.trace("Received request {}", httpExchange);
       if (httpExchange.getRequestMethod().equals("POST")) {
         final String requestBody = new String(httpExchange.getRequestBody().readAllBytes());
         final Set<PredictionRequest> predictionRequest =
             gson.fromJson(requestBody, new TypeToken<Set<PredictionRequest>>() {}.getType());
-        logger.info("prediction request: {}", predictionRequest);
+        logger.debug("prediction request: {}", predictionRequest);
         final String predictionRoute = extractModelRoute(httpExchange);
-        logger.info("prediction route: {}", predictionRoute);
+        logger.info("received request for prediction route: {}", predictionRoute);
         final Set<PredictionResponse> predictionResponses =
             this.modelRegistry.forwardToPredictor(predictionRoute, predictionRequest);
-        logger.info("prediction response {}", predictionResponses);
+        logger.debug("prediction response {}", predictionResponses);
         handleResponse(httpExchange, 200, gson.toJsonTree(predictionResponses));
       } else {
         final Map<String, ?> responseMap =

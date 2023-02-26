@@ -57,6 +57,6 @@ public class PMMLPredictor extends AbstractPredictor {
 
   @Override
   public Set<PredictionResponse> predictSet(Set<PredictionRequest> inputs) {
-    return inputs.stream().map(entry -> predictSingle(entry)).collect(Collectors.toSet());
+    return inputs.stream().map(this::predictSingle).collect(Collectors.toSet());
   }
 }
