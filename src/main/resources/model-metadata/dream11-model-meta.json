@@ -8,7 +8,7 @@
       "name": "is_male",
       "version": "v1",
       "defaultValue": "0.0",
-      "featureGroup": "dream11_fg_player_date",
+      "featureGroup": "dream11_fg_player",
       "dataType": "DOUBLE"
     },
     {
@@ -43,7 +43,7 @@
       "name": "batter_runs_1000D_venue",
       "version": "v1",
       "defaultValue": "0.0",
-      "featureGroup": "dream11_fg_player_date",
+      "featureGroup": "dream11_fg_player_date_venue",
       "dataType": "DOUBLE"
     },
     {
@@ -78,7 +78,7 @@
       "name": "balls_faced_1000D_venue",
       "version": "v1",
       "defaultValue": "0.0",
-      "featureGroup": "dream11_fg_player_date",
+      "featureGroup": "dream11_fg_player_date_venue",
       "dataType": "DOUBLE"
     },
     {
@@ -113,7 +113,7 @@
       "name": "dismissals_1000D_venue",
       "version": "v1",
       "defaultValue": "0.0",
-      "featureGroup": "dream11_fg_player_date",
+      "featureGroup": "dream11_fg_player_date_venue",
       "dataType": "DOUBLE"
     },
     {
@@ -148,7 +148,7 @@
       "name": "boundary_count_1000D_venue",
       "version": "v1",
       "defaultValue": "0.0",
-      "featureGroup": "dream11_fg_player_date",
+      "featureGroup": "dream11_fg_player_date_venue",
       "dataType": "DOUBLE"
     },
     {
@@ -183,7 +183,7 @@
       "name": "six_count_1000D_venue",
       "version": "v1",
       "defaultValue": "0.0",
-      "featureGroup": "dream11_fg_player_date",
+      "featureGroup": "dream11_fg_player_date_venue",
       "dataType": "DOUBLE"
     },
     {
@@ -218,7 +218,7 @@
       "name": "batting_avg_1000D_venue",
       "version": "v1",
       "defaultValue": "0.0",
-      "featureGroup": "dream11_fg_player_date",
+      "featureGroup": "dream11_fg_player_date_venue",
       "dataType": "DOUBLE"
     },
     {
@@ -253,7 +253,7 @@
       "name": "batting_sr_1000D_venue",
       "version": "v1",
       "defaultValue": "0.0",
-      "featureGroup": "dream11_fg_player_date",
+      "featureGroup": "dream11_fg_player_date_venue",
       "dataType": "DOUBLE"
     },
     {
@@ -288,7 +288,7 @@
       "name": "total_runs_1000D_venue",
       "version": "v1",
       "defaultValue": "0.0",
-      "featureGroup": "dream11_fg_player_date",
+      "featureGroup": "dream11_fg_player_date_venue",
       "dataType": "DOUBLE"
     },
     {
@@ -323,7 +323,7 @@
       "name": "deliveries_1000D_venue",
       "version": "v1",
       "defaultValue": "0.0",
-      "featureGroup": "dream11_fg_player_date",
+      "featureGroup": "dream11_fg_player_date_venue",
       "dataType": "DOUBLE"
     },
     {
@@ -358,7 +358,7 @@
       "name": "wicket_sum_1000D_venue",
       "version": "v1",
       "defaultValue": "0.0",
-      "featureGroup": "dream11_fg_player_date",
+      "featureGroup": "dream11_fg_player_date_venue",
       "dataType": "DOUBLE"
     },
     {
@@ -393,7 +393,7 @@
       "name": "maiden_count_1000D_venue",
       "version": "v1",
       "defaultValue": "0.0",
-      "featureGroup": "dream11_fg_player_date",
+      "featureGroup": "dream11_fg_player_date_venue",
       "dataType": "DOUBLE"
     },
     {
@@ -428,7 +428,7 @@
       "name": "bowling_avg_1000D_venue",
       "version": "v1",
       "defaultValue": "0.0",
-      "featureGroup": "dream11_fg_player_date",
+      "featureGroup": "dream11_fg_player_date_venue",
       "dataType": "DOUBLE"
     },
     {
@@ -463,7 +463,7 @@
       "name": "bowling_sr_1000D_venue",
       "version": "v1",
       "defaultValue": "0.0",
-      "featureGroup": "dream11_fg_player_date",
+      "featureGroup": "dream11_fg_player_date_venue",
       "dataType": "DOUBLE"
     },
     {
@@ -498,7 +498,7 @@
       "name": "bowling_eco_1000D_venue",
       "version": "v1",
       "defaultValue": "0.0",
-      "featureGroup": "dream11_fg_player_date",
+      "featureGroup": "dream11_fg_player_date_venue",
       "dataType": "DOUBLE"
     }
   ],

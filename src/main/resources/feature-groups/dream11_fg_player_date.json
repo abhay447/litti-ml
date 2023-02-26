@@ -1,0 +1,4 @@
+{
+  "name" : "dream11_fg_player_date",
+  "dimensions" : ["player_id","dt"]
+}
