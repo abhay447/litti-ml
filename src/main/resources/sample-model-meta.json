@@ -1,7 +1,7 @@
 {
   "name": "test_model",
   "version": "v1",
-  "modelLocation": "/home/abhay/work/kaggle/spaceship-titanic/HistGradientBoostingClassifier.pmml",
+  "modelLocation": "src/main/resources/HistGradientBoostingClassifier.pmml",
   "modelFramework": "PMML",
   "features": [
     {
