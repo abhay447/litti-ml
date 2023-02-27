@@ -5,6 +5,12 @@ import com.litti.ml.model.entities.ModelMetadata;
 import com.litti.ml.model.entities.ModelOutputMetadata;
 import com.litti.ml.model.entities.PredictionResponse;
 import jakarta.xml.bind.JAXBException;
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.xml.parsers.ParserConfigurationException;
 import net.minidev.json.JSONObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,13 +18,6 @@ import org.jpmml.evaluator.Evaluator;
 import org.jpmml.evaluator.EvaluatorUtil;
 import org.jpmml.evaluator.LoadingModelEvaluatorBuilder;
 import org.xml.sax.SAXException;
-
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class PMMLPredictor extends AbstractPredictor {
 

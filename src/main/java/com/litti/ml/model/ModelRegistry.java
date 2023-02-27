@@ -7,13 +7,12 @@ import com.litti.ml.model.entities.PredictionResponse;
 import com.litti.ml.model.predictor.AbstractPredictor;
 import com.litti.ml.model.predictor.ModelPredictionManager;
 import com.litti.ml.model.predictor.PMMLPredictor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ModelRegistry {
 

@@ -3,7 +3,6 @@ package com.litti.ml.model.predictor;
 import com.litti.ml.feature.FeatureFetchRouter;
 import com.litti.ml.model.entities.ModelMetadata;
 import com.litti.ml.model.entities.PredictionResponse;
-
 import java.util.Map;
 import java.util.Set;
 
