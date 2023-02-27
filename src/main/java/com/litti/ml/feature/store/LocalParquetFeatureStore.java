@@ -1,14 +1,9 @@
 package com.litti.ml.feature.store;
 
 import com.google.common.io.Resources;
+import com.litti.ml.feature.dtypes.JsonDataReader;
 import com.litti.ml.feature.entities.FeatureGroup;
 import com.litti.ml.feature.entities.FeatureMetadata;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.time.LocalDate;
-import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -17,12 +12,21 @@ import org.apache.parquet.hadoop.ParquetReader;
 import org.apache.parquet.hadoop.util.HadoopInputFile;
 import org.apache.parquet.io.InputFile;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
 public class LocalParquetFeatureStore extends AbstractFeatureStore {
 
   private final String name = "LocalParquet";
   private final List<GenericRecord> records;
+  private final JsonDataReader jsonDataReader;
 
-  public LocalParquetFeatureStore() {
+  public LocalParquetFeatureStore(JsonDataReader jsonDataReader) {
+    this.jsonDataReader = jsonDataReader;
     this.records = readAllLocalRecords();
   }
 
@@ -66,9 +70,11 @@ public class LocalParquetFeatureStore extends AbstractFeatureStore {
                   featureMetadataList.forEach(
                       f -> {
                         if (record.hasField(f.name()) && record.get(f.name()) != null) {
-                          features.put(f.name(), record.get(f.name()));
+                          features.put(
+                              f.name(), jsonDataReader.read(record.get(f.name()), f.dataType()));
                         } else {
-                          features.put(f.name(), Double.valueOf(f.defaultValue()));
+                          features.put(
+                              f.name(), jsonDataReader.read(f.defaultValue(), f.dataType()));
                           featureStoreMisses.add(f.name());
                         }
                       });
@@ -105,7 +111,7 @@ public class LocalParquetFeatureStore extends AbstractFeatureStore {
 
   private Map<String, ?> createDefaultFeatures(List<FeatureMetadata> featureMetadataList) {
     return featureMetadataList.stream()
-        .map(f -> Map.entry(f.name(), Double.valueOf(f.defaultValue())))
+        .map(f -> Map.entry(f.name(), jsonDataReader.read(f.defaultValue(), f.dataType())))
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 
