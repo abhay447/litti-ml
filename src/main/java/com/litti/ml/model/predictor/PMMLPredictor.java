@@ -5,6 +5,12 @@ import com.litti.ml.model.entities.ModelMetadata;
 import com.litti.ml.model.entities.ModelOutputMetadata;
 import com.litti.ml.model.entities.PredictionResponse;
 import jakarta.xml.bind.JAXBException;
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.xml.parsers.ParserConfigurationException;
 import net.minidev.json.JSONObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,28 +19,15 @@ import org.jpmml.evaluator.EvaluatorUtil;
 import org.jpmml.evaluator.LoadingModelEvaluatorBuilder;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 public class PMMLPredictor extends AbstractPredictor {
 
   static Logger logger = LogManager.getLogger(PMMLPredictor.class);
-  private final ModelMetadata modelMetadata;
-
-  // TODO: find a better abstraction for feature fetch, it should happen before model predictor
-  private final FeatureFetchRouter featureFetchRouter;
   private final Evaluator evaluator;
   private final Map<String, ModelOutputMetadata> outputFieldsMap;
 
   public PMMLPredictor(ModelMetadata modelMetadata, FeatureFetchRouter featureFetchRouter)
       throws JAXBException, IOException, ParserConfigurationException, SAXException {
     super(modelMetadata, featureFetchRouter);
-    this.modelMetadata = modelMetadata;
-    this.featureFetchRouter = featureFetchRouter;
     this.evaluator =
         new LoadingModelEvaluatorBuilder().load(new File(modelMetadata.modelLocation())).build();
     evaluator.verify();
