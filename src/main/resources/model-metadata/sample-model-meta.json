@@ -8,85 +8,85 @@
       "name": "HomePlanet",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "STRING"
+      "dataType": "PRIMITIVE#STRING"
     },
     {
       "name": "CryoSleep",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "Double"
+      "dataType": "PRIMITIVE#Double"
     },
     {
       "name": "Destination",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "STRING"
+      "dataType": "PRIMITIVE#STRING"
     },
     {
       "name": "Age",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "DOUBLE"
+      "dataType": "PRIMITIVE#DOUBLE"
     },
     {
       "name": "VIP",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "DOUBLE"
+      "dataType": "PRIMITIVE#DOUBLE"
     },
     {
       "name": "RoomService",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "DOUBLE"
+      "dataType": "PRIMITIVE#DOUBLE"
     },
     {
       "name": "FoodCourt",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "DOUBLE"
+      "dataType": "PRIMITIVE#DOUBLE"
     },
     {
       "name": "ShoppingMall",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "DOUBLE"
+      "dataType": "PRIMITIVE#DOUBLE"
     },
     {
       "name": "Spa",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "DOUBLE"
+      "dataType": "PRIMITIVE#DOUBLE"
     },
     {
       "name": "VRDeck",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "DOUBLE"
+      "dataType": "PRIMITIVE#DOUBLE"
     },
     {
       "name": "Cabin_0",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "STRING"
+      "dataType": "PRIMITIVE#STRING"
     },
     {
       "name": "Cabin_1",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "STRING"
+      "dataType": "PRIMITIVE#STRING"
     },
     {
       "name": "Cabin_2",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "DOUBLE"
+      "dataType": "PRIMITIVE#DOUBLE"
     }
   ],
   "outputs": [
     {
       "name": "Transported",
-      "dataType": "DOUBLE"
+      "dataType": "PRIMITIVE#DOUBLE"
     }
   ]
 }
