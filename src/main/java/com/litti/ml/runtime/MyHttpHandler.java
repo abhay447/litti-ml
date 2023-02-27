@@ -8,12 +8,13 @@ import com.litti.ml.model.entities.PredictionRequest;
 import com.litti.ml.model.entities.PredictionResponse;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
 import java.util.Set;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class MyHttpHandler implements HttpHandler {
   static Logger logger = LogManager.getLogger(MyHttpHandler.class);
@@ -37,7 +38,7 @@ public class MyHttpHandler implements HttpHandler {
         final String predictionRoute = extractModelRoute(httpExchange);
         logger.info("received request for prediction route: {}", predictionRoute);
         final Set<PredictionResponse> predictionResponses =
-            this.modelRegistry.forwardToPredictor(predictionRoute, predictionRequest);
+            this.modelRegistry.forwardToRouter(predictionRoute, predictionRequest);
         logger.debug("prediction response {}", predictionResponses);
         handleResponse(httpExchange, 200, gson.toJsonTree(predictionResponses));
       } else {

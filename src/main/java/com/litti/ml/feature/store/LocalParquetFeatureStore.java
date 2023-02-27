@@ -3,12 +3,6 @@ package com.litti.ml.feature.store;
 import com.google.common.io.Resources;
 import com.litti.ml.feature.entities.FeatureGroup;
 import com.litti.ml.feature.entities.FeatureMetadata;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.time.LocalDate;
-import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -17,7 +11,14 @@ import org.apache.parquet.hadoop.ParquetReader;
 import org.apache.parquet.hadoop.util.HadoopInputFile;
 import org.apache.parquet.io.InputFile;
 
-public class LocalParquetFeatureStore implements FeatureStore {
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+public class LocalParquetFeatureStore extends AbstractFeatureStore {
 
   private final String name = "LocalParquet";
   private final List<GenericRecord> records;
@@ -32,28 +33,31 @@ public class LocalParquetFeatureStore implements FeatureStore {
   }
 
   @Override
-  public Map<String, Object> fetchFeatures(
+  public FeatureFetchResult fetchFeatureFromStore(
       List<FeatureMetadata> featureMetadataList,
       FeatureGroup featureGroup,
-      Map<String, String> inputDimensions) {
-    final Map<String, String> queryDimensions =
-        inputDimensions.entrySet().stream()
-            .filter(x -> featureGroup.dimensions().contains(x.getKey()))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-    if (queryDimensions.containsKey("dt")) {
-      // HACK : cast dt to epoch days since our test parquet files have dt in avro DaysSinceEPoch
-      // format
-      queryDimensions.put(
-          "dt", String.valueOf(LocalDate.parse(queryDimensions.get("dt")).toEpochDay()));
-    }
-    final Predicate<GenericRecord> baseFilterQuery = Objects::nonNull;
+      Map<String, String> dimensions) {
+
     Predicate<GenericRecord> dimensionFilterQuery =
-        queryDimensions.entrySet().stream()
-            .map(
-                entry ->
-                    baseFilterQuery.and(
-                        record -> record.get(entry.getKey()).toString().equals(entry.getValue())))
-            .reduce(baseFilterQuery, Predicate::and);
+        generateDimensionFilterQuery(dimensions, featureGroup);
+
+    Optional<FeatureFetchResult> featureFetchResult =
+        queryLocalFile(featureMetadataList, dimensionFilterQuery);
+
+    if (!featureFetchResult.isEmpty()) {
+      return featureFetchResult.get();
+    }
+    Map<String, ?> defaultFeatures = createDefaultFeatures(featureMetadataList);
+
+    return new FeatureFetchResult(
+        defaultFeatures,
+        featureMetadataList.stream().map(FeatureMetadata::name).collect(Collectors.toSet()),
+        Collections.emptySet());
+  }
+
+  private Optional<FeatureFetchResult> queryLocalFile(
+      List<FeatureMetadata> featureMetadataList, Predicate<GenericRecord> dimensionFilterQuery) {
+    Set<String> featureStoreMisses = new HashSet<>();
     List<Map<String, Object>> featureValues =
         this.records.stream()
             .filter(dimensionFilterQuery)
@@ -66,16 +70,44 @@ public class LocalParquetFeatureStore implements FeatureStore {
                           features.put(f.name(), record.get(f.name()));
                         } else {
                           features.put(f.name(), Double.valueOf(f.defaultValue()));
+                          featureStoreMisses.add(f.name());
                         }
                       });
                   return features;
                 })
             .collect(Collectors.toList());
-    Map<String, Object> defaultFeatures =
-        featureMetadataList.stream()
-            .map(f -> Map.entry(f.name(), Double.valueOf(f.defaultValue())))
+    if (!featureValues.isEmpty()) {
+      return Optional.of(
+          new FeatureFetchResult(featureValues.get(0), featureStoreMisses, Collections.emptySet()));
+    }
+    return Optional.empty();
+  }
+
+  private Predicate<GenericRecord> generateDimensionFilterQuery(
+      Map<String, String> requestInputs, FeatureGroup featureGroup) {
+    final Map<String, String> queryDimensions =
+        requestInputs.entrySet().stream()
+            .filter(x -> featureGroup.dimensions().contains(x.getKey()))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-    return featureValues.isEmpty() ? defaultFeatures : featureValues.get(0);
+    if (queryDimensions.containsKey("dt")) {
+      // HACK : cast dt to epoch days since our test parquet files have dt in avro DaysSinceEPoch
+      // format
+      queryDimensions.put(
+          "dt", String.valueOf(LocalDate.parse(queryDimensions.get("dt")).toEpochDay()));
+    }
+    final Predicate<GenericRecord> baseFilterQuery = Objects::nonNull;
+    return queryDimensions.entrySet().stream()
+        .map(
+            entry ->
+                baseFilterQuery.and(
+                    record -> record.get(entry.getKey()).toString().equals(entry.getValue())))
+        .reduce(baseFilterQuery, Predicate::and);
+  }
+
+  private Map<String, ?> createDefaultFeatures(List<FeatureMetadata> featureMetadataList) {
+    return featureMetadataList.stream()
+        .map(f -> Map.entry(f.name(), Double.valueOf(f.defaultValue())))
+        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 
   private List<GenericRecord> readAllLocalRecords() {

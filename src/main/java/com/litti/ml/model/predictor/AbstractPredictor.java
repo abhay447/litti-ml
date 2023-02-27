@@ -2,8 +2,9 @@ package com.litti.ml.model.predictor;
 
 import com.litti.ml.feature.FeatureFetchRouter;
 import com.litti.ml.model.entities.ModelMetadata;
-import com.litti.ml.model.entities.PredictionRequest;
 import com.litti.ml.model.entities.PredictionResponse;
+
+import java.util.Map;
 import java.util.Set;
 
 public abstract class AbstractPredictor {
@@ -15,7 +16,12 @@ public abstract class AbstractPredictor {
     this.featureFetchRouter = featureFetchRouter;
   }
 
-  public abstract PredictionResponse predictSingle(PredictionRequest inputs);
+  public abstract PredictionResponse predictSingle(String predictionId, Map<String, ?> features);
 
-  public abstract Set<PredictionResponse> predictSet(Set<PredictionRequest> inputs);
+  public abstract Set<PredictionResponse> predictSet(
+      Map<String, Map<String, ?>> predictionFeaturesMap);
+
+  public ModelMetadata getModelMetadata() {
+    return modelMetadata;
+  }
 }

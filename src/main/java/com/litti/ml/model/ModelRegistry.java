@@ -5,18 +5,20 @@ import com.litti.ml.model.entities.ModelMetadata;
 import com.litti.ml.model.entities.PredictionRequest;
 import com.litti.ml.model.entities.PredictionResponse;
 import com.litti.ml.model.predictor.AbstractPredictor;
+import com.litti.ml.model.predictor.ModelPredictionManager;
 import com.litti.ml.model.predictor.PMMLPredictor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class ModelRegistry {
 
   static Logger logger = LogManager.getLogger(ModelRegistry.class);
-  private final Map<String, AbstractPredictor> predictionRegistry;
+  private final Map<String, ModelPredictionManager> predictionRegistry;
 
   private final FeatureFetchRouter featureFetchRouter;
 
@@ -29,9 +31,13 @@ public class ModelRegistry {
     try {
       switch (modelMetadata.modelFramework()) {
         case "PMML":
+          final AbstractPredictor modelPredictor =
+              new PMMLPredictor(modelMetadata, featureFetchRouter);
+          final ModelPredictionManager modelPredictionManager =
+              new ModelPredictionManager(featureFetchRouter, modelPredictor);
           predictionRegistry.put(
               String.format("%s#%s", modelMetadata.name(), modelMetadata.version()),
-              new PMMLPredictor(modelMetadata, featureFetchRouter));
+              modelPredictionManager);
           break;
         default:
           logger.info("predictor not found for model framework {}", modelMetadata.modelFramework());
@@ -42,7 +48,7 @@ public class ModelRegistry {
     }
   }
 
-  public Set<PredictionResponse> forwardToPredictor(String route, Set<PredictionRequest> request) {
+  public Set<PredictionResponse> forwardToRouter(String route, Set<PredictionRequest> request) {
     if (!this.predictionRegistry.containsKey(route)) {
       logger.info("registered routes {}", this.predictionRegistry.keySet());
       throw new RuntimeException("Model/version not found : " + Arrays.asList(route.split("#")));
