@@ -1,0 +1,73 @@
+{
+  "id": "id",
+  "inputs": {
+    "PRIMITIVE#STRING": "string",
+    "PRIMITIVE#LONG": 1,
+    "PRIMITIVE#DOUBLE": 2,
+    "PRIMITIVE#BOOLEAN": false,
+    "ARRAY#STRING": [
+      "abcd",
+      "1234",
+      "ink"
+    ],
+    "ARRAY#BOOLEAN": [
+      true,
+      true,
+      false,
+      true
+    ],
+    "ARRAY#LONG": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "ARRAY#DOUBLE": [
+      1.5,
+      2.5,
+      2.3,
+      4.9,
+      0.4
+    ],
+    "MATRIX#STRING": [
+      [
+        "abcd",
+        "1234",
+        "ink"
+      ]
+    ],
+    "MATRIX#BOOLEAN": [
+      [
+        true,
+        true
+      ],
+      [
+        false,
+        false
+      ]
+    ],
+    "MATRIX#LONG": [
+      [
+        1,
+        2
+      ],
+      [
+        3,
+        4
+      ]
+    ],
+    "MATRIX#DOUBLE": [
+      [
+        1.5,
+        2.5
+      ],
+      [
+        2.3,
+        4.9
+      ],
+      [
+        0.4
+      ]
+    ]
+  }
+}
