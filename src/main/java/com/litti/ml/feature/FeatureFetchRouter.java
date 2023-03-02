@@ -3,12 +3,13 @@ package com.litti.ml.feature;
 import com.litti.ml.feature.entities.FeatureGroup;
 import com.litti.ml.feature.entities.FeatureMetadata;
 import com.litti.ml.feature.store.AbstractFeatureStore;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class FeatureFetchRouter {
   private static final Logger logger = LogManager.getLogger(FeatureFetchRouter.class);
@@ -37,19 +38,23 @@ public class FeatureFetchRouter {
     Map<String, ?> fetchedFeatures =
         groupedFeatures.entrySet().stream()
             .flatMap(
-                groupedEntry -> {
-                  final FeatureGroup featureGroup =
-                      this.inferenceFeatureGroups.get(groupedEntry.getKey());
-                  final AbstractFeatureStore featureStore =
-                      this.inferenceFeatureStores.get(
-                          this.featureGroupStoreMap.get(featureGroup.name()));
-                  return featureStore
-                      .fetchFeatures(groupedEntry.getValue(), featureGroup, requestInputs)
-                      .getFeatures()
-                      .entrySet()
-                      .stream();
-                })
+                groupedEntry ->
+                    fetchFeatureGroup(groupedEntry.getKey(), groupedEntry.getValue(), requestInputs)
+                        .entrySet()
+                        .stream())
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     return fetchedFeatures;
+  }
+
+  private Map<String, ?> fetchFeatureGroup(
+      String featureGroupName,
+      List<FeatureMetadata> featureMetadataList,
+      Map<String, ?> requestInputs) {
+    final FeatureGroup featureGroup = this.inferenceFeatureGroups.get(featureGroupName);
+    final AbstractFeatureStore featureStore =
+        this.inferenceFeatureStores.get(this.featureGroupStoreMap.get(featureGroup.name()));
+    return featureStore
+        .fetchFeatures(featureMetadataList, featureGroup, requestInputs)
+        .getFeatures();
   }
 }
