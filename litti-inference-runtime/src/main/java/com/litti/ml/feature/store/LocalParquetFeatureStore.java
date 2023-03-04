@@ -48,6 +48,14 @@ public class LocalParquetFeatureStore extends AbstractFeatureStore {
     return queryLocalFile(featureMetadataSet, dimensionFilterQuery);
   }
 
+  @Override
+  void writeFeaturesToStore(
+      List<Map<String, ?>> featureRows,
+      Map<String, FeatureMetadata> featureMetadataMap,
+      FeatureGroup featureGroup) {
+    throw new RuntimeException("Writes not supported via feature store for LocalParquet");
+  }
+
   private Optional<Map<String, ?>> queryLocalFile(
       Set<FeatureMetadata> featureMetadataSet, Predicate<GenericRecord> dimensionFilterQuery) {
     List<Map<String, Object>> featureValues =

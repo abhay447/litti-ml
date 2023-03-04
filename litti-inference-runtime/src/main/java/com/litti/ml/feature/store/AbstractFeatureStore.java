@@ -6,10 +6,7 @@ import com.litti.ml.entities.dtypes.JsonDataReader;
 import com.litti.ml.entities.feature.FeatureGroup;
 import com.litti.ml.entities.feature.FeatureMetadata;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class AbstractFeatureStore {
@@ -26,6 +23,11 @@ public abstract class AbstractFeatureStore {
       Set<FeatureMetadata> featureMetadataList,
       FeatureGroup featureGroup,
       Map<String, String> dimensions);
+
+  abstract void writeFeaturesToStore(
+      List<Map<String, ?>> featureRows,
+      Map<String, FeatureMetadata> featureMetadataMap,
+      FeatureGroup featureGroup);
 
   public final FeatureFetchResult fetchFeatures(
       Set<FeatureMetadata> featureMetadataList,
