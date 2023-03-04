@@ -2,5 +2,5 @@
 target/*
 **/.idea/*
 **/target/**
-litti-inference-runtime/target/*
-litti-inference-runtime/idea/*
+litti-inference-runtime/target/**
+litti-inference-runtime/idea/**
