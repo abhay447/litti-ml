@@ -1,7 +1,7 @@
 {
   "name": "dream11_model",
   "version": "v1",
-  "modelLocation": "src/main/resources/model-artifacts/dream11_v1.pmml",
+  "modelLocation": "model-artifacts/dream11_v1.pmml",
   "modelFramework": "PMML",
   "features": [
     {

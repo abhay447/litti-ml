@@ -1,5 +1,6 @@
 package com.litti.ml.model.predictor;
 
+import com.google.common.io.Resources;
 import com.litti.ml.feature.FeatureFetchRouter;
 import com.litti.ml.model.entities.ModelMetadata;
 import com.litti.ml.model.entities.ModelOutputMetadata;
@@ -29,7 +30,9 @@ public class PMMLPredictor extends AbstractPredictor {
       throws JAXBException, IOException, ParserConfigurationException, SAXException {
     super(modelMetadata, featureFetchRouter);
     this.evaluator =
-        new LoadingModelEvaluatorBuilder().load(new File(modelMetadata.modelLocation())).build();
+        new LoadingModelEvaluatorBuilder()
+            .load(new File(Resources.getResource(modelMetadata.modelLocation()).getFile()))
+            .build();
     evaluator.verify();
 
     this.outputFieldsMap =

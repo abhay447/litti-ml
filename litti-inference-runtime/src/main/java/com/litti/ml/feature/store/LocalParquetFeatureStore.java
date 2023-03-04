@@ -1,6 +1,5 @@
 package com.litti.ml.feature.store;
 
-import com.google.common.io.Resources;
 import com.litti.ml.feature.dtypes.JsonDataReader;
 import com.litti.ml.feature.entities.FeatureGroup;
 import com.litti.ml.feature.entities.FeatureMetadata;
@@ -11,6 +10,7 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.apache.avro.generic.GenericRecord;
+import org.apache.curator.shaded.com.google.common.io.Resources;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.parquet.avro.AvroParquetReader;
