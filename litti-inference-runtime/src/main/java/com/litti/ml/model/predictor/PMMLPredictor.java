@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.xml.parsers.ParserConfigurationException;
-import net.minidev.json.JSONObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jpmml.evaluator.Evaluator;
@@ -44,7 +43,6 @@ public class PMMLPredictor extends AbstractPredictor {
   @Override
   public PredictionResponse predictSingle(String predictionId, Map<String, ?> features) {
     try {
-      logger.info(new JSONObject(features));
       final Map<String, ?> outputs =
           EvaluatorUtil.decodeAll(evaluator.evaluate(features)).entrySet().stream()
               .filter(entry -> outputFieldsMap.containsKey(entry.getKey()))

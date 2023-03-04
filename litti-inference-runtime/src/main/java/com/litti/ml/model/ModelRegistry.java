@@ -4,6 +4,7 @@ import com.litti.ml.entities.model.BatchPredictionRequest;
 import com.litti.ml.entities.model.BatchPredictionResponse;
 import com.litti.ml.entities.model.ModelMetadata;
 import com.litti.ml.feature.FeatureFetchRouter;
+import com.litti.ml.model.logger.ModelLogger;
 import com.litti.ml.model.predictor.AbstractPredictor;
 import com.litti.ml.model.predictor.ModelPredictionManager;
 import com.litti.ml.model.predictor.PMMLPredictor;
@@ -18,9 +19,12 @@ public class ModelRegistry {
   static Logger logger = LogManager.getLogger(ModelRegistry.class);
   private final Map<String, ModelPredictionManager> predictionRegistry;
 
+  private final ModelLogger modelLogger;
+
   private final FeatureFetchRouter featureFetchRouter;
 
-  public ModelRegistry(FeatureFetchRouter featureFetchRouter) {
+  public ModelRegistry(ModelLogger modelLogger, FeatureFetchRouter featureFetchRouter) {
+    this.modelLogger = modelLogger;
     this.featureFetchRouter = featureFetchRouter;
     predictionRegistry = new HashMap<>();
   }
@@ -32,7 +36,7 @@ public class ModelRegistry {
           final AbstractPredictor modelPredictor =
               new PMMLPredictor(modelMetadata, featureFetchRouter);
           final ModelPredictionManager modelPredictionManager =
-              new ModelPredictionManager(featureFetchRouter, modelPredictor);
+              new ModelPredictionManager(featureFetchRouter, modelPredictor, modelLogger);
           predictionRegistry.put(
               String.format("%s#%s", modelMetadata.name(), modelMetadata.version()),
               modelPredictionManager);

@@ -10,6 +10,7 @@ import com.litti.ml.feature.store.RedisFeatureStore;
 import com.litti.ml.model.ModelRegistry;
 import com.litti.ml.model.loader.ModelLoader;
 import com.litti.ml.model.loader.StaticResourcesModelLoader;
+import com.litti.ml.model.logger.ModelConsoleLogger;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.support.ConnectionPoolSupport;
@@ -38,7 +39,8 @@ public class Main {
         .loadAllFeatureGroups()
         .getFeatureGroupsLoaded()
         .forEach(fg -> featureFetchRouter.registerFeatureGroup(fg, redisFeatureStore));
-    final ModelRegistry modelRegistry = new ModelRegistry(featureFetchRouter);
+    final ModelRegistry modelRegistry =
+        new ModelRegistry(new ModelConsoleLogger(), featureFetchRouter);
     final ModelLoader staticModelLoader = new StaticResourcesModelLoader();
     staticModelLoader
         .loadAllModels()

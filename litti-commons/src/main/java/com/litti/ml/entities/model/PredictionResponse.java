@@ -1,5 +1,6 @@
 package com.litti.ml.entities.model;
 
+import java.util.Collections;
 import java.util.Map;
 
 public class PredictionResponse {
@@ -10,8 +11,20 @@ public class PredictionResponse {
 
   public PredictionResponse(String id, Map<String, ?> outputs, String errorMessage) {
     this.id = id;
-    this.outputs = outputs;
+    this.outputs = Collections.unmodifiableMap(outputs);
     this.errorMessage = errorMessage;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public Map<String, ?> getOutputs() {
+    return outputs;
+  }
+
+  public String getErrorMessage() {
+    return errorMessage;
   }
 
   @Override
