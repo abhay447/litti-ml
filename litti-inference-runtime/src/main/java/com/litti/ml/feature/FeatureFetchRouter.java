@@ -34,6 +34,7 @@ public class FeatureFetchRouter {
       List<FeatureMetadata> featureMetadataList, Map<String, ?> requestInputs) {
     Map<String, Set<FeatureMetadata>> groupedFeatures =
         featureMetadataList.stream()
+            .filter(f -> f.featureGroup() != null) // fetch features only for features without group
             .collect(Collectors.groupingBy(FeatureMetadata::featureGroup, Collectors.toSet()));
     return groupedFeatures.entrySet().stream()
         .flatMap(
