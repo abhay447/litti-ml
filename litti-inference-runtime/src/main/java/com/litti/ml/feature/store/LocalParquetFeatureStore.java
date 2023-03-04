@@ -1,15 +1,8 @@
 package com.litti.ml.feature.store;
 
-import com.google.common.collect.Sets;
 import com.litti.ml.entities.dtypes.JsonDataReader;
 import com.litti.ml.entities.feature.FeatureGroup;
 import com.litti.ml.entities.feature.FeatureMetadata;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.time.LocalDate;
-import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.curator.shaded.com.google.common.io.Resources;
 import org.apache.hadoop.conf.Configuration;
@@ -18,6 +11,13 @@ import org.apache.parquet.avro.AvroParquetReader;
 import org.apache.parquet.hadoop.ParquetReader;
 import org.apache.parquet.hadoop.util.HadoopInputFile;
 import org.apache.parquet.io.InputFile;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class LocalParquetFeatureStore extends AbstractFeatureStore {
 
@@ -66,10 +66,6 @@ public class LocalParquetFeatureStore extends AbstractFeatureStore {
                 })
             .toList();
     if (!featureValues.isEmpty()) {
-      final Set<String> featureStoreMisses =
-          Sets.difference(
-              featureMetadataSet.stream().map(FeatureMetadata::name).collect(Collectors.toSet()),
-              featureValues.get(0).keySet());
       return Optional.of(featureValues.get(0));
     }
     return Optional.empty();
