@@ -1,8 +1,8 @@
 package com.litti.ml.model;
 
 import com.litti.ml.entities.model.BatchPredictionRequest;
+import com.litti.ml.entities.model.BatchPredictionResponse;
 import com.litti.ml.entities.model.ModelMetadata;
-import com.litti.ml.entities.model.PredictionResponse;
 import com.litti.ml.feature.FeatureFetchRouter;
 import com.litti.ml.model.predictor.AbstractPredictor;
 import com.litti.ml.model.predictor.ModelPredictionManager;
@@ -10,7 +10,6 @@ import com.litti.ml.model.predictor.PMMLPredictor;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -47,7 +46,7 @@ public class ModelRegistry {
     }
   }
 
-  public Set<PredictionResponse> forwardToRouter(
+  public BatchPredictionResponse forwardToRouter(
       String route, BatchPredictionRequest batchPredictionRequest) {
     if (!this.predictionRegistry.containsKey(route)) {
       logger.info("registered routes {}", this.predictionRegistry.keySet());

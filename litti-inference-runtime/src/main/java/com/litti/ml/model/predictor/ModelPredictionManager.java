@@ -1,10 +1,9 @@
 package com.litti.ml.model.predictor;
 
 import com.litti.ml.entities.model.BatchPredictionRequest;
-import com.litti.ml.entities.model.PredictionResponse;
+import com.litti.ml.entities.model.BatchPredictionResponse;
 import com.litti.ml.feature.FeatureFetchRouter;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ModelPredictionManager {
@@ -18,7 +17,7 @@ public class ModelPredictionManager {
     this.modelPredictor = modelPredictor;
   }
 
-  public Set<PredictionResponse> predictSet(BatchPredictionRequest batchPredictionRequest) {
+  public BatchPredictionResponse predictSet(BatchPredictionRequest batchPredictionRequest) {
     Map<String, Map<String, ?>> predictSetMap =
         batchPredictionRequest.getPredictionRequests().stream()
             .map(
@@ -29,6 +28,8 @@ public class ModelPredictionManager {
                   return Map.entry(input.getId(), featureStoreFeatures);
                 })
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-    return this.modelPredictor.predictSet(predictSetMap);
+    return new BatchPredictionResponse(
+        batchPredictionRequest.getBatchPredictionId(),
+        this.modelPredictor.predictSet(predictSetMap));
   }
 }

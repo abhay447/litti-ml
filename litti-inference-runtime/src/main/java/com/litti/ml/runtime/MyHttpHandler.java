@@ -3,14 +3,13 @@ package com.litti.ml.runtime;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.litti.ml.entities.model.BatchPredictionRequest;
-import com.litti.ml.entities.model.PredictionResponse;
+import com.litti.ml.entities.model.BatchPredictionResponse;
 import com.litti.ml.model.ModelRegistry;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
-import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,7 +34,7 @@ public class MyHttpHandler implements HttpHandler {
         logger.debug("prediction request: {}", batchPredictionRequest);
         final String predictionRoute = extractModelRoute(httpExchange);
         logger.info("received request for prediction route: {}", predictionRoute);
-        final Set<PredictionResponse> predictionResponses =
+        final BatchPredictionResponse predictionResponses =
             this.modelRegistry.forwardToRouter(predictionRoute, batchPredictionRequest);
         logger.debug("prediction response {}", predictionResponses);
         handleResponse(httpExchange, 200, gson.toJsonTree(predictionResponses));
