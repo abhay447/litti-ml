@@ -11,6 +11,7 @@
     <modules>
         <module>litti-inference-runtime</module>
         <module>litti-commons</module>
+        <module>litti-features</module>
     </modules>
 
     <properties>
