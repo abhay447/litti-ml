@@ -7,13 +7,14 @@ import com.litti.ml.entities.feature.FeatureGroup;
 import com.litti.ml.entities.feature.FeatureMetadata;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.sync.RedisCommands;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class RedisFeatureStore extends AbstractFeatureStore {
 
@@ -63,6 +64,13 @@ public class RedisFeatureStore extends AbstractFeatureStore {
       List<Map<String, ?>> featureRows,
       List<FeatureMetadata> featureMetadataList,
       FeatureGroup featureGroup) {
+    featureMetadataList.forEach(
+        featureMetadata -> {
+          if (!featureMetadata.featureGroup().equalsIgnoreCase(featureGroup.name())) {
+            throw new RuntimeException(
+                ("feature group for all features should match supplied feature group"));
+          }
+        });
     final Map<String, FeatureMetadata> featureMetadataMap =
         featureMetadataList.stream()
             .map(f -> Map.entry(f.name() + "#" + f.version(), f))
