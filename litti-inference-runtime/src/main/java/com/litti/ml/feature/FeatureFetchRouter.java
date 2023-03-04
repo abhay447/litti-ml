@@ -3,12 +3,14 @@ package com.litti.ml.feature;
 import com.litti.ml.entities.feature.FeatureGroup;
 import com.litti.ml.entities.feature.FeatureMetadata;
 import com.litti.ml.feature.store.AbstractFeatureStore;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class FeatureFetchRouter {
   private static final Logger logger = LogManager.getLogger(FeatureFetchRouter.class);
@@ -31,9 +33,9 @@ public class FeatureFetchRouter {
 
   public Map<String, ?> fetchFeatures(
       List<FeatureMetadata> featureMetadataList, Map<String, ?> requestInputs) {
-    Map<String, List<FeatureMetadata>> groupedFeatures =
+    Map<String, Set<FeatureMetadata>> groupedFeatures =
         featureMetadataList.stream()
-            .collect(Collectors.groupingBy(FeatureMetadata::featureGroup, Collectors.toList()));
+            .collect(Collectors.groupingBy(FeatureMetadata::featureGroup, Collectors.toSet()));
     Map<String, ?> fetchedFeatures =
         groupedFeatures.entrySet().stream()
             .flatMap(
@@ -47,7 +49,7 @@ public class FeatureFetchRouter {
 
   private Map<String, ?> fetchFeatureGroup(
       String featureGroupName,
-      List<FeatureMetadata> featureMetadataList,
+      Set<FeatureMetadata> featureMetadataList,
       Map<String, ?> requestInputs) {
     final FeatureGroup featureGroup = this.inferenceFeatureGroups.get(featureGroupName);
     final AbstractFeatureStore featureStore =
