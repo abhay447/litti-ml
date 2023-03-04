@@ -24,6 +24,8 @@ public abstract class FeatureMetadata {
   @Nullable
   public abstract String featureGroup();
 
+  public abstract Long ttlSeconds();
+
   @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "")
   @AutoValue.Builder
   public abstract static class Builder {
@@ -39,5 +41,8 @@ public abstract class FeatureMetadata {
     public abstract FeatureMetadata.Builder featureGroup(@Nullable String value);
 
     public abstract FeatureMetadata build();
+
+    // TODO: attributes related to cached features can be nullable, some features maybe realtime
+    public abstract Builder ttlSeconds(Long value);
   }
 }

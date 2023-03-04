@@ -7,11 +7,10 @@ import com.litti.ml.entities.feature.FeatureGroup;
 import com.litti.ml.entities.feature.FeatureMetadata;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.sync.RedisCommands;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.util.*;
 import java.util.stream.Collectors;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class RedisFeatureStore extends AbstractFeatureStore {
 
@@ -103,7 +102,6 @@ public class RedisFeatureStore extends AbstractFeatureStore {
       Map<String, FeatureMetadata> featureMetadataMap,
       Boolean merge) {
     final Gson gson = new Gson();
-    final long ttl = System.currentTimeMillis() + 86400; // use this from feature group
     final String featureGroupKey = this.createFeatureGroupRedisKey(featureRow, featureGroup);
     final Map<String, FeatureStoreRecord> inputRow =
         featureRow.entrySet().stream()
@@ -131,8 +129,13 @@ public class RedisFeatureStore extends AbstractFeatureStore {
       }
     }
     redisWriteRow.putAll(inputRow);
+    final Long maxExpiry =
+        redisWriteRow.values().stream()
+            .map(FeatureStoreRecord::getValidTo)
+            .max(Long::compare)
+            .get();
+    final Long ttl = maxExpiry - System.currentTimeMillis() / 1000;
     final RedisCommands<String, String> syncCommands = this.redisConnection.sync();
-    // TODO use feature group ttl
     syncCommands.setex(featureGroupKey, ttl, gson.toJson(redisWriteRow));
   }
 

@@ -10,9 +10,9 @@ public class FeatureStoreRecord {
 
   private final Object rawValue;
 
-  private final long validFrom;
+  private final Long validFrom;
 
-  private final long validTo;
+  private final Long validTo;
 
   public FeatureStoreRecord(
       String featureName, String featureVersion, Object rawValue, long validFrom, long validTo) {
@@ -46,11 +46,11 @@ public class FeatureStoreRecord {
     return rawValue;
   }
 
-  public long getValidFrom() {
+  public Long getValidFrom() {
     return validFrom;
   }
 
-  public long getValidTo() {
+  public Long getValidTo() {
     return validTo;
   }
 }

@@ -8,79 +8,92 @@
       "name": "HomePlanet",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "PRIMITIVE#STRING"
+      "dataType": "PRIMITIVE#STRING",
+      "ttlSeconds": 86400
     },
     {
       "name": "CryoSleep",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "PRIMITIVE#Double"
+      "dataType": "PRIMITIVE#DOUBLE",
+      "ttlSeconds": 86400
     },
     {
       "name": "Destination",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "PRIMITIVE#STRING"
+      "dataType": "PRIMITIVE#STRING",
+      "ttlSeconds": 86400
     },
     {
       "name": "Age",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "PRIMITIVE#DOUBLE"
+      "dataType": "PRIMITIVE#DOUBLE",
+      "ttlSeconds": 86400
     },
     {
       "name": "VIP",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "PRIMITIVE#DOUBLE"
+      "dataType": "PRIMITIVE#DOUBLE",
+      "ttlSeconds": 86400
     },
     {
       "name": "RoomService",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "PRIMITIVE#DOUBLE"
+      "dataType": "PRIMITIVE#DOUBLE",
+      "ttlSeconds": 86400
     },
     {
       "name": "FoodCourt",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "PRIMITIVE#DOUBLE"
+      "dataType": "PRIMITIVE#DOUBLE",
+      "ttlSeconds": 86400
     },
     {
       "name": "ShoppingMall",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "PRIMITIVE#DOUBLE"
+      "dataType": "PRIMITIVE#DOUBLE",
+      "ttlSeconds": 86400
     },
     {
       "name": "Spa",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "PRIMITIVE#DOUBLE"
+      "dataType": "PRIMITIVE#DOUBLE",
+      "ttlSeconds": 86400
     },
     {
       "name": "VRDeck",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "PRIMITIVE#DOUBLE"
+      "dataType": "PRIMITIVE#DOUBLE",
+      "ttlSeconds": 86400
     },
     {
       "name": "Cabin_0",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "PRIMITIVE#STRING"
+      "dataType": "PRIMITIVE#STRING",
+      "ttlSeconds": 86400
     },
     {
       "name": "Cabin_1",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "PRIMITIVE#STRING"
+      "dataType": "PRIMITIVE#STRING",
+      "ttlSeconds": 86400
     },
     {
       "name": "Cabin_2",
       "version": "v1",
       "defaultValue": "0.0",
-      "dataType": "PRIMITIVE#DOUBLE"
+      "dataType": "PRIMITIVE#DOUBLE",
+      "ttlSeconds": 86400
     }
   ],
   "outputs": [
