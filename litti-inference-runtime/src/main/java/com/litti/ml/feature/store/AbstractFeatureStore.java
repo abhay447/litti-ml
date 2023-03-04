@@ -1,11 +1,9 @@
 package com.litti.ml.feature.store;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import com.litti.ml.entities.dtypes.JsonDataReader;
 import com.litti.ml.entities.feature.FeatureGroup;
 import com.litti.ml.entities.feature.FeatureMetadata;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -24,9 +22,9 @@ public abstract class AbstractFeatureStore {
       FeatureGroup featureGroup,
       Map<String, String> dimensions);
 
-  abstract void writeFeaturesToStore(
+  public abstract void writeFeaturesToStore(
       List<Map<String, ?>> featureRows,
-      Map<String, FeatureMetadata> featureMetadataMap,
+      List<FeatureMetadata> featureMetadataList,
       FeatureGroup featureGroup);
 
   public final FeatureFetchResult fetchFeatures(
@@ -52,20 +50,19 @@ public abstract class AbstractFeatureStore {
             .filter(acceptableFeatureNames::contains)
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     final Map<String, ?> defaultFeatures = createDefaultFeaturesRow(featureMetadataSet);
-    ImmutableMap.Builder<String, Object> featureSetBuilder = ImmutableMap.builder();
+    Map<String, Object> mergedFeatures = new HashMap<>();
     // start with defaults
-    featureSetBuilder.putAll(defaultFeatures);
+    mergedFeatures.putAll(defaultFeatures);
     // top up with feature store result
-    featureSetBuilder.putAll(featureStoreFeatures);
+    mergedFeatures.putAll(featureStoreFeatures);
     // override with request inputs
-    featureSetBuilder.putAll(inputOverrideFeatures);
+    mergedFeatures.putAll(inputOverrideFeatures);
     // features defaulted
     final Set<String> featuresCacheMissed =
         Sets.difference(acceptableFeatureNames, featureStoreFeatures.keySet());
     // features overridden
     final Set<String> featuresOverriden = inputOverrideFeatures.keySet();
-    return new FeatureFetchResult(
-        featureSetBuilder.build(), featuresCacheMissed, featuresOverriden);
+    return new FeatureFetchResult(mergedFeatures, featuresCacheMissed, featuresOverriden);
   }
 
   private Map<String, String> extractDimensions(Map<String, ?> requestInputs) {

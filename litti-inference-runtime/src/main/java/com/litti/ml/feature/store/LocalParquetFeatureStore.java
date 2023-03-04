@@ -3,6 +3,12 @@ package com.litti.ml.feature.store;
 import com.litti.ml.entities.dtypes.JsonDataReader;
 import com.litti.ml.entities.feature.FeatureGroup;
 import com.litti.ml.entities.feature.FeatureMetadata;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.curator.shaded.com.google.common.io.Resources;
 import org.apache.hadoop.conf.Configuration;
@@ -11,13 +17,6 @@ import org.apache.parquet.avro.AvroParquetReader;
 import org.apache.parquet.hadoop.ParquetReader;
 import org.apache.parquet.hadoop.util.HadoopInputFile;
 import org.apache.parquet.io.InputFile;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.time.LocalDate;
-import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class LocalParquetFeatureStore extends AbstractFeatureStore {
 
@@ -49,9 +48,9 @@ public class LocalParquetFeatureStore extends AbstractFeatureStore {
   }
 
   @Override
-  void writeFeaturesToStore(
+  public void writeFeaturesToStore(
       List<Map<String, ?>> featureRows,
-      Map<String, FeatureMetadata> featureMetadataMap,
+      List<FeatureMetadata> featureMetadataList,
       FeatureGroup featureGroup) {
     throw new RuntimeException("Writes not supported via feature store for LocalParquet");
   }
@@ -100,7 +99,7 @@ public class LocalParquetFeatureStore extends AbstractFeatureStore {
         .reduce(baseFilterQuery, Predicate::and);
   }
 
-  private List<GenericRecord> readAllLocalRecords() {
+  public List<GenericRecord> readAllLocalRecords() {
     List<GenericRecord> allRecords = new ArrayList<>();
     try {
       final Path path =
