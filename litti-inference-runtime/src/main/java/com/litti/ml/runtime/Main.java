@@ -15,14 +15,15 @@ import com.litti.ml.model.loader.ModelLoader;
 import com.litti.ml.model.loader.StaticResourcesModelLoader;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class Main {
 
@@ -85,7 +86,6 @@ public class Main {
                               if (allFeatureNames.contains(f.name())) {
                                 return Map.entry(f.name() + "#v1", record.get(f.name())); // feature
                               } else {
-                                logger.info(f);
                                 Object value =
                                     f.name().equals("dt")
                                         ? LocalDate.ofEpochDay((Integer) record.get("dt"))
