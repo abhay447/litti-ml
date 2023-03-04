@@ -1,0 +1,1322 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_4" xmlns:data="http://jpmml.org/jpmml-model/InlineTable" version="4.4">
+	<Header>
+		<Application name="JPMML-SparkML library" version="2.1.0"/>
+		<Timestamp>2023-02-26T16:09:03Z</Timestamp>
+	</Header>
+	<DataDictionary>
+		<DataField name="batter_runs_30D" optype="continuous" dataType="integer"/>
+		<DataField name="batter_runs_300D" optype="continuous" dataType="integer"/>
+		<DataField name="batter_runs_1000D" optype="continuous" dataType="integer"/>
+		<DataField name="batter_runs_1000D_venue" optype="continuous" dataType="integer"/>
+		<DataField name="balls_faced_30D" optype="continuous" dataType="integer"/>
+		<DataField name="balls_faced_300D" optype="continuous" dataType="integer"/>
+		<DataField name="balls_faced_1000D" optype="continuous" dataType="integer"/>
+		<DataField name="balls_faced_1000D_venue" optype="continuous" dataType="integer"/>
+		<DataField name="dismissals_30D" optype="continuous" dataType="integer"/>
+		<DataField name="dismissals_90D" optype="continuous" dataType="integer"/>
+		<DataField name="dismissals_300D" optype="continuous" dataType="integer"/>
+		<DataField name="dismissals_1000D_venue" optype="continuous" dataType="integer"/>
+		<DataField name="boundary_count_30D" optype="continuous" dataType="integer"/>
+		<DataField name="boundary_count_90D" optype="continuous" dataType="integer"/>
+		<DataField name="boundary_count_300D" optype="continuous" dataType="integer"/>
+		<DataField name="boundary_count_1000D_venue" optype="continuous" dataType="integer"/>
+		<DataField name="six_count_30D" optype="continuous" dataType="integer"/>
+		<DataField name="six_count_90D" optype="continuous" dataType="integer"/>
+		<DataField name="six_count_1000D_venue" optype="continuous" dataType="integer"/>
+		<DataField name="batting_avg_30D" optype="continuous" dataType="double"/>
+		<DataField name="batting_avg_90D" optype="continuous" dataType="double"/>
+		<DataField name="batting_avg_1000D" optype="continuous" dataType="double"/>
+		<DataField name="batting_avg_1000D_venue" optype="continuous" dataType="double"/>
+		<DataField name="batting_sr_30D" optype="continuous" dataType="double"/>
+		<DataField name="batting_sr_300D" optype="continuous" dataType="double"/>
+		<DataField name="batting_sr_1000D" optype="continuous" dataType="double"/>
+		<DataField name="batting_sr_1000D_venue" optype="continuous" dataType="double"/>
+		<DataField name="total_runs_30D" optype="continuous" dataType="integer"/>
+		<DataField name="total_runs_1000D_venue" optype="continuous" dataType="integer"/>
+		<DataField name="deliveries_1000D_venue" optype="continuous" dataType="integer"/>
+		<DataField name="wicket_sum_30D" optype="continuous" dataType="integer"/>
+		<DataField name="wicket_sum_90D" optype="continuous" dataType="integer"/>
+		<DataField name="wicket_sum_300D" optype="continuous" dataType="integer"/>
+		<DataField name="wicket_sum_1000D" optype="continuous" dataType="integer"/>
+		<DataField name="wicket_sum_1000D_venue" optype="continuous" dataType="integer"/>
+		<DataField name="maiden_count_30D" optype="continuous" dataType="integer"/>
+		<DataField name="maiden_count_1000D_venue" optype="continuous" dataType="integer"/>
+		<DataField name="bowling_avg_30D" optype="continuous" dataType="double"/>
+		<DataField name="bowling_avg_90D" optype="continuous" dataType="double"/>
+		<DataField name="bowling_avg_1000D" optype="continuous" dataType="double"/>
+		<DataField name="bowling_avg_1000D_venue" optype="continuous" dataType="double"/>
+		<DataField name="bowling_sr_30D" optype="continuous" dataType="double"/>
+		<DataField name="bowling_sr_90D" optype="continuous" dataType="double"/>
+		<DataField name="bowling_sr_300D" optype="continuous" dataType="double"/>
+		<DataField name="bowling_sr_1000D_venue" optype="continuous" dataType="double"/>
+		<DataField name="bowling_eco_30D" optype="continuous" dataType="double"/>
+		<DataField name="bowling_eco_90D" optype="continuous" dataType="double"/>
+		<DataField name="bowling_eco_1000D_venue" optype="continuous" dataType="double"/>
+		<DataField name="fielding_wicket_sum" optype="continuous" dataType="integer"/>
+		<DataField name="fantasy_points" optype="continuous" dataType="double"/>
+	</DataDictionary>
+	<MiningModel functionName="regression">
+		<MiningSchema>
+			<MiningField name="fantasy_points" usageType="target"/>
+			<MiningField name="batter_runs_30D"/>
+			<MiningField name="batter_runs_300D"/>
+			<MiningField name="batter_runs_1000D"/>
+			<MiningField name="batter_runs_1000D_venue"/>
+			<MiningField name="balls_faced_30D"/>
+			<MiningField name="balls_faced_300D"/>
+			<MiningField name="balls_faced_1000D"/>
+			<MiningField name="balls_faced_1000D_venue"/>
+			<MiningField name="dismissals_30D"/>
+			<MiningField name="dismissals_90D"/>
+			<MiningField name="dismissals_300D"/>
+			<MiningField name="dismissals_1000D_venue"/>
+			<MiningField name="boundary_count_30D"/>
+			<MiningField name="boundary_count_90D"/>
+			<MiningField name="boundary_count_300D"/>
+			<MiningField name="boundary_count_1000D_venue"/>
+			<MiningField name="six_count_30D"/>
+			<MiningField name="six_count_90D"/>
+			<MiningField name="six_count_1000D_venue"/>
+			<MiningField name="batting_avg_30D"/>
+			<MiningField name="batting_avg_90D"/>
+			<MiningField name="batting_avg_1000D"/>
+			<MiningField name="batting_avg_1000D_venue"/>
+			<MiningField name="batting_sr_30D"/>
+			<MiningField name="batting_sr_300D"/>
+			<MiningField name="batting_sr_1000D"/>
+			<MiningField name="batting_sr_1000D_venue"/>
+			<MiningField name="total_runs_30D"/>
+			<MiningField name="total_runs_1000D_venue"/>
+			<MiningField name="deliveries_1000D_venue"/>
+			<MiningField name="wicket_sum_30D"/>
+			<MiningField name="wicket_sum_90D"/>
+			<MiningField name="wicket_sum_300D"/>
+			<MiningField name="wicket_sum_1000D"/>
+			<MiningField name="wicket_sum_1000D_venue"/>
+			<MiningField name="maiden_count_30D"/>
+			<MiningField name="maiden_count_1000D_venue"/>
+			<MiningField name="bowling_avg_30D"/>
+			<MiningField name="bowling_avg_90D"/>
+			<MiningField name="bowling_avg_1000D"/>
+			<MiningField name="bowling_avg_1000D_venue"/>
+			<MiningField name="bowling_sr_30D"/>
+			<MiningField name="bowling_sr_90D"/>
+			<MiningField name="bowling_sr_300D"/>
+			<MiningField name="bowling_sr_1000D_venue"/>
+			<MiningField name="bowling_eco_30D"/>
+			<MiningField name="bowling_eco_90D"/>
+			<MiningField name="bowling_eco_1000D_venue"/>
+			<MiningField name="fielding_wicket_sum"/>
+		</MiningSchema>
+		<Output>
+			<OutputField name="prediction" optype="continuous" dataType="double"/>
+		</Output>
+		<Segmentation multipleModelMethod="weightedSum">
+			<Segment id="1">
+				<True/>
+				<TreeModel functionName="regression" missingValueStrategy="nullPrediction" noTrueChildStrategy="returnLastPrediction">
+					<MiningSchema>
+						<MiningField name="batter_runs_30D"/>
+						<MiningField name="batting_avg_30D"/>
+						<MiningField name="batting_avg_1000D_venue"/>
+						<MiningField name="batting_sr_30D"/>
+						<MiningField name="batting_sr_1000D_venue"/>
+						<MiningField name="deliveries_1000D_venue"/>
+						<MiningField name="wicket_sum_30D"/>
+						<MiningField name="wicket_sum_1000D_venue"/>
+						<MiningField name="bowling_sr_30D"/>
+						<MiningField name="bowling_sr_1000D_venue"/>
+						<MiningField name="fielding_wicket_sum"/>
+					</MiningSchema>
+					<Node score="53.722727272727276">
+						<True/>
+						<Node score="90.87115384615385">
+							<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="1.0"/>
+							<Node score="32.84954128440367">
+								<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="26.366666666666667"/>
+								<Node score="17.818382677861248">
+									<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="12.944444444444445"/>
+									<Node score="14.988143258770322">
+										<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="0.0"/>
+										<Node score="5.9870662852878995">
+											<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="0.0"/>
+										</Node>
+									</Node>
+									<Node score="31.15899581589958">
+										<SimplePredicate field="bowling_sr_1000D_venue" operator="lessOrEqual" value="31.916666666666664"/>
+									</Node>
+								</Node>
+								<Node score="32.676">
+									<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="0.0"/>
+									<Node score="23.08688327316486">
+										<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="0.0"/>
+									</Node>
+								</Node>
+								<Node score="50.582750582750585">
+									<SimplePredicate field="deliveries_1000D_venue" operator="lessOrEqual" value="26.0"/>
+								</Node>
+							</Node>
+							<Node score="55.80686149936468">
+								<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="49.875"/>
+								<Node score="39.7641196013289">
+									<SimplePredicate field="batting_avg_30D" operator="lessOrEqual" value="30.80909090909091"/>
+									<Node score="16.12691466083151">
+										<SimplePredicate field="batting_avg_30D" operator="lessOrEqual" value="12.366666666666667"/>
+									</Node>
+								</Node>
+								<Node score="45.99926162933793">
+									<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="0.0"/>
+								</Node>
+							</Node>
+							<Node score="63.25687203791469">
+								<SimplePredicate field="batting_sr_30D" operator="lessOrEqual" value="1.2997797356828196"/>
+								<Node score="26.130769230769232">
+									<SimplePredicate field="batter_runs_30D" operator="lessOrEqual" value="49.0"/>
+								</Node>
+							</Node>
+							<Node score="73.83153153153152">
+								<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="1.6684397163120568"/>
+							</Node>
+						</Node>
+						<Node score="105.63487738419619">
+							<SimplePredicate field="bowling_sr_1000D_venue" operator="lessOrEqual" value="12.679487179487179"/>
+							<Node score="87.2228637413395">
+								<SimplePredicate field="bowling_sr_1000D_venue" operator="lessOrEqual" value="8.30952380952381"/>
+								<Node score="145.9433962264151">
+									<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="3.0"/>
+									<Node score="79.0739357729649">
+										<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="41.29166666666667"/>
+									</Node>
+								</Node>
+								<Node score="125.27633851468049">
+									<SimplePredicate field="deliveries_1000D_venue" operator="lessOrEqual" value="26.0"/>
+								</Node>
+							</Node>
+							<Node score="56.28764478764479">
+								<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="18.95"/>
+								<Node score="69.77179006560449">
+									<SimplePredicate field="bowling_sr_1000D_venue" operator="lessOrEqual" value="9.96875"/>
+								</Node>
+							</Node>
+							<Node score="78.31117824773413">
+								<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="41.29166666666667"/>
+							</Node>
+						</Node>
+						<Node score="32.08081922982585">
+							<SimplePredicate field="batting_avg_30D" operator="lessOrEqual" value="19.633333333333333"/>
+							<Node score="46.5390924002187">
+								<SimplePredicate field="bowling_sr_1000D_venue" operator="lessOrEqual" value="17.316666666666666"/>
+								<Node score="20.61263736263736">
+									<SimplePredicate field="wicket_sum_30D" operator="lessOrEqual" value="1.0"/>
+								</Node>
+							</Node>
+							<Node score="8.57074340527578">
+								<SimplePredicate field="wicket_sum_30D" operator="lessOrEqual" value="0.0"/>
+							</Node>
+						</Node>
+						<Node score="47.4365821094793">
+							<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="36.03125"/>
+							<Node score="62.03260869565217">
+								<SimplePredicate field="bowling_sr_30D" operator="lessOrEqual" value="17.954545454545453"/>
+							</Node>
+						</Node>
+						<Node score="77.73869900771776">
+							<SimplePredicate field="bowling_sr_1000D_venue" operator="lessOrEqual" value="26.125"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="2" weight="0.1">
+				<True/>
+				<TreeModel functionName="regression" missingValueStrategy="nullPrediction" noTrueChildStrategy="returnLastPrediction">
+					<MiningSchema>
+						<MiningField name="balls_faced_30D"/>
+						<MiningField name="dismissals_1000D_venue"/>
+						<MiningField name="boundary_count_1000D_venue"/>
+						<MiningField name="six_count_1000D_venue"/>
+						<MiningField name="batting_avg_90D"/>
+						<MiningField name="batting_avg_1000D_venue"/>
+						<MiningField name="batting_sr_30D"/>
+						<MiningField name="batting_sr_1000D_venue"/>
+						<MiningField name="total_runs_1000D_venue"/>
+						<MiningField name="deliveries_1000D_venue"/>
+						<MiningField name="wicket_sum_30D"/>
+						<MiningField name="wicket_sum_1000D_venue"/>
+						<MiningField name="maiden_count_30D"/>
+						<MiningField name="bowling_avg_30D"/>
+						<MiningField name="bowling_sr_300D"/>
+						<MiningField name="bowling_sr_1000D_venue"/>
+						<MiningField name="fielding_wicket_sum"/>
+					</MiningSchema>
+					<Node score="116.14023444152885">
+						<True/>
+						<Node score="15.011393650024182">
+							<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="1.0"/>
+							<Node score="-1.7810099712531975">
+								<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="0.6684981684981685"/>
+								<Node score="-11.451276348644463">
+									<SimplePredicate field="balls_faced_30D" operator="lessOrEqual" value="0.0"/>
+									<Node score="6.229689215122598">
+										<SimplePredicate field="bowling_avg_30D" operator="lessOrEqual" value="19.958333333333336"/>
+										<Node score="-6.4341692914555715">
+											<SimplePredicate field="deliveries_1000D_venue" operator="lessOrEqual" value="19.0"/>
+										</Node>
+									</Node>
+									<Node score="-3.1465633161386495">
+										<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="1.0"/>
+									</Node>
+								</Node>
+								<Node score="-10.281714553650655">
+									<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="1.875"/>
+									<Node score="-18.80165916170455">
+										<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="0.49468085106382975"/>
+									</Node>
+								</Node>
+								<Node score="-9.119268925521">
+									<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="4.916666666666666"/>
+								</Node>
+							</Node>
+							<Node score="-1.2439203213153507">
+								<SimplePredicate field="wicket_sum_30D" operator="lessOrEqual" value="0.0"/>
+								<Node score="13.948776991103156">
+									<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="12.944444444444445"/>
+									<Node score="3.8043766630702947">
+										<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="7.875"/>
+									</Node>
+								</Node>
+								<Node score="-12.260487373627898">
+									<SimplePredicate field="batting_sr_30D" operator="lessOrEqual" value="1.0030487804878048"/>
+								</Node>
+							</Node>
+							<Node score="35.082315638592185">
+								<SimplePredicate field="total_runs_1000D_venue" operator="lessOrEqual" value="32.0"/>
+								<Node score="10.495665964300082">
+									<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="26.366666666666667"/>
+								</Node>
+							</Node>
+							<Node score="-0.3320218751244014">
+								<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="0.0"/>
+							</Node>
+						</Node>
+						<Node score="32.90656842023565">
+							<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="2.0"/>
+							<Node score="52.068402337366095">
+								<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="0.0"/>
+								<Node score="-89.66810976686247">
+									<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="64.9"/>
+									<Node score="11.14382008925587">
+										<SimplePredicate field="six_count_1000D_venue" operator="lessOrEqual" value="26.0"/>
+									</Node>
+								</Node>
+								<Node score="14.90019991401883">
+									<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="1.4633249641319943"/>
+								</Node>
+							</Node>
+							<Node score="193.83836154034907">
+								<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="0.6684981684981685"/>
+								<Node score="16.287219500608995">
+									<SimplePredicate field="maiden_count_30D" operator="lessOrEqual" value="2.0"/>
+								</Node>
+							</Node>
+							<Node score="287.447322970639">
+								<SimplePredicate field="bowling_sr_300D" operator="lessOrEqual" value="4.25"/>
+							</Node>
+						</Node>
+						<Node score="59.61012523504291">
+							<SimplePredicate field="batting_sr_30D" operator="lessOrEqual" value="1.4474604343025397"/>
+							<Node score="40.247328136149214">
+								<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="3.0"/>
+								<Node score="21.225286973750737">
+									<SimplePredicate field="bowling_sr_1000D_venue" operator="lessOrEqual" value="13.96875"/>
+								</Node>
+							</Node>
+							<Node score="35.503807518759395">
+								<SimplePredicate field="boundary_count_1000D_venue" operator="lessOrEqual" value="6.0"/>
+							</Node>
+						</Node>
+						<Node score="75.07411856072638">
+							<SimplePredicate field="batting_avg_90D" operator="lessOrEqual" value="59.92857142857143"/>
+							<Node score="36.032576249304434">
+								<SimplePredicate field="dismissals_1000D_venue" operator="lessOrEqual" value="5.0"/>
+							</Node>
+						</Node>
+						<Node score="5.1463728715207795">
+							<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="1.3895663956639566"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="3" weight="0.1">
+				<True/>
+				<TreeModel functionName="regression" missingValueStrategy="nullPrediction" noTrueChildStrategy="returnLastPrediction">
+					<MiningSchema>
+						<MiningField name="batter_runs_300D"/>
+						<MiningField name="dismissals_30D"/>
+						<MiningField name="dismissals_90D"/>
+						<MiningField name="dismissals_1000D_venue"/>
+						<MiningField name="boundary_count_1000D_venue"/>
+						<MiningField name="six_count_1000D_venue"/>
+						<MiningField name="batting_avg_30D"/>
+						<MiningField name="batting_avg_90D"/>
+						<MiningField name="batting_avg_1000D"/>
+						<MiningField name="batting_avg_1000D_venue"/>
+						<MiningField name="batting_sr_30D"/>
+						<MiningField name="batting_sr_1000D_venue"/>
+						<MiningField name="total_runs_1000D_venue"/>
+						<MiningField name="deliveries_1000D_venue"/>
+						<MiningField name="wicket_sum_30D"/>
+						<MiningField name="wicket_sum_1000D_venue"/>
+						<MiningField name="bowling_avg_30D"/>
+						<MiningField name="bowling_eco_1000D_venue"/>
+						<MiningField name="fielding_wicket_sum"/>
+					</MiningSchema>
+					<Node score="-156.15598815978137">
+						<True/>
+						<Node score="12.459224005399355">
+							<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="1.0"/>
+							<Node score="-9.365678944465412">
+								<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="4.916666666666666"/>
+								<Node score="2.761603336586099">
+									<SimplePredicate field="dismissals_1000D_venue" operator="lessOrEqual" value="0.0"/>
+									<Node score="11.983484999144117">
+										<SimplePredicate field="bowling_avg_30D" operator="lessOrEqual" value="16.970588235294116"/>
+										<Node score="-2.01746777258671">
+											<SimplePredicate field="deliveries_1000D_venue" operator="lessOrEqual" value="47.0"/>
+										</Node>
+									</Node>
+									<Node score="-7.136845050142827">
+										<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="0.0"/>
+									</Node>
+								</Node>
+								<Node score="-11.660478288729163">
+									<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="0.49468085106382975"/>
+									<Node score="-17.025662775633016">
+										<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="0.25"/>
+									</Node>
+								</Node>
+								<Node score="-2.415398864115059">
+									<SimplePredicate field="bowling_eco_1000D_venue" operator="lessOrEqual" value="7.357092986353539"/>
+								</Node>
+							</Node>
+							<Node score="11.495724942121894">
+								<SimplePredicate field="wicket_sum_30D" operator="lessOrEqual" value="0.0"/>
+								<Node score="10.65488003454894">
+									<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="12.944444444444445"/>
+									<Node score="3.0297483732624255">
+										<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="7.875"/>
+									</Node>
+								</Node>
+								<Node score="-4.2702261916676285">
+									<SimplePredicate field="batting_avg_30D" operator="lessOrEqual" value="64.2"/>
+								</Node>
+							</Node>
+							<Node score="31.89022683005907">
+								<SimplePredicate field="total_runs_1000D_venue" operator="lessOrEqual" value="32.0"/>
+								<Node score="9.631641800127795">
+									<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="32.36666666666667"/>
+								</Node>
+							</Node>
+							<Node score="-0.3100217979487949">
+								<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="0.0"/>
+							</Node>
+						</Node>
+						<Node score="51.53261682024145">
+							<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="1.3895663956639566"/>
+							<Node score="54.784291196057026">
+								<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="2.0"/>
+								<Node score="9.614014132863984">
+									<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="0.0"/>
+									<Node score="1.3763278557910406">
+										<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="0.569047619047619"/>
+									</Node>
+								</Node>
+								<Node score="16.469356643697356">
+									<SimplePredicate field="batting_avg_30D" operator="lessOrEqual" value="49.30952380952381"/>
+								</Node>
+							</Node>
+							<Node score="0.22793344254913742">
+								<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="3.0"/>
+								<Node score="21.100513949324885">
+									<SimplePredicate field="batting_avg_1000D" operator="lessOrEqual" value="38.86038961038961"/>
+								</Node>
+							</Node>
+							<Node score="27.43350826869856">
+								<SimplePredicate field="boundary_count_1000D_venue" operator="lessOrEqual" value="6.0"/>
+							</Node>
+						</Node>
+						<Node score="193.94128830051739">
+							<SimplePredicate field="batting_avg_90D" operator="lessOrEqual" value="59.92857142857143"/>
+							<Node score="76.53344913808724">
+								<SimplePredicate field="six_count_1000D_venue" operator="lessOrEqual" value="26.0"/>
+								<Node score="20.8728746420915">
+									<SimplePredicate field="dismissals_30D" operator="lessOrEqual" value="9.0"/>
+								</Node>
+							</Node>
+							<Node score="-72.55418175320898">
+								<SimplePredicate field="batting_sr_30D" operator="lessOrEqual" value="1.6243466898954704"/>
+							</Node>
+						</Node>
+						<Node score="81.74933918744989">
+							<SimplePredicate field="boundary_count_1000D_venue" operator="lessOrEqual" value="6.0"/>
+							<Node score="13.672775028119345">
+								<SimplePredicate field="batter_runs_300D" operator="lessOrEqual" value="497.0"/>
+							</Node>
+						</Node>
+						<Node score="68.85839595011036">
+							<SimplePredicate field="dismissals_90D" operator="lessOrEqual" value="10.0"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="4" weight="0.1">
+				<True/>
+				<TreeModel functionName="regression" missingValueStrategy="nullPrediction" noTrueChildStrategy="returnLastPrediction">
+					<MiningSchema>
+						<MiningField name="batter_runs_30D"/>
+						<MiningField name="batter_runs_1000D_venue"/>
+						<MiningField name="balls_faced_1000D_venue"/>
+						<MiningField name="dismissals_1000D_venue"/>
+						<MiningField name="boundary_count_30D"/>
+						<MiningField name="boundary_count_90D"/>
+						<MiningField name="six_count_30D"/>
+						<MiningField name="batting_avg_1000D_venue"/>
+						<MiningField name="batting_sr_30D"/>
+						<MiningField name="batting_sr_1000D"/>
+						<MiningField name="batting_sr_1000D_venue"/>
+						<MiningField name="wicket_sum_1000D_venue"/>
+						<MiningField name="bowling_avg_30D"/>
+						<MiningField name="bowling_eco_30D"/>
+						<MiningField name="bowling_eco_90D"/>
+						<MiningField name="fielding_wicket_sum"/>
+					</MiningSchema>
+					<Node score="37.1092172797647">
+						<True/>
+						<Node score="12.90337536843746">
+							<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="1.3315018315018314"/>
+							<Node score="-23.529002344478382">
+								<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="0.0"/>
+								<Node score="6.917019723451111">
+									<SimplePredicate field="bowling_eco_30D" operator="lessOrEqual" value="7.362899262899263"/>
+									<Node score="3.521685632466966">
+										<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="26.366666666666667"/>
+										<Node score="-3.0007128688316262">
+											<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="0.6684981684981685"/>
+										</Node>
+									</Node>
+									<Node score="-11.9074829660947">
+										<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="0.0"/>
+									</Node>
+								</Node>
+								<Node score="1.1458777423128248">
+									<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="1.0"/>
+									<Node score="-5.206997667637376">
+										<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="0.569047619047619"/>
+									</Node>
+								</Node>
+								<Node score="-7.956474537088604">
+									<SimplePredicate field="bowling_avg_30D" operator="lessOrEqual" value="39.55"/>
+								</Node>
+							</Node>
+							<Node score="16.011586694627038">
+								<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="0.0"/>
+								<Node score="7.300897411029007">
+									<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="1.0"/>
+									<Node score="-5.122485319495895">
+										<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="41.29166666666667"/>
+									</Node>
+								</Node>
+								<Node score="5.46798554122031">
+									<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="2.0"/>
+								</Node>
+							</Node>
+							<Node score="10.010130615511521">
+								<SimplePredicate field="bowling_eco_30D" operator="lessOrEqual" value="8.404918032786885"/>
+								<Node score="18.92068808261893">
+									<SimplePredicate field="bowling_avg_30D" operator="lessOrEqual" value="14.038461538461538"/>
+								</Node>
+							</Node>
+							<Node score="-0.2087761583666054">
+								<SimplePredicate field="batting_sr_1000D" operator="lessOrEqual" value="1.2717163635417479"/>
+							</Node>
+						</Node>
+						<Node score="6.275751198233544">
+							<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="64.9"/>
+							<Node score="28.425152092994704">
+								<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="49.875"/>
+								<Node score="5.893608458262828">
+									<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="1.0"/>
+									<Node score="-19.215784961391204">
+										<SimplePredicate field="batting_sr_30D" operator="lessOrEqual" value="0.6866071428571429"/>
+									</Node>
+								</Node>
+								<Node score="14.82932652814092">
+									<SimplePredicate field="bowling_eco_90D" operator="lessOrEqual" value="6.4140576770438305"/>
+								</Node>
+							</Node>
+							<Node score="-13.717424027465686">
+								<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="1.6684397163120568"/>
+								<Node score="2.3173158703790175">
+									<SimplePredicate field="balls_faced_1000D_venue" operator="lessOrEqual" value="61.0"/>
+								</Node>
+							</Node>
+							<Node score="-31.298478690586187">
+								<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="1.0"/>
+							</Node>
+						</Node>
+						<Node score="79.65818221861296">
+							<SimplePredicate field="dismissals_1000D_venue" operator="lessOrEqual" value="0.0"/>
+							<Node score="71.23224268120713">
+								<SimplePredicate field="batter_runs_1000D_venue" operator="lessOrEqual" value="90.0"/>
+								<Node score="28.570364429376827">
+									<SimplePredicate field="boundary_count_90D" operator="lessOrEqual" value="29.0"/>
+								</Node>
+							</Node>
+							<Node score="-58.44076028966263">
+								<SimplePredicate field="batter_runs_30D" operator="lessOrEqual" value="77.0"/>
+							</Node>
+						</Node>
+						<Node score="16.27618395081481">
+							<SimplePredicate field="boundary_count_30D" operator="lessOrEqual" value="4.0"/>
+							<Node score="-28.88265954649714">
+								<SimplePredicate field="six_count_30D" operator="lessOrEqual" value="6.0"/>
+							</Node>
+						</Node>
+						<Node score="8.493174476553774">
+							<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="0.0"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="5" weight="0.1">
+				<True/>
+				<TreeModel functionName="regression" missingValueStrategy="nullPrediction" noTrueChildStrategy="returnLastPrediction">
+					<MiningSchema>
+						<MiningField name="batter_runs_1000D"/>
+						<MiningField name="batter_runs_1000D_venue"/>
+						<MiningField name="balls_faced_1000D_venue"/>
+						<MiningField name="dismissals_30D"/>
+						<MiningField name="dismissals_1000D_venue"/>
+						<MiningField name="boundary_count_30D"/>
+						<MiningField name="boundary_count_1000D_venue"/>
+						<MiningField name="batting_avg_30D"/>
+						<MiningField name="batting_avg_1000D_venue"/>
+						<MiningField name="batting_sr_1000D_venue"/>
+						<MiningField name="deliveries_1000D_venue"/>
+						<MiningField name="wicket_sum_30D"/>
+						<MiningField name="wicket_sum_1000D"/>
+						<MiningField name="wicket_sum_1000D_venue"/>
+						<MiningField name="maiden_count_1000D_venue"/>
+						<MiningField name="bowling_avg_30D"/>
+						<MiningField name="bowling_avg_1000D_venue"/>
+						<MiningField name="bowling_sr_90D"/>
+						<MiningField name="bowling_eco_30D"/>
+						<MiningField name="bowling_eco_1000D_venue"/>
+						<MiningField name="fielding_wicket_sum"/>
+					</MiningSchema>
+					<Node score="56.8753340504061">
+						<True/>
+						<Node score="-4.769866066061465">
+							<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="1.1905989199803633"/>
+							<Node score="-21.60676195027372">
+								<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="0.0"/>
+								<Node score="-13.168600331606102">
+									<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="49.875"/>
+									<Node score="5.5924639187516405">
+										<SimplePredicate field="bowling_avg_30D" operator="lessOrEqual" value="25.816666666666666"/>
+										<Node score="-1.7852694409768468">
+											<SimplePredicate field="maiden_count_1000D_venue" operator="lessOrEqual" value="0.0"/>
+										</Node>
+									</Node>
+									<Node score="-2.1785521744509326">
+										<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="1.0"/>
+									</Node>
+								</Node>
+								<Node score="-131.29165651424984">
+									<SimplePredicate field="dismissals_1000D_venue" operator="lessOrEqual" value="0.0"/>
+									<Node score="6.795413624923695">
+										<SimplePredicate field="boundary_count_1000D_venue" operator="lessOrEqual" value="14.0"/>
+									</Node>
+								</Node>
+								<Node score="-40.88508649518529">
+									<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="0.9636243386243386"/>
+								</Node>
+							</Node>
+							<Node score="11.4702147632917">
+								<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="0.0"/>
+								<Node score="-1.7012009335069442">
+									<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="1.0"/>
+									<Node score="-7.2470069820307685">
+										<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="0.569047619047619"/>
+									</Node>
+								</Node>
+								<Node score="3.139645099544995">
+									<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="2.0"/>
+								</Node>
+							</Node>
+							<Node score="3.1028934523260725">
+								<SimplePredicate field="bowling_avg_30D" operator="lessOrEqual" value="27.954545454545453"/>
+								<Node score="12.208702823081397">
+									<SimplePredicate field="bowling_eco_1000D_venue" operator="lessOrEqual" value="8.249087591240876"/>
+								</Node>
+							</Node>
+							<Node score="8.270054353176947">
+								<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="1.0"/>
+							</Node>
+						</Node>
+						<Node score="-2.646196284791741">
+							<SimplePredicate field="batting_avg_30D" operator="lessOrEqual" value="64.2"/>
+							<Node score="5.7306780846960335">
+								<SimplePredicate field="wicket_sum_30D" operator="lessOrEqual" value="0.0"/>
+								<Node score="-6.139278022792856">
+									<SimplePredicate field="boundary_count_30D" operator="lessOrEqual" value="15.0"/>
+									<Node score="3.2866187584069264">
+										<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="26.366666666666667"/>
+									</Node>
+								</Node>
+								<Node score="34.084239108187965">
+									<SimplePredicate field="dismissals_1000D_venue" operator="lessOrEqual" value="0.0"/>
+								</Node>
+							</Node>
+							<Node score="11.605738099588676">
+								<SimplePredicate field="bowling_eco_30D" operator="lessOrEqual" value="7.611525704809287"/>
+								<Node score="39.707426356538434">
+									<SimplePredicate field="bowling_sr_90D" operator="lessOrEqual" value="8.3875"/>
+								</Node>
+							</Node>
+							<Node score="9.61624467115083">
+								<SimplePredicate field="deliveries_1000D_venue" operator="lessOrEqual" value="26.0"/>
+							</Node>
+						</Node>
+						<Node score="-44.801141818843504">
+							<SimplePredicate field="batter_runs_1000D_venue" operator="lessOrEqual" value="75.0"/>
+							<Node score="41.33060199486443">
+								<SimplePredicate field="bowling_avg_1000D_venue" operator="lessOrEqual" value="43.535714285714285"/>
+								<Node score="0.9185755165805106">
+									<SimplePredicate field="wicket_sum_1000D" operator="lessOrEqual" value="62.0"/>
+								</Node>
+							</Node>
+							<Node score="23.125005159058606">
+								<SimplePredicate field="balls_faced_1000D_venue" operator="lessOrEqual" value="13.0"/>
+							</Node>
+						</Node>
+						<Node score="69.18978077138466">
+							<SimplePredicate field="dismissals_30D" operator="lessOrEqual" value="0.0"/>
+							<Node score="29.6918397861191">
+								<SimplePredicate field="batter_runs_1000D" operator="lessOrEqual" value="253.0"/>
+							</Node>
+						</Node>
+						<Node score="15.550793553082729">
+							<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="1.8907670454545453"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="6" weight="0.1">
+				<True/>
+				<TreeModel functionName="regression" missingValueStrategy="nullPrediction" noTrueChildStrategy="returnLastPrediction">
+					<MiningSchema>
+						<MiningField name="batter_runs_1000D_venue"/>
+						<MiningField name="balls_faced_300D"/>
+						<MiningField name="boundary_count_1000D_venue"/>
+						<MiningField name="six_count_1000D_venue"/>
+						<MiningField name="batting_avg_30D"/>
+						<MiningField name="batting_avg_1000D_venue"/>
+						<MiningField name="batting_sr_30D"/>
+						<MiningField name="batting_sr_1000D_venue"/>
+						<MiningField name="total_runs_1000D_venue"/>
+						<MiningField name="wicket_sum_30D"/>
+						<MiningField name="wicket_sum_1000D_venue"/>
+						<MiningField name="bowling_avg_30D"/>
+						<MiningField name="bowling_sr_1000D_venue"/>
+						<MiningField name="bowling_eco_1000D_venue"/>
+						<MiningField name="fielding_wicket_sum"/>
+					</MiningSchema>
+					<Node score="71.49214122089263">
+						<True/>
+						<Node score="5.496853950656676">
+							<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="1.0"/>
+							<Node score="-14.704394826885494">
+								<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="0.569047619047619"/>
+								<Node score="-1.0131884178979391">
+									<SimplePredicate field="balls_faced_300D" operator="lessOrEqual" value="0.0"/>
+									<Node score="10.982314279085717">
+										<SimplePredicate field="bowling_avg_30D" operator="lessOrEqual" value="16.970588235294116"/>
+										<Node score="-0.2800292575278415">
+											<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="4.0"/>
+										</Node>
+									</Node>
+									<Node score="-5.734927174691336">
+										<SimplePredicate field="bowling_sr_1000D_venue" operator="lessOrEqual" value="17.316666666666666"/>
+									</Node>
+								</Node>
+								<Node score="-8.195352779644452">
+									<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="2.416666666666667"/>
+									<Node score="-12.2600599442397">
+										<SimplePredicate field="batter_runs_1000D_venue" operator="lessOrEqual" value="0.0"/>
+									</Node>
+								</Node>
+								<Node score="-2.9373638408711664">
+									<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="12.944444444444445"/>
+								</Node>
+							</Node>
+							<Node score="-3.813901410056381">
+								<SimplePredicate field="batting_sr_30D" operator="lessOrEqual" value="0.5728429985855727"/>
+								<Node score="-3.468634147269132">
+									<SimplePredicate field="batter_runs_1000D_venue" operator="lessOrEqual" value="19.0"/>
+									<Node score="-20.173078512299067">
+										<SimplePredicate field="batting_avg_30D" operator="lessOrEqual" value="0.5833333333333333"/>
+									</Node>
+								</Node>
+								<Node score="-28.9638784695803">
+									<SimplePredicate field="batting_avg_30D" operator="lessOrEqual" value="6.9"/>
+								</Node>
+							</Node>
+							<Node score="-1.506477421127265">
+								<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="12.944444444444445"/>
+								<Node score="6.535095509677714">
+									<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="1.0"/>
+								</Node>
+							</Node>
+							<Node score="-1.881130141005546">
+								<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="0.0"/>
+							</Node>
+						</Node>
+						<Node score="6.144291481853926">
+							<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="1.143947655398037"/>
+							<Node score="-7.619553541839923">
+								<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="0.0"/>
+								<Node score="-1.0950522744796884">
+									<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="3.0"/>
+									<Node score="4.884070417141584">
+										<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="12.944444444444445"/>
+									</Node>
+								</Node>
+								<Node score="26.440678114050492">
+									<SimplePredicate field="six_count_1000D_venue" operator="lessOrEqual" value="1.0"/>
+								</Node>
+							</Node>
+							<Node score="37.70101730771695">
+								<SimplePredicate field="bowling_eco_1000D_venue" operator="lessOrEqual" value="5.855400696864111"/>
+								<Node score="13.985818508247675">
+									<SimplePredicate field="boundary_count_1000D_venue" operator="lessOrEqual" value="0.0"/>
+								</Node>
+							</Node>
+							<Node score="46.839338235002764">
+								<SimplePredicate field="bowling_avg_30D" operator="lessOrEqual" value="8.03125"/>
+							</Node>
+						</Node>
+						<Node score="29.63703138476194">
+							<SimplePredicate field="batting_avg_30D" operator="lessOrEqual" value="49.30952380952381"/>
+							<Node score="79.38208076897945">
+								<SimplePredicate field="six_count_1000D_venue" operator="lessOrEqual" value="26.0"/>
+								<Node score="11.321019244034987">
+									<SimplePredicate field="wicket_sum_30D" operator="lessOrEqual" value="13.0"/>
+								</Node>
+							</Node>
+							<Node score="-67.14681997423537">
+								<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="2.0"/>
+							</Node>
+						</Node>
+						<Node score="-92.63412750713137">
+							<SimplePredicate field="boundary_count_1000D_venue" operator="lessOrEqual" value="4.0"/>
+							<Node score="2.988615098586197">
+								<SimplePredicate field="total_runs_1000D_venue" operator="lessOrEqual" value="32.0"/>
+							</Node>
+						</Node>
+						<Node score="27.28642026429876">
+							<SimplePredicate field="bowling_eco_1000D_venue" operator="lessOrEqual" value="7.357092986353539"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="7" weight="0.1">
+				<True/>
+				<TreeModel functionName="regression" missingValueStrategy="nullPrediction" noTrueChildStrategy="returnLastPrediction">
+					<MiningSchema>
+						<MiningField name="batter_runs_1000D_venue"/>
+						<MiningField name="balls_faced_1000D_venue"/>
+						<MiningField name="dismissals_1000D_venue"/>
+						<MiningField name="boundary_count_30D"/>
+						<MiningField name="boundary_count_300D"/>
+						<MiningField name="six_count_90D"/>
+						<MiningField name="six_count_1000D_venue"/>
+						<MiningField name="batting_avg_30D"/>
+						<MiningField name="batting_avg_1000D_venue"/>
+						<MiningField name="batting_sr_30D"/>
+						<MiningField name="batting_sr_1000D_venue"/>
+						<MiningField name="total_runs_30D"/>
+						<MiningField name="deliveries_1000D_venue"/>
+						<MiningField name="wicket_sum_1000D_venue"/>
+						<MiningField name="bowling_avg_30D"/>
+						<MiningField name="bowling_sr_1000D_venue"/>
+						<MiningField name="fielding_wicket_sum"/>
+					</MiningSchema>
+					<Node score="83.93550826986676">
+						<True/>
+						<Node score="-25.42926895284593">
+							<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="0.0"/>
+							<Node score="18.94645214452349">
+								<SimplePredicate field="bowling_sr_1000D_venue" operator="lessOrEqual" value="26.125"/>
+								<Node score="-14.848786074403682">
+									<SimplePredicate field="batting_sr_30D" operator="lessOrEqual" value="1.1791733547351524"/>
+									<Node score="1.6323136422961912">
+										<SimplePredicate field="balls_faced_1000D_venue" operator="lessOrEqual" value="61.0"/>
+										<Node score="-2.3003495286954716">
+											<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="6.1"/>
+										</Node>
+									</Node>
+									<Node score="-1.6794749601941925">
+										<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="26.366666666666667"/>
+									</Node>
+								</Node>
+								<Node score="-7.499354153567188">
+									<SimplePredicate field="batting_avg_30D" operator="lessOrEqual" value="64.2"/>
+									<Node score="2.0912614637352283">
+										<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="49.875"/>
+									</Node>
+								</Node>
+								<Node score="0.2776734458117455">
+									<SimplePredicate field="batter_runs_1000D_venue" operator="lessOrEqual" value="90.0"/>
+								</Node>
+							</Node>
+							<Node score="-14.787428979986236">
+								<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="1.0"/>
+								<Node score="20.82559120872808">
+									<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="49.875"/>
+									<Node score="-2.946798271629362">
+										<SimplePredicate field="batter_runs_1000D_venue" operator="lessOrEqual" value="75.0"/>
+									</Node>
+								</Node>
+								<Node score="-61.94593556214518">
+									<SimplePredicate field="balls_faced_1000D_venue" operator="lessOrEqual" value="61.0"/>
+								</Node>
+							</Node>
+							<Node score="52.21159047682272">
+								<SimplePredicate field="total_runs_30D" operator="lessOrEqual" value="64.0"/>
+								<Node score="-1.7480274430293854">
+									<SimplePredicate field="six_count_90D" operator="lessOrEqual" value="9.0"/>
+								</Node>
+							</Node>
+							<Node score="-13.929938446039635">
+								<SimplePredicate field="batting_avg_30D" operator="lessOrEqual" value="19.633333333333333"/>
+							</Node>
+						</Node>
+						<Node score="14.964093966436447">
+							<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="0.0"/>
+							<Node score="7.034272492000688">
+								<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="64.9"/>
+								<Node score="0.9543844489578969">
+									<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="1.0"/>
+									<Node score="-4.100628414712129">
+										<SimplePredicate field="batting_avg_30D" operator="lessOrEqual" value="19.633333333333333"/>
+									</Node>
+								</Node>
+								<Node score="0.0323746032395947">
+									<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="0.6684981684981685"/>
+								</Node>
+							</Node>
+							<Node score="64.02565239419513">
+								<SimplePredicate field="dismissals_1000D_venue" operator="lessOrEqual" value="0.0"/>
+								<Node score="18.71559483981244">
+									<SimplePredicate field="boundary_count_300D" operator="lessOrEqual" value="19.0"/>
+								</Node>
+							</Node>
+							<Node score="-9.707639089795505">
+								<SimplePredicate field="boundary_count_30D" operator="lessOrEqual" value="7.0"/>
+							</Node>
+						</Node>
+						<Node score="-4.6991176655662725">
+							<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="64.9"/>
+							<Node score="22.486157927217903">
+								<SimplePredicate field="bowling_avg_30D" operator="lessOrEqual" value="27.954545454545453"/>
+								<Node score="8.309534998570069">
+									<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="1.4633249641319943"/>
+								</Node>
+							</Node>
+							<Node score="6.381161843422235">
+								<SimplePredicate field="deliveries_1000D_venue" operator="lessOrEqual" value="50.0"/>
+							</Node>
+						</Node>
+						<Node score="92.46900516082222">
+							<SimplePredicate field="boundary_count_30D" operator="lessOrEqual" value="17.0"/>
+							<Node score="15.810170718538897">
+								<SimplePredicate field="six_count_1000D_venue" operator="lessOrEqual" value="10.0"/>
+							</Node>
+						</Node>
+						<Node score="-68.58974940564462">
+							<SimplePredicate field="batting_sr_30D" operator="lessOrEqual" value="0.9813635837481189"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="8" weight="0.1">
+				<True/>
+				<TreeModel functionName="regression" missingValueStrategy="nullPrediction" noTrueChildStrategy="returnLastPrediction">
+					<MiningSchema>
+						<MiningField name="batter_runs_1000D"/>
+						<MiningField name="batter_runs_1000D_venue"/>
+						<MiningField name="balls_faced_30D"/>
+						<MiningField name="balls_faced_1000D_venue"/>
+						<MiningField name="dismissals_1000D_venue"/>
+						<MiningField name="boundary_count_300D"/>
+						<MiningField name="batting_avg_30D"/>
+						<MiningField name="batting_avg_1000D"/>
+						<MiningField name="batting_avg_1000D_venue"/>
+						<MiningField name="batting_sr_30D"/>
+						<MiningField name="batting_sr_1000D_venue"/>
+						<MiningField name="total_runs_1000D_venue"/>
+						<MiningField name="wicket_sum_30D"/>
+						<MiningField name="wicket_sum_1000D_venue"/>
+						<MiningField name="maiden_count_1000D_venue"/>
+						<MiningField name="bowling_avg_30D"/>
+						<MiningField name="bowling_avg_90D"/>
+						<MiningField name="bowling_avg_1000D_venue"/>
+						<MiningField name="bowling_sr_30D"/>
+						<MiningField name="bowling_sr_90D"/>
+						<MiningField name="bowling_sr_1000D_venue"/>
+					</MiningSchema>
+					<Node score="3.5431517245868207">
+						<True/>
+						<Node score="-50.85973249708233">
+							<SimplePredicate field="batting_sr_30D" operator="lessOrEqual" value="1.0030487804878048"/>
+							<Node score="-0.5663051168923331">
+								<SimplePredicate field="batter_runs_1000D_venue" operator="lessOrEqual" value="53.0"/>
+								<Node score="-1.8535166268530316">
+									<SimplePredicate field="maiden_count_1000D_venue" operator="lessOrEqual" value="0.0"/>
+									<Node score="-5.194817034020584">
+										<SimplePredicate field="batting_avg_30D" operator="lessOrEqual" value="6.9"/>
+										<Node score="-0.6998001814654905">
+											<SimplePredicate field="balls_faced_30D" operator="lessOrEqual" value="0.0"/>
+										</Node>
+									</Node>
+									<Node score="2.973586021004479">
+										<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="12.944444444444445"/>
+									</Node>
+								</Node>
+								<Node score="61.68736392261273">
+									<SimplePredicate field="total_runs_1000D_venue" operator="lessOrEqual" value="19.0"/>
+									<Node score="17.582202714348764">
+										<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="5.0"/>
+									</Node>
+								</Node>
+								<Node score="14.400814289319067">
+									<SimplePredicate field="bowling_sr_30D" operator="lessOrEqual" value="11.645833333333332"/>
+								</Node>
+							</Node>
+							<Node score="-99.83539814697984">
+								<SimplePredicate field="bowling_sr_1000D_venue" operator="lessOrEqual" value="12.679487179487179"/>
+								<Node score="-107.10116714548242">
+									<SimplePredicate field="batting_avg_30D" operator="lessOrEqual" value="5.366666666666667"/>
+									<Node score="-25.59861142363155">
+										<SimplePredicate field="bowling_avg_90D" operator="lessOrEqual" value="16.21111111111111"/>
+									</Node>
+								</Node>
+								<Node score="-9.248425632426347">
+									<SimplePredicate field="bowling_avg_30D" operator="lessOrEqual" value="39.55"/>
+								</Node>
+							</Node>
+							<Node score="1.6183431620054476">
+								<SimplePredicate field="bowling_avg_1000D_venue" operator="lessOrEqual" value="37.07142857142857"/>
+								<Node score="29.259750262422198">
+									<SimplePredicate field="bowling_sr_90D" operator="lessOrEqual" value="11.973684210526315"/>
+								</Node>
+							</Node>
+							<Node score="-10.890412744290419">
+								<SimplePredicate field="batting_avg_1000D" operator="lessOrEqual" value="45.236111111111114"/>
+							</Node>
+						</Node>
+						<Node score="29.53272678755863">
+							<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="3.708333333333333"/>
+							<Node score="23.714203487825323">
+								<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="0.569047619047619"/>
+								<Node score="-83.23865418121477">
+									<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="3.0"/>
+									<Node score="-7.233108134290991">
+										<SimplePredicate field="total_runs_1000D_venue" operator="lessOrEqual" value="109.0"/>
+									</Node>
+								</Node>
+								<Node score="-33.685997197419915">
+									<SimplePredicate field="wicket_sum_30D" operator="lessOrEqual" value="11.0"/>
+								</Node>
+							</Node>
+							<Node score="7.09764741114437">
+								<SimplePredicate field="total_runs_1000D_venue" operator="lessOrEqual" value="212.0"/>
+								<Node score="-3.0681597038491915">
+									<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="2.0"/>
+								</Node>
+							</Node>
+							<Node score="-49.21537415014014">
+								<SimplePredicate field="batter_runs_1000D" operator="lessOrEqual" value="201.0"/>
+							</Node>
+						</Node>
+						<Node score="42.287036538004365">
+							<SimplePredicate field="dismissals_1000D_venue" operator="lessOrEqual" value="0.0"/>
+							<Node score="7.987546256506203">
+								<SimplePredicate field="balls_faced_1000D_venue" operator="lessOrEqual" value="45.0"/>
+								<Node score="1.7559453895796273">
+									<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="0.0"/>
+								</Node>
+							</Node>
+							<Node score="17.83581083333733">
+								<SimplePredicate field="boundary_count_300D" operator="lessOrEqual" value="17.0"/>
+							</Node>
+						</Node>
+						<Node score="7.296278571030353">
+							<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="49.875"/>
+							<Node score="1.8461990625844191">
+								<SimplePredicate field="batting_avg_30D" operator="lessOrEqual" value="42.0625"/>
+							</Node>
+						</Node>
+						<Node score="-10.707046483211261">
+							<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="64.9"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="9" weight="0.1">
+				<True/>
+				<TreeModel functionName="regression" missingValueStrategy="nullPrediction" noTrueChildStrategy="returnLastPrediction">
+					<MiningSchema>
+						<MiningField name="batter_runs_300D"/>
+						<MiningField name="balls_faced_1000D"/>
+						<MiningField name="dismissals_1000D_venue"/>
+						<MiningField name="boundary_count_30D"/>
+						<MiningField name="six_count_30D"/>
+						<MiningField name="six_count_1000D_venue"/>
+						<MiningField name="batting_avg_30D"/>
+						<MiningField name="batting_avg_1000D_venue"/>
+						<MiningField name="batting_sr_1000D_venue"/>
+						<MiningField name="total_runs_1000D_venue"/>
+						<MiningField name="deliveries_1000D_venue"/>
+						<MiningField name="wicket_sum_30D"/>
+						<MiningField name="wicket_sum_1000D_venue"/>
+						<MiningField name="bowling_avg_30D"/>
+						<MiningField name="bowling_avg_1000D"/>
+						<MiningField name="bowling_sr_30D"/>
+						<MiningField name="bowling_sr_1000D_venue"/>
+						<MiningField name="bowling_eco_30D"/>
+						<MiningField name="fielding_wicket_sum"/>
+					</MiningSchema>
+					<Node score="16.18185008301765">
+						<True/>
+						<Node score="-6.082089363677938">
+							<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="0.0"/>
+							<Node score="0.7480370395855842">
+								<SimplePredicate field="bowling_eco_30D" operator="lessOrEqual" value="7.611525704809287"/>
+								<Node score="10.648513348951267">
+									<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="26.366666666666667"/>
+									<Node score="1.4910167104632603">
+										<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="21.03846153846154"/>
+										<Node score="-1.2667518070138077">
+											<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="4.916666666666666"/>
+										</Node>
+									</Node>
+									<Node score="-6.0881206172716205">
+										<SimplePredicate field="batting_avg_30D" operator="lessOrEqual" value="14.0625"/>
+									</Node>
+								</Node>
+								<Node score="-3.0655925012096095">
+									<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="0.0"/>
+									<Node score="-12.17576805210561">
+										<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="32.36666666666667"/>
+									</Node>
+								</Node>
+								<Node score="29.676936544634085">
+									<SimplePredicate field="deliveries_1000D_venue" operator="lessOrEqual" value="26.0"/>
+								</Node>
+							</Node>
+							<Node score="74.08660900817813">
+								<SimplePredicate field="deliveries_1000D_venue" operator="lessOrEqual" value="26.0"/>
+								<Node score="-5.125821062667339">
+									<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="0.6684981684981685"/>
+									<Node score="-0.7145268606703912">
+										<SimplePredicate field="balls_faced_1000D" operator="lessOrEqual" value="0.0"/>
+									</Node>
+								</Node>
+								<Node score="2.8982892413230528">
+									<SimplePredicate field="six_count_1000D_venue" operator="lessOrEqual" value="21.0"/>
+								</Node>
+							</Node>
+							<Node score="-11.266360689785667">
+								<SimplePredicate field="bowling_sr_1000D_venue" operator="lessOrEqual" value="12.679487179487179"/>
+								<Node score="-79.81221651755739">
+									<SimplePredicate field="wicket_sum_30D" operator="lessOrEqual" value="1.0"/>
+								</Node>
+							</Node>
+							<Node score="8.41616168425982">
+								<SimplePredicate field="bowling_sr_30D" operator="lessOrEqual" value="13.033333333333333"/>
+							</Node>
+						</Node>
+						<Node score="14.527765686141718">
+							<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="0.0"/>
+							<Node score="21.285498759437505">
+								<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="41.29166666666667"/>
+								<Node score="8.524290213418062">
+									<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="2.0"/>
+									<Node score="-1.524782369472372">
+										<SimplePredicate field="six_count_30D" operator="lessOrEqual" value="11.0"/>
+									</Node>
+								</Node>
+								<Node score="7.856511088223778">
+									<SimplePredicate field="batter_runs_300D" operator="lessOrEqual" value="401.0"/>
+								</Node>
+							</Node>
+							<Node score="6.024270742341838">
+								<SimplePredicate field="boundary_count_30D" operator="lessOrEqual" value="18.0"/>
+								<Node score="-8.149241100148854">
+									<SimplePredicate field="boundary_count_30D" operator="lessOrEqual" value="4.0"/>
+								</Node>
+							</Node>
+							<Node score="41.56428404440597">
+								<SimplePredicate field="dismissals_1000D_venue" operator="lessOrEqual" value="0.0"/>
+							</Node>
+						</Node>
+						<Node score="-3.931237547804991">
+							<SimplePredicate field="boundary_count_30D" operator="lessOrEqual" value="6.0"/>
+							<Node score="7.377169890948852">
+								<SimplePredicate field="bowling_avg_30D" operator="lessOrEqual" value="25.816666666666666"/>
+								<Node score="-18.397003017675907">
+									<SimplePredicate field="wicket_sum_30D" operator="lessOrEqual" value="0.0"/>
+								</Node>
+							</Node>
+							<Node score="5.927172310009142">
+								<SimplePredicate field="total_runs_1000D_venue" operator="lessOrEqual" value="54.0"/>
+							</Node>
+						</Node>
+						<Node score="6.370643080277081">
+							<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="26.366666666666667"/>
+							<Node score="-194.53386809139204">
+								<SimplePredicate field="bowling_avg_1000D" operator="lessOrEqual" value="3.583333333333333"/>
+							</Node>
+						</Node>
+						<Node score="45.44596280872531">
+							<SimplePredicate field="total_runs_1000D_venue" operator="lessOrEqual" value="25.0"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="10" weight="0.1">
+				<True/>
+				<TreeModel functionName="regression" missingValueStrategy="nullPrediction" noTrueChildStrategy="returnLastPrediction">
+					<MiningSchema>
+						<MiningField name="dismissals_30D"/>
+						<MiningField name="dismissals_90D"/>
+						<MiningField name="dismissals_300D"/>
+						<MiningField name="dismissals_1000D_venue"/>
+						<MiningField name="boundary_count_30D"/>
+						<MiningField name="boundary_count_300D"/>
+						<MiningField name="boundary_count_1000D_venue"/>
+						<MiningField name="six_count_30D"/>
+						<MiningField name="six_count_1000D_venue"/>
+						<MiningField name="batting_avg_30D"/>
+						<MiningField name="batting_avg_1000D_venue"/>
+						<MiningField name="batting_sr_30D"/>
+						<MiningField name="batting_sr_300D"/>
+						<MiningField name="batting_sr_1000D_venue"/>
+						<MiningField name="total_runs_30D"/>
+						<MiningField name="wicket_sum_90D"/>
+						<MiningField name="wicket_sum_300D"/>
+						<MiningField name="wicket_sum_1000D"/>
+						<MiningField name="wicket_sum_1000D_venue"/>
+						<MiningField name="maiden_count_30D"/>
+						<MiningField name="fielding_wicket_sum"/>
+					</MiningSchema>
+					<Node score="-18.120791989578436">
+						<True/>
+						<Node score="102.89312450864759">
+							<SimplePredicate field="boundary_count_30D" operator="lessOrEqual" value="20.0"/>
+							<Node score="65.9988898019485">
+								<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="1.0"/>
+								<Node score="-9.290090328289054">
+									<SimplePredicate field="maiden_count_30D" operator="lessOrEqual" value="0.0"/>
+									<Node score="0.5221294486324656">
+										<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="49.875"/>
+										<Node score="-1.9170076028668321">
+											<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="0.7521929824561404"/>
+										</Node>
+									</Node>
+									<Node score="11.525217115584216">
+										<SimplePredicate field="dismissals_1000D_venue" operator="lessOrEqual" value="0.0"/>
+									</Node>
+								</Node>
+								<Node score="67.19880772046169">
+									<SimplePredicate field="total_runs_30D" operator="lessOrEqual" value="21.0"/>
+									<Node score="18.633752614130525">
+										<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="7.0"/>
+									</Node>
+								</Node>
+								<Node score="2.147482692006669">
+									<SimplePredicate field="boundary_count_1000D_venue" operator="lessOrEqual" value="24.0"/>
+								</Node>
+							</Node>
+							<Node score="38.942841341444904">
+								<SimplePredicate field="batting_avg_30D" operator="lessOrEqual" value="64.2"/>
+								<Node score="17.706449090457067">
+									<SimplePredicate field="wicket_sum_1000D" operator="lessOrEqual" value="82.0"/>
+									<Node score="3.452934428583372">
+										<SimplePredicate field="fielding_wicket_sum" operator="lessOrEqual" value="3.0"/>
+									</Node>
+								</Node>
+								<Node score="6.287398922672968">
+									<SimplePredicate field="wicket_sum_1000D_venue" operator="lessOrEqual" value="3.0"/>
+								</Node>
+							</Node>
+							<Node score="17.823579405111133">
+								<SimplePredicate field="batting_sr_300D" operator="lessOrEqual" value="1.6517750299162346"/>
+								<Node score="-16.919402172720293">
+									<SimplePredicate field="boundary_count_300D" operator="lessOrEqual" value="8.0"/>
+								</Node>
+							</Node>
+							<Node score="27.1423332064443">
+								<SimplePredicate field="boundary_count_1000D_venue" operator="lessOrEqual" value="9.0"/>
+							</Node>
+						</Node>
+						<Node score="25.81341154843041">
+							<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="64.9"/>
+							<Node score="-4.972700106501504">
+								<SimplePredicate field="six_count_30D" operator="lessOrEqual" value="30.0"/>
+								<Node score="16.388697865798367">
+									<SimplePredicate field="batting_sr_1000D_venue" operator="lessOrEqual" value="1.2349310094408135"/>
+									<Node score="-0.3112010686059771">
+										<SimplePredicate field="wicket_sum_300D" operator="lessOrEqual" value="20.0"/>
+									</Node>
+								</Node>
+								<Node score="8.674555100775175">
+									<SimplePredicate field="batting_avg_1000D_venue" operator="lessOrEqual" value="49.875"/>
+								</Node>
+							</Node>
+							<Node score="266.18548437679533">
+								<SimplePredicate field="dismissals_300D" operator="lessOrEqual" value="8.0"/>
+							</Node>
+							<Node score="223.403033800226">
+								<SimplePredicate field="dismissals_90D" operator="lessOrEqual" value="6.0"/>
+							</Node>
+						</Node>
+						<Node score="239.62505343275996">
+							<SimplePredicate field="dismissals_1000D_venue" operator="lessOrEqual" value="1.0"/>
+							<Node score="37.20258784687681">
+								<SimplePredicate field="six_count_1000D_venue" operator="lessOrEqual" value="8.0"/>
+								<Node score="12.835256610780107">
+									<SimplePredicate field="boundary_count_1000D_venue" operator="lessOrEqual" value="9.0"/>
+								</Node>
+							</Node>
+							<Node score="69.31899113857617">
+								<SimplePredicate field="batting_sr_30D" operator="lessOrEqual" value="1.803225806451613"/>
+							</Node>
+						</Node>
+						<Node score="26.323034006090193">
+							<SimplePredicate field="wicket_sum_90D" operator="lessOrEqual" value="12.0"/>
+							<Node score="-5.394973968919806">
+								<SimplePredicate field="boundary_count_1000D_venue" operator="lessOrEqual" value="30.0"/>
+							</Node>
+						</Node>
+						<Node score="132.83244277890657">
+							<SimplePredicate field="dismissals_30D" operator="lessOrEqual" value="5.0"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+		</Segmentation>
+	</MiningModel>
+</PMML>

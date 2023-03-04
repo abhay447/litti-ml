@@ -1,0 +1,518 @@
+{
+  "name": "dream11_model",
+  "version": "v1",
+  "modelLocation": "model-artifacts/dream11_v1.pmml",
+  "modelFramework": "PMML",
+  "features": [
+    {
+      "name": "is_male",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "batter_runs_30D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "batter_runs_90D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "batter_runs_300D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "batter_runs_1000D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "batter_runs_1000D_venue",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date_venue",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "balls_faced_30D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "balls_faced_90D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "balls_faced_300D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "balls_faced_1000D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "balls_faced_1000D_venue",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date_venue",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "dismissals_30D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "dismissals_90D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "dismissals_300D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "dismissals_1000D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "dismissals_1000D_venue",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date_venue",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "boundary_count_30D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "boundary_count_90D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "boundary_count_300D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "boundary_count_1000D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "boundary_count_1000D_venue",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date_venue",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "six_count_30D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "six_count_90D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "six_count_300D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "six_count_1000D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "six_count_1000D_venue",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date_venue",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "batting_avg_30D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "batting_avg_90D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "batting_avg_300D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "batting_avg_1000D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "batting_avg_1000D_venue",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date_venue",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "batting_sr_30D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "batting_sr_90D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "batting_sr_300D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "batting_sr_1000D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "batting_sr_1000D_venue",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date_venue",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "total_runs_30D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "total_runs_90D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "total_runs_300D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "total_runs_1000D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "total_runs_1000D_venue",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date_venue",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "deliveries_30D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "deliveries_90D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "deliveries_300D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "deliveries_1000D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "deliveries_1000D_venue",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date_venue",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "wicket_sum_30D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "wicket_sum_90D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "wicket_sum_300D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "wicket_sum_1000D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "wicket_sum_1000D_venue",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date_venue",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "maiden_count_30D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "maiden_count_90D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "maiden_count_300D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "maiden_count_1000D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "maiden_count_1000D_venue",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date_venue",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "bowling_avg_30D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "bowling_avg_90D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "bowling_avg_300D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "bowling_avg_1000D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "bowling_avg_1000D_venue",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date_venue",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "bowling_sr_30D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "bowling_sr_90D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "bowling_sr_300D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "bowling_sr_1000D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "bowling_sr_1000D_venue",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date_venue",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "bowling_eco_30D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "bowling_eco_90D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "bowling_eco_300D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "bowling_eco_1000D",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "bowling_eco_1000D_venue",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date_venue",
+      "dataType": "PRIMITIVE#DOUBLE"
+    },
+    {
+      "name": "fielding_wicket_sum",
+      "version": "v1",
+      "defaultValue": "0.0",
+      "featureGroup": "dream11_fg_player_date",
+      "dataType": "PRIMITIVE#DOUBLE"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "prediction",
+      "dataType": "PRIMITIVE#DOUBLE"
+    }
+  ]
+}
