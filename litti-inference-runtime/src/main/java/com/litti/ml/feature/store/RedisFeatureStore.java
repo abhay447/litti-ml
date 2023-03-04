@@ -83,7 +83,7 @@ public class RedisFeatureStore extends AbstractFeatureStore {
               final RedisFeatureStoreRow row =
                   new RedisFeatureStoreRow(featureGroupKey, recordsMap);
               final RedisCommands<String, String> syncCommands = this.redisConnection.sync();
-              syncCommands.setex(featureGroupKey, ttl, gson.toJson(recordsMap));
+              syncCommands.setex(featureGroupKey, ttl, gson.toJson(row));
             });
   }
 
