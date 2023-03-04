@@ -1,38 +1,41 @@
-[
-  {
-    "id" : "prediction_id1",
-    "inputs" : {
-      "HomePlanet" : "Mars",
-      "CryoSleep" : true,
-      "Destination" : "TRAPPIST-1e",
-      "Age" : 39.0,
-      "VIP" : true,
-      "RoomService" : 410000007.0,
-      "FoodCourt" : 349.0,
-      "ShoppingMall" : 634.0,
-      "Spa" : 3.0,
-      "VRDeck" : 10500000007.0,
-      "Cabin_0" : "F",
-      "Cabin_1" : 63,
-      "Cabin_2" : "S"
+{
+  "batchPredictionId": "id1",
+  "predictionRequests": [
+    {
+      "id": "prediction_id1",
+      "inputs": {
+        "HomePlanet": "Mars",
+        "CryoSleep": true,
+        "Destination": "TRAPPIST-1e",
+        "Age": 39.0,
+        "VIP": true,
+        "RoomService": 410000007.0,
+        "FoodCourt": 349.0,
+        "ShoppingMall": 634.0,
+        "Spa": 3.0,
+        "VRDeck": 10500000007.0,
+        "Cabin_0": "F",
+        "Cabin_1": 63,
+        "Cabin_2": "S"
+      }
+    },
+    {
+      "id": "prediction_id2",
+      "inputs": {
+        "HomePlanet": "Earth",
+        "CryoSleep": false,
+        "Destination": "TRAPPIST-1e",
+        "Age": 24.0,
+        "VIP": false,
+        "RoomService": 109.0,
+        "FoodCourt": 9.0,
+        "ShoppingMall": 25.0,
+        "Spa": 549.0,
+        "VRDeck": 44.0,
+        "Cabin_0": "F",
+        "Cabin_1": 0,
+        "Cabin_2": "S"
+      }
     }
-  },
-  {
-    "id" : "prediction_id2",
-    "inputs" : {
-      "HomePlanet" : "Earth",
-      "CryoSleep" : false,
-      "Destination" : "TRAPPIST-1e",
-      "Age" : 24.0,
-      "VIP" : false,
-      "RoomService" : 109.0,
-      "FoodCourt" : 9.0,
-      "ShoppingMall" : 25.0,
-      "Spa" : 549.0,
-      "VRDeck" : 44.0,
-      "Cabin_0" : "F",
-      "Cabin_1" : 0,
-      "Cabin_2" : "S"
-    }
-  }
-]
+  ]
+}

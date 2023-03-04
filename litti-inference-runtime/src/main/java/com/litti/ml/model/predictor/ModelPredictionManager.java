@@ -1,6 +1,6 @@
 package com.litti.ml.model.predictor;
 
-import com.litti.ml.entities.model.PredictionRequest;
+import com.litti.ml.entities.model.BatchPredictionRequest;
 import com.litti.ml.entities.model.PredictionResponse;
 import com.litti.ml.feature.FeatureFetchRouter;
 import java.util.Map;
@@ -18,9 +18,9 @@ public class ModelPredictionManager {
     this.modelPredictor = modelPredictor;
   }
 
-  public Set<PredictionResponse> predictSet(Set<PredictionRequest> inputs) {
+  public Set<PredictionResponse> predictSet(BatchPredictionRequest batchPredictionRequest) {
     Map<String, Map<String, ?>> predictSetMap =
-        inputs.stream()
+        batchPredictionRequest.getPredictionRequests().stream()
             .map(
                 input -> {
                   final Map<String, ?> featureStoreFeatures =

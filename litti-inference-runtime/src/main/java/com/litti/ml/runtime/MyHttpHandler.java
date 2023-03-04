@@ -1,9 +1,8 @@
 package com.litti.ml.runtime;
 
-import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.litti.ml.entities.model.PredictionRequest;
+import com.litti.ml.entities.model.BatchPredictionRequest;
 import com.litti.ml.entities.model.PredictionResponse;
 import com.litti.ml.model.ModelRegistry;
 import com.sun.net.httpserver.HttpExchange;
@@ -31,13 +30,13 @@ public class MyHttpHandler implements HttpHandler {
       logger.trace("Received request {}", httpExchange);
       if (httpExchange.getRequestMethod().equals("POST")) {
         final String requestBody = new String(httpExchange.getRequestBody().readAllBytes());
-        final Set<PredictionRequest> predictionRequest =
-            gson.fromJson(requestBody, new TypeToken<Set<PredictionRequest>>() {}.getType());
-        logger.debug("prediction request: {}", predictionRequest);
+        final BatchPredictionRequest batchPredictionRequest =
+            gson.fromJson(requestBody, BatchPredictionRequest.class);
+        logger.debug("prediction request: {}", batchPredictionRequest);
         final String predictionRoute = extractModelRoute(httpExchange);
         logger.info("received request for prediction route: {}", predictionRoute);
         final Set<PredictionResponse> predictionResponses =
-            this.modelRegistry.forwardToRouter(predictionRoute, predictionRequest);
+            this.modelRegistry.forwardToRouter(predictionRoute, batchPredictionRequest);
         logger.debug("prediction response {}", predictionResponses);
         handleResponse(httpExchange, 200, gson.toJsonTree(predictionResponses));
       } else {

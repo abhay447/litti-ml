@@ -1,7 +1,7 @@
 package com.litti.ml.model;
 
+import com.litti.ml.entities.model.BatchPredictionRequest;
 import com.litti.ml.entities.model.ModelMetadata;
-import com.litti.ml.entities.model.PredictionRequest;
 import com.litti.ml.entities.model.PredictionResponse;
 import com.litti.ml.feature.FeatureFetchRouter;
 import com.litti.ml.model.predictor.AbstractPredictor;
@@ -47,11 +47,12 @@ public class ModelRegistry {
     }
   }
 
-  public Set<PredictionResponse> forwardToRouter(String route, Set<PredictionRequest> request) {
+  public Set<PredictionResponse> forwardToRouter(
+      String route, BatchPredictionRequest batchPredictionRequest) {
     if (!this.predictionRegistry.containsKey(route)) {
       logger.info("registered routes {}", this.predictionRegistry.keySet());
       throw new RuntimeException("Model/version not found : " + Arrays.asList(route.split("#")));
     }
-    return predictionRegistry.get(route).predictSet(request);
+    return predictionRegistry.get(route).predictSet(batchPredictionRequest);
   }
 }
