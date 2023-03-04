@@ -30,8 +30,7 @@ public class FeatureStoreRecord {
         featureMetadata.version(),
         value,
         System.currentTimeMillis() / 1000,
-        System.currentTimeMillis() / 1000 + 86400 // TODO: track ttl in feature meta
-        );
+        System.currentTimeMillis() / 1000 + featureMetadata.ttlSeconds());
   }
 
   public String getFeatureName() {

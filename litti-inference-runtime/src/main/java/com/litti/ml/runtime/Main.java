@@ -12,7 +12,10 @@ import com.litti.ml.model.loader.ModelLoader;
 import com.litti.ml.model.loader.StaticResourcesModelLoader;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
+import io.lettuce.core.support.ConnectionPoolSupport;
 import java.io.IOException;
+import org.apache.commons.pool2.impl.GenericObjectPool;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,10 +29,10 @@ public class Main {
     final FeatureFetchRouter featureFetchRouter = new FeatureFetchRouter();
     final LocalParquetFeatureStore localParquetStore = new LocalParquetFeatureStore(jsonDataReader);
     final RedisClient redisClient = RedisClient.create("redis://localhost:6379/0");
-    final StatefulRedisConnection<String, String> redisConnection = redisClient.connect();
-    logger.info(redisConnection.sync().get("1"));
-    final AbstractFeatureStore redisFeatureStore =
-        new RedisFeatureStore(jsonDataReader, redisConnection);
+    final GenericObjectPool<StatefulRedisConnection<String, String>> redisPool =
+        ConnectionPoolSupport.createGenericObjectPool(
+            redisClient::connect, new GenericObjectPoolConfig());
+    final AbstractFeatureStore redisFeatureStore = new RedisFeatureStore(jsonDataReader, redisPool);
     final FeatureGroupLoader featureGroupLoader = new StaticResourcesFGLoader();
     featureGroupLoader
         .loadAllFeatureGroups()

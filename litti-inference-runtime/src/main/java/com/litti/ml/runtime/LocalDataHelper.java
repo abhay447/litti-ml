@@ -12,11 +12,14 @@ import com.litti.ml.feature.store.RedisFeatureStore;
 import com.litti.ml.model.loader.StaticResourcesModelLoader;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
+import io.lettuce.core.support.ConnectionPoolSupport;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.apache.commons.pool2.impl.GenericObjectPool;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 public class LocalDataHelper {
 
@@ -26,10 +29,10 @@ public class LocalDataHelper {
     final JsonDataReader jsonDataReader = new JsonDataReader();
     final LocalParquetFeatureStore localParquetStore = new LocalParquetFeatureStore(jsonDataReader);
     final RedisClient redisClient = RedisClient.create("redis://localhost:6379/0");
-    final StatefulRedisConnection<String, String> redisConnection = redisClient.connect();
-    final AbstractFeatureStore redisFeatureStore =
-        new RedisFeatureStore(jsonDataReader, redisConnection);
-
+    final GenericObjectPool<StatefulRedisConnection<String, String>> redisPool =
+        ConnectionPoolSupport.createGenericObjectPool(
+            () -> redisClient.connect(), new GenericObjectPoolConfig());
+    final AbstractFeatureStore redisFeatureStore = new RedisFeatureStore(jsonDataReader, redisPool);
     final FeatureGroupLoader featureGroupLoader = new StaticResourcesFGLoader();
     final Map<String, FeatureGroup> fgMap =
         featureGroupLoader.loadAllFeatureGroups().getFeatureGroupsLoaded().stream()

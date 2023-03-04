@@ -9,6 +9,7 @@ import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.sync.RedisCommands;
 import java.util.*;
 import java.util.stream.Collectors;
+import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,11 +17,14 @@ public class RedisFeatureStore extends AbstractFeatureStore {
 
   private static final Logger logger = LogManager.getLogger(RedisFeatureStore.class);
 
-  private final StatefulRedisConnection redisConnection; // TODO: replace with connection pool
+  private final GenericObjectPool<StatefulRedisConnection<String, String>>
+      pool; // TODO: replace with connection pool
 
-  public RedisFeatureStore(JsonDataReader jsonDataReader, StatefulRedisConnection redisConnection) {
+  public RedisFeatureStore(
+      JsonDataReader jsonDataReader,
+      GenericObjectPool<StatefulRedisConnection<String, String>> pool) {
     super(jsonDataReader);
-    this.redisConnection = redisConnection;
+    this.pool = pool;
   }
 
   @Override
@@ -57,14 +61,19 @@ public class RedisFeatureStore extends AbstractFeatureStore {
 
     final Gson gson = new Gson();
     final String featureGroupKey = this.createFeatureGroupRedisKey(dimensions, featureGroup);
-    final RedisCommands<String, String> syncCommands = this.redisConnection.sync();
-    final String rawRedisValue = syncCommands.get(featureGroupKey);
-    if (rawRedisValue == null || rawRedisValue.equalsIgnoreCase("nil")) {
-      return Optional.empty();
+    try (StatefulRedisConnection<String, String> redisConnection = pool.borrowObject()) {
+      final RedisCommands<String, String> syncCommands = redisConnection.sync();
+      final String rawRedisValue = syncCommands.get(featureGroupKey);
+      if (rawRedisValue == null || rawRedisValue.equalsIgnoreCase("nil")) {
+        return Optional.empty();
+      }
+      return Optional.of(
+          gson.fromJson(
+              rawRedisValue, new TypeToken<Map<String, FeatureStoreRecord>>() {}.getType()));
+    } catch (Exception e) {
+      logger.error("Error occured in fetching features from Redis", e);
+      throw new RuntimeException("Error occured in fetching features from Redis");
     }
-    return Optional.of(
-        gson.fromJson(
-            rawRedisValue, new TypeToken<Map<String, FeatureStoreRecord>>() {}.getType()));
   }
 
   @Override
@@ -135,8 +144,13 @@ public class RedisFeatureStore extends AbstractFeatureStore {
             .max(Long::compare)
             .get();
     final Long ttl = maxExpiry - System.currentTimeMillis() / 1000;
-    final RedisCommands<String, String> syncCommands = this.redisConnection.sync();
-    syncCommands.setex(featureGroupKey, ttl, gson.toJson(redisWriteRow));
+    try (StatefulRedisConnection<String, String> redisConnection = pool.borrowObject()) {
+      final RedisCommands<String, String> syncCommands = redisConnection.sync();
+      syncCommands.setex(featureGroupKey, ttl, gson.toJson(redisWriteRow));
+    } catch (Exception e) {
+      logger.error("Error occured in writing features to Redis", e);
+      throw new RuntimeException("Error occured in writing features to Redis");
+    }
   }
 
   private String createFeatureGroupRedisKey(Map<String, ?> featureRow, FeatureGroup featureGroup) {
