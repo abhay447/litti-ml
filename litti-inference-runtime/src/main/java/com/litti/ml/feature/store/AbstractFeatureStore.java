@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import com.litti.ml.entities.dtypes.JsonDataReader;
 import com.litti.ml.entities.feature.FeatureGroup;
 import com.litti.ml.entities.feature.FeatureMetadata;
+
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
@@ -26,7 +27,7 @@ public abstract class AbstractFeatureStore {
       FeatureGroup featureGroup,
       Map<String, String> dimensions);
 
-  public FeatureFetchResult fetchFeatures(
+  public final FeatureFetchResult fetchFeatures(
       Set<FeatureMetadata> featureMetadataList,
       FeatureGroup featureGroup,
       Map<String, ?> requestInputs) {
