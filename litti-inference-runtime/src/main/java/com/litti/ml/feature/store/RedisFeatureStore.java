@@ -80,8 +80,6 @@ public class RedisFeatureStore extends AbstractFeatureStore {
                       .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
               // TODO: merge records incase key already exists, overwrite features in new recordsMap
-              final RedisFeatureStoreRow row =
-                  new RedisFeatureStoreRow(featureGroupKey, recordsMap);
               final RedisCommands<String, String> syncCommands = this.redisConnection.sync();
               syncCommands.setex(featureGroupKey, ttl, gson.toJson(recordsMap));
             });
