@@ -17,14 +17,13 @@ public class RedisFeatureStore extends AbstractFeatureStore {
 
   private static final Logger logger = LogManager.getLogger(RedisFeatureStore.class);
 
-  private final GenericObjectPool<StatefulRedisConnection<String, String>>
-      pool; // TODO: replace with connection pool
+  private final GenericObjectPool<StatefulRedisConnection<String, String>> redisPool;
 
   public RedisFeatureStore(
       JsonDataReader jsonDataReader,
-      GenericObjectPool<StatefulRedisConnection<String, String>> pool) {
+      GenericObjectPool<StatefulRedisConnection<String, String>> redisPool) {
     super(jsonDataReader);
-    this.pool = pool;
+    this.redisPool = redisPool;
   }
 
   @Override
@@ -61,7 +60,7 @@ public class RedisFeatureStore extends AbstractFeatureStore {
 
     final Gson gson = new Gson();
     final String featureGroupKey = this.createFeatureGroupRedisKey(dimensions, featureGroup);
-    try (StatefulRedisConnection<String, String> redisConnection = pool.borrowObject()) {
+    try (StatefulRedisConnection<String, String> redisConnection = redisPool.borrowObject()) {
       final RedisCommands<String, String> syncCommands = redisConnection.sync();
       final String rawRedisValue = syncCommands.get(featureGroupKey);
       if (rawRedisValue == null || rawRedisValue.equalsIgnoreCase("nil")) {
@@ -144,7 +143,7 @@ public class RedisFeatureStore extends AbstractFeatureStore {
             .max(Long::compare)
             .get();
     final Long ttl = maxExpiry - System.currentTimeMillis() / 1000;
-    try (StatefulRedisConnection<String, String> redisConnection = pool.borrowObject()) {
+    try (StatefulRedisConnection<String, String> redisConnection = redisPool.borrowObject()) {
       final RedisCommands<String, String> syncCommands = redisConnection.sync();
       syncCommands.setex(featureGroupKey, ttl, gson.toJson(redisWriteRow));
     } catch (Exception e) {
