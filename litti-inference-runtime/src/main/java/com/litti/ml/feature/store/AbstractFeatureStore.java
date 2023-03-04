@@ -25,7 +25,8 @@ public abstract class AbstractFeatureStore {
   public abstract void writeFeaturesToStore(
       List<Map<String, ?>> featureRows,
       List<FeatureMetadata> featureMetadataList,
-      FeatureGroup featureGroup);
+      FeatureGroup featureGroup,
+      Boolean merge);
 
   public final FeatureFetchResult fetchFeatures(
       Set<FeatureMetadata> featureMetadataList,

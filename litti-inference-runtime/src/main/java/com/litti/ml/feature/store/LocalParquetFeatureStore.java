@@ -51,7 +51,8 @@ public class LocalParquetFeatureStore extends AbstractFeatureStore {
   public void writeFeaturesToStore(
       List<Map<String, ?>> featureRows,
       List<FeatureMetadata> featureMetadataList,
-      FeatureGroup featureGroup) {
+      FeatureGroup featureGroup,
+      Boolean merge) {
     throw new RuntimeException("Writes not supported via feature store for LocalParquet");
   }
 

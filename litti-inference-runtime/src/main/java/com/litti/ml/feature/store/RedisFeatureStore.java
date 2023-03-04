@@ -10,10 +10,7 @@ import io.lettuce.core.api.sync.RedisCommands;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class RedisFeatureStore extends AbstractFeatureStore {
@@ -41,6 +38,24 @@ public class RedisFeatureStore extends AbstractFeatureStore {
         featureMetadataList.stream()
             .map(x -> String.format("%s#%s", x.name(), x.version()))
             .collect(Collectors.toSet());
+    final Optional<Map<String, FeatureStoreRecord>> featureStoreRecords =
+        readFeatureRecords(featureMetadataList, featureGroup, dimensions);
+    return featureStoreRecords.map(
+        records ->
+            records.entrySet().stream()
+                .filter(entry -> acceptableFeatures.contains(entry.getKey()))
+                .filter(entry -> entry.getValue().getValidTo() > System.currentTimeMillis() / 1000)
+                .map(
+                    entry ->
+                        Map.entry(entry.getKey().split("#")[0], entry.getValue().getRawValue()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+  }
+
+  private Optional<Map<String, FeatureStoreRecord>> readFeatureRecords(
+      Set<FeatureMetadata> featureMetadataList,
+      FeatureGroup featureGroup,
+      Map<String, String> dimensions) {
+
     final Gson gson = new Gson();
     final String featureGroupKey = this.createFeatureGroupRedisKey(dimensions, featureGroup);
     final RedisCommands<String, String> syncCommands = this.redisConnection.sync();
@@ -48,25 +63,21 @@ public class RedisFeatureStore extends AbstractFeatureStore {
     if (rawRedisValue == null || rawRedisValue.equalsIgnoreCase("nil")) {
       return Optional.empty();
     }
-    final Map<String, FeatureStoreRecord> featureStoreRecords =
-        gson.fromJson(rawRedisValue, new TypeToken<Map<String, FeatureStoreRecord>>() {}.getType());
-    final Map<String, ?> features =
-        featureStoreRecords.entrySet().stream()
-            .filter(entry -> acceptableFeatures.contains(entry.getKey()))
-            .filter(entry -> entry.getValue().getValidTo() > System.currentTimeMillis() / 1000)
-            .map(entry -> Map.entry(entry.getKey().split("#")[0], entry.getValue().getRawValue()))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-    return Optional.of(features);
+    return Optional.of(
+        gson.fromJson(
+            rawRedisValue, new TypeToken<Map<String, FeatureStoreRecord>>() {}.getType()));
   }
 
   @Override
   public void writeFeaturesToStore(
       List<Map<String, ?>> featureRows,
       List<FeatureMetadata> featureMetadataList,
-      FeatureGroup featureGroup) {
+      FeatureGroup featureGroup,
+      Boolean merge) {
     featureMetadataList.forEach(
         featureMetadata -> {
           if (!featureMetadata.featureGroup().equalsIgnoreCase(featureGroup.name())) {
+            logger.error("feature:{} has invalid feature group: {}", featureMetadata, featureGroup);
             throw new RuntimeException(
                 ("feature group for all features should match supplied feature group"));
           }
@@ -79,7 +90,7 @@ public class RedisFeatureStore extends AbstractFeatureStore {
         .forEach(
             featureRow -> {
               try {
-                writeRow(featureRow, featureGroup, featureMetadataMap);
+                writeRow(featureRow, featureGroup, featureMetadataMap, merge);
               } catch (Exception e) {
                 logger.error("Error occured in writing row {}", featureRow, e);
               }
@@ -89,11 +100,12 @@ public class RedisFeatureStore extends AbstractFeatureStore {
   private void writeRow(
       Map<String, ?> featureRow,
       FeatureGroup featureGroup,
-      Map<String, FeatureMetadata> featureMetadataMap) {
+      Map<String, FeatureMetadata> featureMetadataMap,
+      Boolean merge) {
     final Gson gson = new Gson();
     final long ttl = System.currentTimeMillis() + 86400; // use this from feature group
     final String featureGroupKey = this.createFeatureGroupRedisKey(featureRow, featureGroup);
-    final Map<String, FeatureStoreRecord> recordsMap =
+    final Map<String, FeatureStoreRecord> inputRow =
         featureRow.entrySet().stream()
             .filter(f -> !featureGroup.dimensions().contains(f.getKey()))
             .filter(f -> featureMetadataMap.containsKey(f.getKey()))
@@ -105,15 +117,29 @@ public class RedisFeatureStore extends AbstractFeatureStore {
                             entry.getValue(), featureMetadataMap.get(entry.getKey()))))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-    // TODO: merge records incase key already exists, overwrite features in new recordsMap
+    final Map<String, FeatureStoreRecord> redisWriteRow = new HashMap<>();
+    if (merge) {
+      Optional<Map<String, FeatureStoreRecord>> featureStoreValues =
+          this.readFeatureRecords(
+              featureMetadataMap.values().stream().collect(Collectors.toSet()),
+              featureGroup,
+              featureRow.entrySet().stream()
+                  .map(e -> Map.entry(e.getKey(), e.getValue().toString()))
+                  .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+      if (featureStoreValues.isPresent()) {
+        redisWriteRow.putAll(featureStoreValues.get());
+      }
+    }
+    redisWriteRow.putAll(inputRow);
     final RedisCommands<String, String> syncCommands = this.redisConnection.sync();
-    syncCommands.setex(featureGroupKey, ttl, gson.toJson(recordsMap));
+    // TODO use feature group ttl
+    syncCommands.setex(featureGroupKey, ttl, gson.toJson(redisWriteRow));
   }
 
   private String createFeatureGroupRedisKey(Map<String, ?> featureRow, FeatureGroup featureGroup) {
     final List<String> sortedDims = featureGroup.dimensions().stream().sorted().toList();
     final List<String> sortedDimVals =
         sortedDims.stream().map(x -> featureRow.get(x).toString()).collect(Collectors.toList());
-    return String.format("%s-%s", String.join("#", sortedDims), String.join("#", sortedDimVals));
+    return String.format("%s|%s", String.join("#", sortedDims), String.join("#", sortedDimVals));
   }
 }

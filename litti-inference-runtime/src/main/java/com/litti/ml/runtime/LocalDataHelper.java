@@ -75,7 +75,7 @@ public class LocalDataHelper {
             groupedFeature -> {
               final FeatureGroup featureGroup = fgMap.get(groupedFeature.getKey());
               redisFeatureStore.writeFeaturesToStore(
-                  rawRows, modelMetadata.features(), featureGroup);
+                  rawRows, groupedFeature.getValue().stream().toList(), featureGroup, true);
             });
   }
 }
