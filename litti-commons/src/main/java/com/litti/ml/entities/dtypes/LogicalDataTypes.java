@@ -1,4 +1,4 @@
-package com.litti.ml.feature.dtypes;
+package com.litti.ml.entities.dtypes;
 
 public class LogicalDataTypes {
 

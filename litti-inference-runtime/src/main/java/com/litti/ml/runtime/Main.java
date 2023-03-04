@@ -1,7 +1,7 @@
 package com.litti.ml.runtime;
 
+import com.litti.ml.entities.dtypes.JsonDataReader;
 import com.litti.ml.feature.FeatureFetchRouter;
-import com.litti.ml.feature.dtypes.JsonDataReader;
 import com.litti.ml.feature.loader.FeatureGroupLoader;
 import com.litti.ml.feature.loader.StaticResourcesFGLoader;
 import com.litti.ml.feature.store.AbstractFeatureStore;

@@ -1,6 +1,6 @@
-package com.litti.ml.feature.dtypes;
+package com.litti.ml.entities.dtypes;
 
-import static com.litti.ml.feature.dtypes.LogicalDataTypes.*;
+import static com.litti.ml.entities.dtypes.LogicalDataTypes.*;
 
 import java.util.List;
 import java.util.stream.Collectors;

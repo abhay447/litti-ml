@@ -1,8 +1,8 @@
 package com.litti.ml.feature.store;
 
+import com.litti.ml.entities.dtypes.JsonDataReader;
 import com.litti.ml.entities.feature.FeatureGroup;
 import com.litti.ml.entities.feature.FeatureMetadata;
-import com.litti.ml.feature.dtypes.JsonDataReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
