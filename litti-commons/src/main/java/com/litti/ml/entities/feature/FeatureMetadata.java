@@ -44,7 +44,6 @@ public abstract class FeatureMetadata {
 
     public abstract FeatureMetadata build();
 
-    // TODO: attributes related to cached features can be nullable, some features maybe realtime
     public abstract Builder ttlSeconds(@Nullable Long value);
   }
 }
