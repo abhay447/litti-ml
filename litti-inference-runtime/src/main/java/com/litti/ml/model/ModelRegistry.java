@@ -1,9 +1,9 @@
 package com.litti.ml.model;
 
+import com.litti.ml.entities.model.ModelMetadata;
+import com.litti.ml.entities.model.PredictionRequest;
+import com.litti.ml.entities.model.PredictionResponse;
 import com.litti.ml.feature.FeatureFetchRouter;
-import com.litti.ml.model.entities.ModelMetadata;
-import com.litti.ml.model.entities.PredictionRequest;
-import com.litti.ml.model.entities.PredictionResponse;
 import com.litti.ml.model.predictor.AbstractPredictor;
 import com.litti.ml.model.predictor.ModelPredictionManager;
 import com.litti.ml.model.predictor.PMMLPredictor;

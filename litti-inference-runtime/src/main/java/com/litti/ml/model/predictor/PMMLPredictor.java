@@ -1,10 +1,10 @@
 package com.litti.ml.model.predictor;
 
 import com.google.common.io.Resources;
+import com.litti.ml.entities.model.ModelMetadata;
+import com.litti.ml.entities.model.ModelOutputMetadata;
+import com.litti.ml.entities.model.PredictionResponse;
 import com.litti.ml.feature.FeatureFetchRouter;
-import com.litti.ml.model.entities.ModelMetadata;
-import com.litti.ml.model.entities.ModelOutputMetadata;
-import com.litti.ml.model.entities.PredictionResponse;
 import jakarta.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;

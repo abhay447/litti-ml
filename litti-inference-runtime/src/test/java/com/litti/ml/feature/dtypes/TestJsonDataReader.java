@@ -3,7 +3,7 @@ package com.litti.ml.feature.dtypes;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.gson.Gson;
-import com.litti.ml.model.entities.PredictionRequest;
+import com.litti.ml.entities.model.PredictionRequest;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;

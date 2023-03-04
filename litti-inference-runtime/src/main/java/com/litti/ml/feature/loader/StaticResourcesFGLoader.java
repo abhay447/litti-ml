@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.google.common.io.Resources;
-import com.litti.ml.feature.entities.FeatureGroup;
+import com.litti.ml.entities.feature.FeatureGroup;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.AbstractMap.SimpleEntry;

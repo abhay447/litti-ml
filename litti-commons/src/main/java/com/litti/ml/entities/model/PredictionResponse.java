@@ -1,4 +1,4 @@
-package com.litti.ml.model.entities;
+package com.litti.ml.entities.model;
 
 import java.util.Map;
 

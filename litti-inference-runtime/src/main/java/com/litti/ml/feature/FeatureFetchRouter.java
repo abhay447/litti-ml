@@ -1,7 +1,7 @@
 package com.litti.ml.feature;
 
-import com.litti.ml.feature.entities.FeatureGroup;
-import com.litti.ml.feature.entities.FeatureMetadata;
+import com.litti.ml.entities.feature.FeatureGroup;
+import com.litti.ml.entities.feature.FeatureMetadata;
 import com.litti.ml.feature.store.AbstractFeatureStore;
 import java.util.HashMap;
 import java.util.List;

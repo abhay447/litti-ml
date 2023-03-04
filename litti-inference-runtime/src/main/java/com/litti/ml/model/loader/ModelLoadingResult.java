@@ -1,6 +1,6 @@
 package com.litti.ml.model.loader;
 
-import com.litti.ml.model.entities.ModelMetadata;
+import com.litti.ml.entities.model.ModelMetadata;
 import java.util.Collections;
 import java.util.Set;
 

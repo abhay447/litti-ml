@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
-import com.litti.ml.model.entities.ModelMetadata;
+import com.litti.ml.entities.model.ModelMetadata;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import org.apache.curator.shaded.com.google.common.io.Resources;
