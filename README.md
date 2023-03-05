@@ -5,7 +5,7 @@ context.
 
 ## High Level Prediction flow
 
-![Diagram](docs/resources/generated-images/prediction-flow.svg)
+![Diagram](docs/resources/generated-images/prediction-flow.png)
 
 ## Goals:
 
