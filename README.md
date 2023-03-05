@@ -3,6 +3,10 @@
 Litti-ML is an extensible ML inference engine, which natively understands model and feature metadata in inference
 context.
 
+## High Level Prediction flow
+
+![Diagram](docs/resources/generated-images/prediction-flow.svg)
+
 ## Goals:
 
 1. Define specifications and add examples for multi-framework inference support for most jvm based frameworks.
