@@ -1,31 +1,40 @@
 package com.litti.ml.management.controller;
 
-import com.litti.ml.entities.model.ModelMetadata;
+import com.litti.ml.management.entiites.ModelEntity;
+import com.litti.ml.management.repository.ModelRepository;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.util.List;
+import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/models")
 public class ModelController {
 
-  @GetMapping(value = "/", produces = "application/json")
-  public Set<ModelMetadata> list() {
-    return null;
+  private final ModelRepository modelRepository;
+
+  public ModelController(ModelRepository modelRepository) {
+    this.modelRepository = modelRepository;
   }
 
-  @PostMapping(value = "/", produces = "application/json", consumes = "application/json")
-  public String add(@RequestBody ModelMetadata modelMetadata) {
-    return "Greetings from Spring Boot!";
+  @GetMapping(value = "/models", produces = "application/json")
+  public List<ModelEntity> list() {
+    return this.modelRepository.findAll();
   }
 
-  @GetMapping(value = "/{modelId}", produces = "application/json")
-  public ModelMetadata get(@PathVariable String modelId) {
-    return null;
+  @PostMapping(value = "/models", consumes = "application/json")
+  public String add(@RequestBody ModelEntity modelEntity) {
+    this.modelRepository.save(modelEntity);
+    return "Model Saved!";
   }
 
-  @DeleteMapping(value = "/{modelId}", produces = "application/json")
+  @GetMapping(value = "/models/{modelId}", produces = "application/json")
+  public ModelEntity get(@PathVariable String modelId) {
+    return this.modelRepository.findById(UUID.fromString(modelId)).get();
+  }
+
+  @DeleteMapping(value = "/models/{modelId}", produces = "application/json")
   public String delete(@PathVariable String modelId) {
-    return "Greetings from Spring Boot!";
+    this.modelRepository.deleteById(UUID.fromString(modelId));
+    return "Model Deleted!";
   }
 }
