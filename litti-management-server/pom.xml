@@ -38,6 +38,11 @@
             <artifactId>spring-boot-starter-log4j2</artifactId>
             <version>${spring-version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.litti.ml</groupId>
+            <artifactId>litti-commons</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 
     <build>
