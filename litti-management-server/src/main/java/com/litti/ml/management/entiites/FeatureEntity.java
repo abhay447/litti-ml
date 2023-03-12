@@ -1,5 +1,6 @@
 package com.litti.ml.management.entiites;
 
+import com.litti.ml.entities.feature.FeatureGroup;
 import com.litti.ml.entities.feature.FeatureMetadata;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ public class FeatureEntity {
   private String version;
   private String dataType;
   private String defaultValue;
-  private String featureGroupName;
+  private UUID featureGroupId;
 
   public FeatureEntity() {}
 
@@ -59,21 +60,22 @@ public class FeatureEntity {
     this.defaultValue = defaultValue;
   }
 
-  public String getFeatureGroupName() {
-    return featureGroupName;
+  public UUID getFeatureGroupId() {
+    return featureGroupId;
   }
 
-  public void setFeatureGroupName(String featureGroupName) {
-    this.featureGroupName = featureGroupName;
+  public void setFeatureGroupID(UUID featureGroupId) {
+    this.featureGroupId = featureGroupId;
   }
 
-  public FeatureMetadata toFeatureDeploymentMetadata() {
+  public FeatureMetadata toFeatureDeploymentMetadata(FeatureGroup featureGroup) {
+
     return FeatureMetadata.builder()
         .name(this.name)
         .version(this.version)
         .dataType(this.dataType)
         .defaultValue(this.defaultValue)
-        .featureGroup(this.featureGroupName)
+        .featureGroup(featureGroup.name())
         .build();
   }
 }
