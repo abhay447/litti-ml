@@ -20,6 +20,11 @@ public class FeatureEntity {
 
   public FeatureEntity() {}
 
+  public FeatureEntity(String name, String version) {
+    this.name = name;
+    this.version = version;
+  }
+
   public UUID getId() {
     return id;
   }
