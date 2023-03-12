@@ -13,6 +13,8 @@ import java.util.UUID;
 @Service
 public class FeatureManagementService {
 
+  // TODO : add more null field checks before saving
+
   private final FeatureRepository featureRepository;
 
   public FeatureManagementService(FeatureRepository featureRepository) {

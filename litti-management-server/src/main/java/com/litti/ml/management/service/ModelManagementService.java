@@ -21,6 +21,8 @@ import java.util.stream.Collectors;
 @Service
 public class ModelManagementService {
 
+  // TODO : add more null field checks before saving
+
   private final ModelRepository modelRepository;
 
   private final ModelFeatureLinkRepository modelFeatureLinkRepository;
