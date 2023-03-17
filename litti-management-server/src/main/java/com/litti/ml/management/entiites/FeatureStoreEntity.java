@@ -15,6 +15,10 @@ public class FeatureStoreEntity {
 
   public FeatureStoreEntity() {}
 
+  public FeatureStoreEntity(String name) {
+    this.name = name;
+  }
+
   public UUID getId() {
     return id;
   }

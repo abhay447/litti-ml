@@ -2,6 +2,7 @@ package com.litti.ml.management.controller;
 
 import com.litti.ml.management.entiites.FeatureEntity;
 import com.litti.ml.management.entiites.FeatureGroupEntity;
+import com.litti.ml.management.entiites.FeatureStoreEntity;
 import com.litti.ml.management.service.FeatureManagementService;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,12 +42,30 @@ public class FeatureController {
       value = "/feature-groups",
       produces = "application/json",
       consumes = "application/json")
-  public FeatureGroupEntity add(@RequestBody FeatureGroupEntity featureGroupEntity) {
+  public FeatureGroupEntity addFeatureGroup(@RequestBody FeatureGroupEntity featureGroupEntity) {
     return this.featureManagementService.addFeatureGroup(featureGroupEntity);
   }
 
   @GetMapping(value = "/feature-groups/{featureGroupId}", produces = "application/json")
-  public FeatureGroupEntity get(@PathVariable String featureGroupId) {
+  public FeatureGroupEntity getFeatureGroup(@PathVariable String featureGroupId) {
     return this.featureManagementService.findFeatureGroupById(UUID.fromString(featureGroupId));
+  }
+
+  @GetMapping(value = "/feature-stores", produces = "application/json")
+  public List<FeatureStoreEntity> listFeatureStores() {
+    return this.featureManagementService.findAllFeatureStores();
+  }
+
+  @PostMapping(
+      value = "/feature-stores",
+      produces = "application/json",
+      consumes = "application/json")
+  public FeatureStoreEntity addFeatureStore(@RequestBody FeatureStoreEntity featureStoreEntity) {
+    return this.featureManagementService.addFeatureStore(featureStoreEntity);
+  }
+
+  @GetMapping(value = "/feature-stores/{featureStoreId}", produces = "application/json")
+  public FeatureStoreEntity getFeatureStore(@PathVariable String featureStoreId) {
+    return this.featureManagementService.findFeatureStoreById(UUID.fromString(featureStoreId));
   }
 }
