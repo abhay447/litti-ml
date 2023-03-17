@@ -18,6 +18,10 @@ public class FeatureGroupEntity {
 
   public FeatureGroupEntity() {}
 
+  public FeatureGroupEntity(String name) {
+    this.name = name;
+  }
+
   public UUID getId() {
     return id;
   }
