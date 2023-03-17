@@ -16,18 +16,18 @@ public class FeatureController {
     this.featureManagementService = featureManagementService;
   }
 
-  @GetMapping(value = "/models", produces = "application/json")
+  @GetMapping(value = "/features", produces = "application/json")
   public List<FeatureEntity> list() {
     return this.featureManagementService.findAll();
   }
 
-  @PostMapping(value = "/models", produces = "application/json", consumes = "application/json")
+  @PostMapping(value = "/features", produces = "application/json", consumes = "application/json")
   public FeatureEntity add(@RequestBody FeatureEntity featureEntity) {
     return this.featureManagementService.addFeature(featureEntity);
   }
 
-  @GetMapping(value = "/models/{modelId}", produces = "application/json")
-  public FeatureEntity get(@PathVariable String modelId) {
-    return this.featureManagementService.findById(UUID.fromString(modelId));
+  @GetMapping(value = "/features/{featureId}", produces = "application/json")
+  public FeatureEntity get(@PathVariable String featureId) {
+    return this.featureManagementService.findById(UUID.fromString(featureId));
   }
 }
