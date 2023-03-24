@@ -12,10 +12,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,14 +49,20 @@ public class ModelManagementService {
         .isPresent()) {
       throw new RuntimeException("model already exists with name and version");
     }
-
+    List<FeatureEntity> existingFeatures = this.featureRepository.findAllById(featureUUIDs);
     Set<UUID> existingFeatureIds =
-        this.featureRepository.findAllById(featureUUIDs).stream()
-            .map(FeatureEntity::getId)
-            .collect(Collectors.toSet());
+        existingFeatures.stream().map(FeatureEntity::getId).collect(Collectors.toSet());
     if (!existingFeatureIds.equals(featureUUIDs)) {
       throw new RuntimeException(
           "feature ids not found: " + Sets.difference(Set.of(featureUUIDs), existingFeatureIds));
+    }
+    Map<String, Long> featureNameFrequency =
+        existingFeatures.stream()
+            .collect(Collectors.groupingBy(FeatureEntity::getName, Collectors.counting()));
+    for (Map.Entry<String, Long> entry : featureNameFrequency.entrySet()) {
+      if (entry.getValue() > 1) {
+        throw new RuntimeException("more than one feature found with same name: " + entry.getKey());
+      }
     }
     final ModelEntity savedModelEntity = this.modelRepository.save(modelEntity);
     final List<ModelFeatureLinkEntity> modelFeatureLinks =
