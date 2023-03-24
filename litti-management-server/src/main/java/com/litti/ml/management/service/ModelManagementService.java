@@ -1,10 +1,14 @@
 package com.litti.ml.management.service;
 
 import com.google.common.collect.Sets;
+import com.litti.ml.entities.feature.FeatureGroup;
+import com.litti.ml.entities.feature.FeatureMetadata;
+import com.litti.ml.entities.model.ModelMetadata;
 import com.litti.ml.management.dto.CreateModelRequest;
 import com.litti.ml.management.entiites.FeatureEntity;
 import com.litti.ml.management.entiites.ModelEntity;
 import com.litti.ml.management.entiites.ModelFeatureLinkEntity;
+import com.litti.ml.management.repository.FeatureGroupRepository;
 import com.litti.ml.management.repository.FeatureRepository;
 import com.litti.ml.management.repository.ModelFeatureLinkRepository;
 import com.litti.ml.management.repository.ModelRepository;
@@ -26,13 +30,17 @@ public class ModelManagementService {
 
   private final FeatureRepository featureRepository;
 
+  private final FeatureGroupRepository featureGroupRepository;
+
   public ModelManagementService(
       ModelRepository modelRepository,
       ModelFeatureLinkRepository modelFeatureLinkRepository,
-      FeatureRepository featureRepository) {
+      FeatureRepository featureRepository,
+      FeatureGroupRepository featureGroupRepository) {
     this.modelRepository = modelRepository;
     this.modelFeatureLinkRepository = modelFeatureLinkRepository;
     this.featureRepository = featureRepository;
+    this.featureGroupRepository = featureGroupRepository;
   }
 
   public ModelEntity addModel(CreateModelRequest createModelRequest) {
@@ -83,5 +91,31 @@ public class ModelManagementService {
 
   public List<ModelEntity> findAll() {
     return this.modelRepository.findAll();
+  }
+
+  public ModelMetadata getModelDeploymentMetadata(UUID modelId) {
+    final ModelEntity modelEntity = this.modelRepository.findById(modelId).get();
+    final List<ModelFeatureLinkEntity> modelFeatureLinkEntities =
+        this.modelFeatureLinkRepository.findAll(Example.of(new ModelFeatureLinkEntity(modelId)));
+    final List<UUID> featureIds =
+        modelFeatureLinkEntities.stream().map(ModelFeatureLinkEntity::getFeatureId).toList();
+    final List<FeatureEntity> featureEntities = this.featureRepository.findAllById(featureIds);
+    final List<UUID> featureGroupIds =
+        featureEntities.stream().map(FeatureEntity::getFeatureGroupId).toList();
+    final Map<UUID, FeatureGroup> featureGroupMap =
+        this.featureGroupRepository.findAllById(featureGroupIds).stream()
+            .map(
+                featureGroupEntity ->
+                    Map.entry(
+                        featureGroupEntity.getId(), featureGroupEntity.toFeatureGroupMetadata()))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    final List<FeatureMetadata> featureMetadataList =
+        featureEntities.stream()
+            .map(
+                featureEntity ->
+                    featureEntity.toFeatureDeploymentMetadata(
+                        featureGroupMap.get(featureEntity.getFeatureGroupId())))
+            .toList();
+    return modelEntity.toModelDeploymentMetadata(featureMetadataList);
   }
 }

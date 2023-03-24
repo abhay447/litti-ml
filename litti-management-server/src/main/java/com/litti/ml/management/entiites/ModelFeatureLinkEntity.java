@@ -15,6 +15,10 @@ public class ModelFeatureLinkEntity {
 
   public ModelFeatureLinkEntity() {}
 
+  public ModelFeatureLinkEntity(UUID modelId) {
+    this.modelId = modelId;
+  }
+
   public ModelFeatureLinkEntity(UUID modelId, UUID featureId) {
     this.modelId = modelId;
     this.featureId = featureId;

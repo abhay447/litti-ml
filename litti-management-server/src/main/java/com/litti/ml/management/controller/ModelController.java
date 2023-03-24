@@ -1,5 +1,6 @@
 package com.litti.ml.management.controller;
 
+import com.litti.ml.entities.model.ModelMetadata;
 import com.litti.ml.management.dto.CreateModelRequest;
 import com.litti.ml.management.entiites.ModelEntity;
 import com.litti.ml.management.service.ModelManagementService;
@@ -30,5 +31,10 @@ public class ModelController {
   @GetMapping(value = "/models/{modelId}", produces = "application/json")
   public ModelEntity get(@PathVariable String modelId) {
     return this.modelManagementService.findById(UUID.fromString(modelId));
+  }
+
+  @GetMapping(value = "/models-deployment-meta/{modelId}", produces = "application/json")
+  public ModelMetadata getModelDeploymentMetadata(@PathVariable String modelId) {
+    return this.modelManagementService.getModelDeploymentMetadata(UUID.fromString(modelId));
   }
 }
