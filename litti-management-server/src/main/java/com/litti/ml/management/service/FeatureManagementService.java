@@ -45,6 +45,12 @@ public class FeatureManagementService {
       throw new RuntimeException("feature already exists with name and version");
     }
 
+    if (featureEntity.getFeatureGroupId() != null
+        && this.featureGroupRepository.findById(featureEntity.getFeatureGroupId()).isEmpty()) {
+      throw new RuntimeException(
+          "feature group not found with id: " + featureEntity.getFeatureGroupId());
+    }
+
     return this.featureRepository.save(featureEntity);
   }
 
@@ -74,6 +80,11 @@ public class FeatureManagementService {
                 caseInsensitiveExampleMatcher))
         .isPresent()) {
       throw new RuntimeException("feature already exists with name and version");
+    }
+
+    if (this.featureStoreRepository.findById(featureGroupEntity.getFeatureStoreId()).isEmpty()) {
+      throw new RuntimeException(
+          "feature group not found with id: " + featureGroupEntity.getFeatureStoreId());
     }
 
     return this.featureGroupRepository.save(featureGroupEntity);
