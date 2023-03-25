@@ -157,7 +157,8 @@ public class FeatureManagementService {
     return this.featureGroupStoreLinkRepository.save(featureGroupStoreLinkEntity);
   }
 
-  public List<FeatureGroupStoreLinkEntity> findFeatureGroupStoreLinks(UUID featureGroupId) {
+  public List<FeatureGroupStoreLinkEntity> findFeatureGroupStoreLinksByGroupId(
+      UUID featureGroupId) {
     final ExampleMatcher caseInsensitiveExampleMatcher =
         ExampleMatcher.matchingAll().withIgnoreCase();
     return this.featureGroupStoreLinkRepository.findAll(
@@ -166,14 +167,14 @@ public class FeatureManagementService {
 
   public Optional<FeatureGroupStoreLinkEntity> findPrimaryFeatureGroupStoreLink(
       UUID featureGroupId) {
-    return this.findFeatureGroupStoreLinks(featureGroupId).stream()
+    return this.findFeatureGroupStoreLinksByGroupId(featureGroupId).stream()
         .filter(x -> x.getMode().equals(FeatureGroupStoreLinkEntity.FEATURE_GROUP_PRIMARY_STORE))
         .findFirst();
   }
 
   public List<FeatureGroupStoreLinkEntity> swapFeatureGroupLinks(UUID featureGroupId) {
     List<FeatureGroupStoreLinkEntity> featureGroupStoreLinks =
-        this.findFeatureGroupStoreLinks(featureGroupId);
+        this.findFeatureGroupStoreLinksByGroupId(featureGroupId);
     if (featureGroupStoreLinks.size() > 2) {
       throw new RuntimeException(
           "More than 2 feature stores linked to feature group Id: "
@@ -181,12 +182,12 @@ public class FeatureManagementService {
               + ", cannot swap");
     }
     Optional<FeatureGroupStoreLinkEntity> primary =
-        this.findFeatureGroupStoreLinks(featureGroupId).stream()
+        featureGroupStoreLinks.stream()
             .filter(
                 x -> x.getMode().equals(FeatureGroupStoreLinkEntity.FEATURE_GROUP_PRIMARY_STORE))
             .findFirst();
     Optional<FeatureGroupStoreLinkEntity> secondary =
-        this.findFeatureGroupStoreLinks(featureGroupId).stream()
+        featureGroupStoreLinks.stream()
             .filter(
                 x ->
                     x.getMode()
@@ -206,7 +207,7 @@ public class FeatureManagementService {
       primary.get().setMode(FeatureGroupStoreLinkEntity.FEATURE_GROUP_WRITE_REPLICA_STORE);
       this.featureGroupStoreLinkRepository.save(primary.get());
     }
-    return this.findFeatureGroupStoreLinks(featureGroupId);
+    return this.findFeatureGroupStoreLinksByGroupId(featureGroupId);
   }
 
   public FeatureGroupStoreLinkEntity deleteFeatureGroupStoreLink(UUID featureGroupStoreLinkId) {
@@ -224,5 +225,19 @@ public class FeatureManagementService {
     }
     this.featureGroupStoreLinkRepository.deleteById(featureGroupStoreLinkId);
     return featureGroupStoreLinkEntity.get();
+  }
+
+  public FeatureGroupStoreLinkEntity findFeatureGroupStoreLink(UUID featureGroupStoreLinkId) {
+    final Optional<FeatureGroupStoreLinkEntity> featureGroupStoreLinkEntity =
+        this.featureGroupStoreLinkRepository.findById(featureGroupStoreLinkId);
+    if (featureGroupStoreLinkEntity.isEmpty()) {
+      throw new RuntimeException(
+          "Feature Group Store links not found with ID: " + featureGroupStoreLinkId);
+    }
+    return featureGroupStoreLinkEntity.get();
+  }
+
+  public List<FeatureGroupStoreLinkEntity> findAllFeatureGroupStoreLinks() {
+    return this.featureGroupStoreLinkRepository.findAll();
   }
 }

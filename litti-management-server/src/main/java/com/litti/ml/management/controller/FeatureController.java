@@ -101,10 +101,25 @@ public class FeatureController {
         UUID.fromString(featureGroupStoreDeleteRequest.getFeatureGroupStoreLinkId()));
   }
 
-  @GetMapping(value = "/feature-group-stores/{featureGroupId}", produces = "application/json")
+  @GetMapping(
+      value = "/feature-group-stores/{featureGroupStoreLinkId}",
+      produces = "application/json")
+  public FeatureGroupStoreLinkEntity getFeatureGroupStoreLink(
+      @PathVariable String featureGroupStoreLinkId) {
+    return this.featureManagementService.findFeatureGroupStoreLink(
+        UUID.fromString(featureGroupStoreLinkId));
+  }
+
+  @GetMapping(value = "/feature-group-stores", produces = "application/json")
   public List<FeatureGroupStoreLinkEntity> getFeatureGroupStoreLinks(
+      @PathVariable String featureGroupStoreLinkId) {
+    return this.featureManagementService.findAllFeatureGroupStoreLinks();
+  }
+
+  @GetMapping(value = "/feature-group-stores-find/{featureGroupId}", produces = "application/json")
+  public List<FeatureGroupStoreLinkEntity> findFeatureGroupStoreLinks(
       @PathVariable String featureGroupId) {
-    return this.featureManagementService.findFeatureGroupStoreLinks(
+    return this.featureManagementService.findFeatureGroupStoreLinksByGroupId(
         UUID.fromString(featureGroupId));
   }
 }
