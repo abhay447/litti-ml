@@ -13,9 +13,9 @@ public abstract class FeatureGroup {
     return new AutoValue_FeatureGroup.Builder();
   }
 
-  public abstract String name();
+  public abstract String getName();
 
-  public abstract ImmutableList<String> dimensions();
+  public abstract ImmutableList<String> getDimensions();
 
   @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "")
   @AutoValue.Builder

@@ -8,11 +8,12 @@ import com.litti.ml.model.logger.ModelLogger;
 import com.litti.ml.model.predictor.AbstractPredictor;
 import com.litti.ml.model.predictor.ModelPredictionManager;
 import com.litti.ml.model.predictor.PMMLPredictor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class ModelRegistry {
 
@@ -31,18 +32,19 @@ public class ModelRegistry {
 
   public void addModelForPrediction(ModelMetadata modelMetadata) {
     try {
-      switch (modelMetadata.modelFramework()) {
+      switch (modelMetadata.getModelFramework()) {
         case "PMML":
           final AbstractPredictor modelPredictor =
               new PMMLPredictor(modelMetadata, featureFetchRouter);
           final ModelPredictionManager modelPredictionManager =
               new ModelPredictionManager(featureFetchRouter, modelPredictor, modelLogger);
           predictionRegistry.put(
-              String.format("%s#%s", modelMetadata.name(), modelMetadata.version()),
+              String.format("%s#%s", modelMetadata.getName(), modelMetadata.getVersion()),
               modelPredictionManager);
           break;
         default:
-          logger.info("predictor not found for model framework {}", modelMetadata.modelFramework());
+          logger.info(
+              "predictor not found for model framework {}", modelMetadata.getModelFramework());
           break;
       }
     } catch (Exception e) {

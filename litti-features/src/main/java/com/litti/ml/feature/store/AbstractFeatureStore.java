@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import com.litti.ml.entities.dtypes.JsonDataReader;
 import com.litti.ml.entities.feature.FeatureGroup;
 import com.litti.ml.entities.feature.FeatureMetadata;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -45,7 +46,7 @@ public abstract class AbstractFeatureStore {
       Map<String, ?> requestInputs,
       Set<FeatureMetadata> featureMetadataSet) {
     Set<String> acceptableFeatureNames =
-        featureMetadataSet.stream().map(FeatureMetadata::name).collect(Collectors.toSet());
+        featureMetadataSet.stream().map(FeatureMetadata::getName).collect(Collectors.toSet());
     Map<String, ?> inputOverrideFeatures =
         requestInputs.entrySet().stream()
             .filter(acceptableFeatureNames::contains)
@@ -74,7 +75,7 @@ public abstract class AbstractFeatureStore {
 
   private Map<String, ?> createDefaultFeaturesRow(Set<FeatureMetadata> featureMetadataList) {
     return featureMetadataList.stream()
-        .map(f -> Map.entry(f.name(), jsonDataReader.read(f.defaultValue(), f.dataType())))
+        .map(f -> Map.entry(f.getName(), jsonDataReader.read(f.getDefaultValue(), f.getDataType())))
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 }

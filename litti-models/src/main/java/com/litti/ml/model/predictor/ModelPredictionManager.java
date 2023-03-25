@@ -6,6 +6,7 @@ import com.litti.ml.entities.model.PredictionResponse;
 import com.litti.ml.feature.FeatureFetchRouter;
 import com.litti.ml.model.logger.ModelLogRecord;
 import com.litti.ml.model.logger.ModelLogger;
+
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -33,7 +34,7 @@ public class ModelPredictionManager {
                 input -> {
                   final Map<String, ?> featureStoreFeatures =
                       this.featureFetchRouter.fetchFeatures(
-                          modelPredictor.getModelMetadata().features(), input.getInputs());
+                          modelPredictor.getModelMetadata().getFeatures(), input.getInputs());
                   return Map.entry(input.getId(), featureStoreFeatures);
                 })
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));

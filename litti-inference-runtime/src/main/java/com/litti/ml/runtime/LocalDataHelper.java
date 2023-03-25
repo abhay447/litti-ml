@@ -13,13 +13,14 @@ import com.litti.ml.model.loader.StaticResourcesModelLoader;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.support.ConnectionPoolSupport;
+import org.apache.commons.pool2.impl.GenericObjectPool;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.apache.commons.pool2.impl.GenericObjectPool;
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 public class LocalDataHelper {
 
@@ -36,21 +37,23 @@ public class LocalDataHelper {
     final FeatureGroupLoader featureGroupLoader = new StaticResourcesFGLoader();
     final Map<String, FeatureGroup> fgMap =
         featureGroupLoader.loadAllFeatureGroups().getFeatureGroupsLoaded().stream()
-            .map(fg -> Map.entry(fg.name(), fg))
+            .map(fg -> Map.entry(fg.getName(), fg))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     final StaticResourcesModelLoader staticModelLoader = new StaticResourcesModelLoader();
     final Map<String, ModelMetadata> modelsMap =
         staticModelLoader.loadAllModels().getModelsLoaded().stream()
-            .map(model -> Map.entry(model.name() + "#" + model.version(), model))
+            .map(model -> Map.entry(model.getName() + "#" + model.getVersion(), model))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     final ModelMetadata modelMetadata = modelsMap.get("dream11_model#v1");
     final Set<String> allFeatureNames =
-        modelMetadata.features().stream().map(FeatureMetadata::name).collect(Collectors.toSet());
+        modelMetadata.getFeatures().stream()
+            .map(FeatureMetadata::getName)
+            .collect(Collectors.toSet());
     final Map<String, Set<FeatureMetadata>> groupedFeatures =
-        modelMetadata.features().stream()
-            .collect(Collectors.groupingBy(FeatureMetadata::featureGroup, Collectors.toSet()));
+        modelMetadata.getFeatures().stream()
+            .collect(Collectors.groupingBy(FeatureMetadata::getFeatureGroup, Collectors.toSet()));
     List<Map<String, ?>> rawRows =
         localParquetStore.readAllLocalRecords().stream()
             .map(

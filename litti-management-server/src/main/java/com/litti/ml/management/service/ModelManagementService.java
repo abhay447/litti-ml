@@ -12,6 +12,8 @@ import com.litti.ml.management.repository.FeatureGroupRepository;
 import com.litti.ml.management.repository.FeatureRepository;
 import com.litti.ml.management.repository.ModelFeatureLinkRepository;
 import com.litti.ml.management.repository.ModelRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class ModelManagementService {
+
+  private static final Logger logger = LogManager.getLogger(ModelManagementService.class);
 
   // TODO : add more null field checks before saving
 
@@ -44,12 +48,15 @@ public class ModelManagementService {
   }
 
   public ModelEntity addModel(CreateModelRequest createModelRequest) {
+    logger.info("received request: {}", createModelRequest);
     final ModelEntity modelEntity = createModelRequest.getModelEntity();
-    final List<UUID> featureUUIDs =
-        createModelRequest.getFeatureIds().stream().map(UUID::fromString).toList();
+    final Set<UUID> featureUUIDs =
+        createModelRequest.getFeatureIds().stream()
+            .map(UUID::fromString)
+            .collect(Collectors.toSet());
     final ExampleMatcher caseInsensitiveExampleMatcher =
         ExampleMatcher.matchingAll().withIgnoreCase();
-    if (this.modelRepository
+    if (modelRepository
         .findOne(
             Example.of(
                 new ModelEntity(modelEntity.getName(), modelEntity.getVersion()),
@@ -72,7 +79,7 @@ public class ModelManagementService {
         throw new RuntimeException("more than one feature found with same name: " + entry.getKey());
       }
     }
-    final ModelEntity savedModelEntity = this.modelRepository.save(modelEntity);
+    final ModelEntity savedModelEntity = modelRepository.save(modelEntity);
     final List<ModelFeatureLinkEntity> modelFeatureLinks =
         featureUUIDs.stream()
             .map(featureId -> new ModelFeatureLinkEntity(savedModelEntity.getId(), featureId))
@@ -82,7 +89,7 @@ public class ModelManagementService {
   }
 
   public ModelEntity findById(UUID modelId) {
-    final Optional<ModelEntity> dbModelEntity = this.modelRepository.findById(modelId);
+    final Optional<ModelEntity> dbModelEntity = modelRepository.findById(modelId);
     if (dbModelEntity.isEmpty()) {
       throw new RuntimeException("modelId not found");
     }
@@ -90,11 +97,11 @@ public class ModelManagementService {
   }
 
   public List<ModelEntity> findAll() {
-    return this.modelRepository.findAll();
+    return modelRepository.findAll();
   }
 
   public ModelMetadata getModelDeploymentMetadata(UUID modelId) {
-    final ModelEntity modelEntity = this.modelRepository.findById(modelId).get();
+    final ModelEntity modelEntity = modelRepository.findById(modelId).get();
     final List<ModelFeatureLinkEntity> modelFeatureLinkEntities =
         this.modelFeatureLinkRepository.findAll(Example.of(new ModelFeatureLinkEntity(modelId)));
     final List<UUID> featureIds =

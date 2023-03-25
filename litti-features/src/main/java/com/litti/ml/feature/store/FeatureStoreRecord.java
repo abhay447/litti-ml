@@ -26,11 +26,11 @@ public class FeatureStoreRecord {
   public static FeatureStoreRecord fromValueAndFeatureMetadata(
       Object value, FeatureMetadata featureMetadata) {
     return new FeatureStoreRecord(
-        featureMetadata.name(),
-        featureMetadata.version(),
+        featureMetadata.getName(),
+        featureMetadata.getVersion(),
         value,
         System.currentTimeMillis() / 1000,
-        System.currentTimeMillis() / 1000 + featureMetadata.ttlSeconds());
+        System.currentTimeMillis() / 1000 + featureMetadata.getTtlSeconds());
   }
 
   public String getFeatureName() {

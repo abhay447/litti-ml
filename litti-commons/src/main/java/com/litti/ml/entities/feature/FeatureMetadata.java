@@ -13,20 +13,20 @@ public abstract class FeatureMetadata {
     return new AutoValue_FeatureMetadata.Builder();
   }
 
-  public abstract String name();
+  public abstract String getName();
 
-  public abstract String version();
+  public abstract String getVersion();
 
-  public abstract String dataType();
-
-  @Nullable
-  public abstract String defaultValue();
+  public abstract String getDataType();
 
   @Nullable
-  public abstract String featureGroup();
+  public abstract String getDefaultValue();
 
   @Nullable
-  public abstract Long ttlSeconds();
+  public abstract String getFeatureGroup();
+
+  @Nullable
+  public abstract Long getTtlSeconds();
 
   @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "")
   @AutoValue.Builder

@@ -3,13 +3,14 @@ package com.litti.ml.feature;
 import com.litti.ml.entities.feature.FeatureGroup;
 import com.litti.ml.entities.feature.FeatureMetadata;
 import com.litti.ml.feature.store.AbstractFeatureStore;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class FeatureFetchRouter {
   private static final Logger logger = LogManager.getLogger(FeatureFetchRouter.class);
@@ -25,17 +26,18 @@ public class FeatureFetchRouter {
   }
 
   public void registerFeatureGroup(FeatureGroup featureGroup, AbstractFeatureStore featureStore) {
-    this.inferenceFeatureGroups.put(featureGroup.name(), featureGroup);
+    this.inferenceFeatureGroups.put(featureGroup.getName(), featureGroup);
     this.inferenceFeatureStores.put(featureStore.name(), featureStore);
-    this.featureGroupStoreMap.put(featureGroup.name(), featureStore.name());
+    this.featureGroupStoreMap.put(featureGroup.getName(), featureStore.name());
   }
 
   public Map<String, ?> fetchFeatures(
       List<FeatureMetadata> featureMetadataList, Map<String, ?> requestInputs) {
     Map<String, Set<FeatureMetadata>> groupedFeatures =
         featureMetadataList.stream()
-            .filter(f -> f.featureGroup() != null) // fetch features only for features without group
-            .collect(Collectors.groupingBy(FeatureMetadata::featureGroup, Collectors.toSet()));
+            .filter(
+                f -> f.getFeatureGroup() != null) // fetch features only for features without group
+            .collect(Collectors.groupingBy(FeatureMetadata::getFeatureGroup, Collectors.toSet()));
     return groupedFeatures.entrySet().stream()
         .flatMap(
             groupedEntry ->
@@ -51,7 +53,7 @@ public class FeatureFetchRouter {
       Map<String, ?> requestInputs) {
     final FeatureGroup featureGroup = this.inferenceFeatureGroups.get(featureGroupName);
     final AbstractFeatureStore featureStore =
-        this.inferenceFeatureStores.get(this.featureGroupStoreMap.get(featureGroup.name()));
+        this.inferenceFeatureStores.get(this.featureGroupStoreMap.get(featureGroup.getName()));
     return featureStore
         .fetchFeatures(featureMetadataList, featureGroup, requestInputs)
         .getFeatures();

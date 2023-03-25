@@ -14,17 +14,17 @@ public abstract class ModelMetadata {
     return new AutoValue_ModelMetadata.Builder();
   }
 
-  public abstract String name();
+  public abstract String getName();
 
-  public abstract String version();
+  public abstract String getVersion();
 
-  public abstract String modelLocation();
+  public abstract String getModelLocation();
 
-  public abstract String modelFramework();
+  public abstract String getModelFramework();
 
-  public abstract ImmutableList<FeatureMetadata> features();
+  public abstract ImmutableList<FeatureMetadata> getFeatures();
 
-  public abstract ImmutableList<ModelOutputMetadata> outputs();
+  public abstract ImmutableList<ModelOutputMetadata> getOutputs();
 
   @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "")
   @AutoValue.Builder

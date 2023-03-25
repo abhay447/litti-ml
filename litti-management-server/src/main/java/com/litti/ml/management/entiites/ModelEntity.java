@@ -91,13 +91,15 @@ public class ModelEntity {
     final Gson gson = new Gson();
     final List<ModelOutputMetadata> outputs =
         gson.fromJson(this.outputs, new TypeToken<List<ModelOutputMetadata>>() {}.getType());
-    return ModelMetadata.builder()
-        .name(this.name)
-        .version(this.version)
-        .modelLocation(this.modelLocation)
-        .modelFramework(this.modelFramework)
-        .features(ImmutableList.copyOf(features))
-        .outputs(ImmutableList.copyOf(outputs))
-        .build();
+    final ModelMetadata modelMetadata =
+        ModelMetadata.builder()
+            .name(this.name)
+            .version(this.version)
+            .modelLocation(this.modelLocation)
+            .modelFramework(this.modelFramework)
+            .features(ImmutableList.copyOf(features))
+            .outputs(ImmutableList.copyOf(outputs))
+            .build();
+    return modelMetadata;
   }
 }

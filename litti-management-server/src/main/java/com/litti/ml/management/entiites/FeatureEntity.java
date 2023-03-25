@@ -18,6 +18,8 @@ public class FeatureEntity {
   private String defaultValue;
   private UUID featureGroupId;
 
+  private Long ttlSeconds;
+
   public FeatureEntity() {}
 
   public FeatureEntity(String name, String version) {
@@ -69,8 +71,20 @@ public class FeatureEntity {
     return featureGroupId;
   }
 
+  public void setFeatureGroupId(UUID featureGroupId) {
+    this.featureGroupId = featureGroupId;
+  }
+
   public void setFeatureGroupID(UUID featureGroupId) {
     this.featureGroupId = featureGroupId;
+  }
+
+  public Long getTtlSeconds() {
+    return ttlSeconds;
+  }
+
+  public void setTtlSeconds(Long ttlSeconds) {
+    this.ttlSeconds = ttlSeconds;
   }
 
   public FeatureMetadata toFeatureDeploymentMetadata(FeatureGroup featureGroup) {
@@ -80,7 +94,8 @@ public class FeatureEntity {
         .version(this.version)
         .dataType(this.dataType)
         .defaultValue(this.defaultValue)
-        .featureGroup(featureGroup.name())
+        .ttlSeconds(this.getTtlSeconds())
+        .featureGroup(featureGroup.getName())
         .build();
   }
 }

@@ -1,27 +1,13 @@
 package com.litti.ml.entities.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import com.google.auto.value.AutoValue;
+public class ModelOutputMetadata {
 
-@AutoValue
-@JsonDeserialize(builder = AutoValue_ModelOutputMetadata.Builder.class)
-public abstract class ModelOutputMetadata {
-  public static ModelOutputMetadata.Builder builder() {
-    return new AutoValue_ModelOutputMetadata.Builder();
-  }
+  public final String name;
 
-  public abstract String name();
+  public final String dataType;
 
-  public abstract String dataType();
-
-  @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "")
-  @AutoValue.Builder
-  public abstract static class Builder {
-    public abstract ModelOutputMetadata.Builder name(String value);
-
-    public abstract ModelOutputMetadata.Builder dataType(String value);
-
-    public abstract ModelOutputMetadata build();
+  public ModelOutputMetadata(String name, String dataType) {
+    this.name = name;
+    this.dataType = dataType;
   }
 }

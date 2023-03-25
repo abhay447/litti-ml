@@ -6,8 +6,10 @@ import java.util.List;
 
 public class CreateModelRequest {
 
-  private final ModelEntity modelEntity;
-  private final List<String> featureIds;
+  private ModelEntity modelEntity;
+  private List<String> featureIds;
+
+  public CreateModelRequest() {}
 
   public CreateModelRequest(ModelEntity modelEntity, List<String> featureIds) {
     this.modelEntity = modelEntity;
@@ -18,7 +20,25 @@ public class CreateModelRequest {
     return modelEntity;
   }
 
+  public void setModelEntity(ModelEntity modelEntity) {
+    this.modelEntity = modelEntity;
+  }
+
   public List<String> getFeatureIds() {
     return featureIds;
+  }
+
+  public void setFeatureIds(List<String> featureIds) {
+    this.featureIds = featureIds;
+  }
+
+  @Override
+  public String toString() {
+    return "CreateModelRequest{"
+        + "modelEntity="
+        + modelEntity
+        + ", featureIds="
+        + featureIds
+        + '}';
   }
 }

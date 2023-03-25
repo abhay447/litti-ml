@@ -7,11 +7,12 @@ import com.litti.ml.entities.feature.FeatureGroup;
 import com.litti.ml.entities.feature.FeatureMetadata;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.sync.RedisCommands;
-import java.util.*;
-import java.util.stream.Collectors;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class RedisFeatureStore extends AbstractFeatureStore {
 
@@ -38,7 +39,7 @@ public class RedisFeatureStore extends AbstractFeatureStore {
       Map<String, String> dimensions) {
     final Set<String> acceptableFeatures =
         featureMetadataList.stream()
-            .map(x -> String.format("%s#%s", x.name(), x.version()))
+            .map(x -> String.format("%s#%s", x.getName(), x.getVersion()))
             .collect(Collectors.toSet());
     final Optional<Map<String, FeatureStoreRecord>> featureStoreRecords =
         readFeatureRecords(featureMetadataList, featureGroup, dimensions);
@@ -83,7 +84,7 @@ public class RedisFeatureStore extends AbstractFeatureStore {
       Boolean merge) {
     featureMetadataList.forEach(
         featureMetadata -> {
-          if (!featureMetadata.featureGroup().equalsIgnoreCase(featureGroup.name())) {
+          if (!featureMetadata.getFeatureGroup().equalsIgnoreCase(featureGroup.getName())) {
             logger.error("feature:{} has invalid feature group: {}", featureMetadata, featureGroup);
             throw new RuntimeException(
                 ("feature group for all features should match supplied feature group"));
@@ -91,7 +92,7 @@ public class RedisFeatureStore extends AbstractFeatureStore {
         });
     final Map<String, FeatureMetadata> featureMetadataMap =
         featureMetadataList.stream()
-            .map(f -> Map.entry(f.name() + "#" + f.version(), f))
+            .map(f -> Map.entry(f.getName() + "#" + f.getVersion(), f))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     featureRows.stream()
         .forEach(
@@ -113,7 +114,7 @@ public class RedisFeatureStore extends AbstractFeatureStore {
     final String featureGroupKey = this.createFeatureGroupRedisKey(featureRow, featureGroup);
     final Map<String, FeatureStoreRecord> inputRow =
         featureRow.entrySet().stream()
-            .filter(f -> !featureGroup.dimensions().contains(f.getKey()))
+            .filter(f -> !featureGroup.getDimensions().contains(f.getKey()))
             .filter(f -> featureMetadataMap.containsKey(f.getKey()))
             .map(
                 entry ->
@@ -153,7 +154,7 @@ public class RedisFeatureStore extends AbstractFeatureStore {
   }
 
   private String createFeatureGroupRedisKey(Map<String, ?> featureRow, FeatureGroup featureGroup) {
-    final List<String> sortedDims = featureGroup.dimensions().stream().sorted().toList();
+    final List<String> sortedDims = featureGroup.getDimensions().stream().sorted().toList();
     final List<String> sortedDimVals =
         sortedDims.stream().map(x -> featureRow.get(x).toString()).collect(Collectors.toList());
     return String.format("%s|%s", String.join("#", sortedDims), String.join("#", sortedDimVals));

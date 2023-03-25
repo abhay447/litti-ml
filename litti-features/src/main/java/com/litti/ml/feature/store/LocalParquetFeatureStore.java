@@ -3,12 +3,6 @@ package com.litti.ml.feature.store;
 import com.litti.ml.entities.dtypes.JsonDataReader;
 import com.litti.ml.entities.feature.FeatureGroup;
 import com.litti.ml.entities.feature.FeatureMetadata;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.time.LocalDate;
-import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.curator.shaded.com.google.common.io.Resources;
 import org.apache.hadoop.conf.Configuration;
@@ -17,6 +11,13 @@ import org.apache.parquet.avro.AvroParquetReader;
 import org.apache.parquet.hadoop.ParquetReader;
 import org.apache.parquet.hadoop.util.HadoopInputFile;
 import org.apache.parquet.io.InputFile;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class LocalParquetFeatureStore extends AbstractFeatureStore {
 
@@ -64,12 +65,12 @@ public class LocalParquetFeatureStore extends AbstractFeatureStore {
             .map(
                 record -> {
                   return featureMetadataSet.stream()
-                      .filter(f -> record.hasField(f.name()) && record.get(f.name()) != null)
+                      .filter(f -> record.hasField(f.getName()) && record.get(f.getName()) != null)
                       .map(
                           f ->
                               Map.entry(
-                                  f.name(),
-                                  jsonDataReader.read(record.get(f.name()), f.dataType())))
+                                  f.getName(),
+                                  jsonDataReader.read(record.get(f.getName()), f.getDataType())))
                       .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
                 })
             .toList();
@@ -83,7 +84,7 @@ public class LocalParquetFeatureStore extends AbstractFeatureStore {
       Map<String, String> requestInputs, FeatureGroup featureGroup) {
     final Map<String, String> queryDimensions =
         requestInputs.entrySet().stream()
-            .filter(x -> featureGroup.dimensions().contains(x.getKey()))
+            .filter(x -> featureGroup.getDimensions().contains(x.getKey()))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     if (queryDimensions.containsKey("dt")) {
       // HACK : cast dt to epoch days since our test parquet files have dt in avro DaysSinceEPoch
