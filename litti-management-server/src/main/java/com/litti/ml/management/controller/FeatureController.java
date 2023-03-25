@@ -111,8 +111,7 @@ public class FeatureController {
   }
 
   @GetMapping(value = "/feature-group-stores", produces = "application/json")
-  public List<FeatureGroupStoreLinkEntity> getFeatureGroupStoreLinks(
-      @PathVariable String featureGroupStoreLinkId) {
+  public List<FeatureGroupStoreLinkEntity> getFeatureGroupStoreLinks() {
     return this.featureManagementService.findAllFeatureGroupStoreLinks();
   }
 

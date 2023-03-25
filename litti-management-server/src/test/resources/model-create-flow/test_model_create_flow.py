@@ -15,31 +15,51 @@ response = requests.post(base_url + "/feature-stores", json=feature_store_entity
 
 feature_store_id = response.json()['id']
 
-# add feature groups
+# add feature groups and link stores
 feature_group_ids = {}
 dream11_fg_player = {
     "name" : "dream11_fg_player",
-    "dimensions" : "player_id",
-    "featureStoreId" : feature_store_id
+    "dimensions" : "player_id"
 }
 response = requests.post(base_url + "/feature-groups", json=dream11_fg_player, headers=headers).json()
 feature_group_ids[response["name"]] = response["id"]
 
+feature_group_store_link = {
+    "featureStoreId" : feature_store_id,
+    "featureGroupId" : response["id"],
+    "mode": "PRIMARY"
+}
+requests.post(base_url + "/feature-group-stores", json=feature_group_store_link, headers=headers).json()
+
+###############################
 dream11_fg_player_date = {
     "name" : "dream11_fg_player_date",
-    "dimensions" : "player_id,dt",
-    "featureStoreId" : feature_store_id
+    "dimensions" : "player_id,dt"
 }
 response = requests.post(base_url + "/feature-groups", json=dream11_fg_player_date, headers=headers).json()
 feature_group_ids[response["name"]] = response["id"]
 
+feature_group_store_link = {
+    "featureStoreId" : feature_store_id,
+    "featureGroupId" : response["id"],
+    "mode": "PRIMARY"
+}
+requests.post(base_url + "/feature-group-stores", json=feature_group_store_link, headers=headers).json()
+
+#######################################
 dream11_fg_player_date_venue = {
     "name" : "dream11_fg_player_date_venue",
-    "dimensions" : "player_id,dt,venue_name",
-    "featureStoreId" : feature_store_id
+    "dimensions" : "player_id,dt,venue_name"
 }
 response = requests.post(base_url + "/feature-groups", json=dream11_fg_player_date_venue, headers=headers).json()
 feature_group_ids[response["name"]] = response["id"]
+
+feature_group_store_link = {
+    "featureStoreId" : feature_store_id,
+    "featureGroupId" : response["id"],
+    "mode": "PRIMARY"
+}
+requests.post(base_url + "/feature-group-stores", json=feature_group_store_link, headers=headers).json()
 
 # add features
 feature_id_map: Dict[str,str] = {}
