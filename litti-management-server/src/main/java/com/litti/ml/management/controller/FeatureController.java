@@ -1,7 +1,10 @@
 package com.litti.ml.management.controller;
 
+import com.litti.ml.management.dto.FeatureGroupStoreDeleteRequest;
+import com.litti.ml.management.dto.FeatureGroupStoresSwapRequest;
 import com.litti.ml.management.entiites.FeatureEntity;
 import com.litti.ml.management.entiites.FeatureGroupEntity;
+import com.litti.ml.management.entiites.FeatureGroupStoreLinkEntity;
 import com.litti.ml.management.entiites.FeatureStoreEntity;
 import com.litti.ml.management.service.FeatureManagementService;
 import org.springframework.web.bind.annotation.*;
@@ -67,5 +70,41 @@ public class FeatureController {
   @GetMapping(value = "/feature-stores/{featureStoreId}", produces = "application/json")
   public FeatureStoreEntity getFeatureStore(@PathVariable String featureStoreId) {
     return this.featureManagementService.findFeatureStoreById(UUID.fromString(featureStoreId));
+  }
+
+  @PostMapping(
+      value = "/feature-group-stores",
+      produces = "application/json",
+      consumes = "application/json")
+  public FeatureGroupStoreLinkEntity addFeatureGroupStore(
+      @RequestBody FeatureGroupStoreLinkEntity featureGroupStoreLinkEntity) {
+    return this.featureManagementService.addFeatureGroupStoreLink(featureGroupStoreLinkEntity);
+  }
+
+  @PostMapping(
+      value = "/feature-group-stores/swap",
+      produces = "application/json",
+      consumes = "application/json")
+  public List<FeatureGroupStoreLinkEntity> swapFeatureGroupStore(
+      @RequestBody FeatureGroupStoresSwapRequest featureGroupStoresSwapRequest) {
+    return this.featureManagementService.swapFeatureGroupLinks(
+        UUID.fromString(featureGroupStoresSwapRequest.getFeatureGroupId()));
+  }
+
+  @DeleteMapping(
+      value = "/feature-group-stores",
+      produces = "application/json",
+      consumes = "application/json")
+  public FeatureGroupStoreLinkEntity swapFeatureGroupStore(
+      @RequestBody FeatureGroupStoreDeleteRequest featureGroupStoreDeleteRequest) {
+    return this.featureManagementService.deleteFeatureGroupStoreLink(
+        UUID.fromString(featureGroupStoreDeleteRequest.getFeatureGroupStoreLinkId()));
+  }
+
+  @GetMapping(value = "/feature-group-stores/{featureGroupId}", produces = "application/json")
+  public List<FeatureGroupStoreLinkEntity> getFeatureGroupStoreLinks(
+      @PathVariable String featureGroupId) {
+    return this.featureManagementService.findFeatureGroupStoreLinks(
+        UUID.fromString(featureGroupId));
   }
 }
