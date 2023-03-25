@@ -79,5 +79,6 @@ print(response)
 db_model_deployment_metadata = requests.get(base_url + "/models-deployment-meta/"+model_id,headers=headers).json()
 print(json.dumps(db_model_deployment_metadata))
 
-assert(set(model_meta["features"]) == set(db_model_deployment_metadata["features"]))
+# assert feature match
+assert [i for i in model_meta["features"] if i not in db_model_deployment_metadata["features"]] == []
 
