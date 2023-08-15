@@ -3,9 +3,10 @@ import Link from 'next/link';
 // add bootstrap css 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Col, Container, Row } from 'reactstrap';
 export default function Home() {
-  return <div>
-    <li><Link href="/models/add">Add Model</Link></li>
-    <li><Link href="/models/list">List Models</Link></li>
-  </div>;
+  return <Container>
+    <Row style={{display:'flex', justifyContent:'center'}}><Link href="/models/add">Add Model</Link></Row>
+    <Row style={{display:'flex', justifyContent:'center'}}><Link href="/models/list">List Models</Link></Row>
+  </Container>;
 }

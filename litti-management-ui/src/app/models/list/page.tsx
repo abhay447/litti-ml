@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { Col, Container, Row } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../globals.css'
+import ModelMenu from "../menu/page";
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export default function Page() {
@@ -35,7 +36,12 @@ export default function Page() {
   )
  
   return (
+    
     <Container>
+      <Row>
+        <ModelMenu/>
+      </Row>
+      <Row xs={10}>
       {
         models.map(model =>{
           console.log(model);
@@ -46,9 +52,10 @@ export default function Page() {
               <Col>{model.domain}</Col>
               <Col>{model.outputs}</Col>
             </Row>
-        }
-      )
+          }
+        )
       }
+      </Row>
     </Container>
   )
 
