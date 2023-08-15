@@ -1,50 +1,34 @@
 "use client";
 import { Col, Container, Row } from "reactstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../globals.css'
 
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export default function Page() {
     return <form action="/send-data-here" method="post">
-    <Container>
-    <Row>
-      {/* <div className="col-sm-4">
-        <label htmlFor="modelName">Name</label>
-      </div>
-      <div className="col-sm-4">
-        <input type="text" id="modelName" name="modelName" />
-      </div> */}
-      <Col>.col-sm-4</Col>
-      <Col>.col-sm-4</Col>
-      <Col>.col-sm-4</Col>
-    </Row>
-    </Container>
-
-    <div className="row">
-  <div className="col-sm-4">.col-sm-4</div>
-  <div className="col-sm-4">.col-sm-4</div>
-  <div className="col-sm-4">.col-sm-4</div>
-</div>
-
-    <div>
-      <label htmlFor="modelVersion">Version</label>
-      <input type="text" id="modelVersion" name="modelVersion" />
-    </div>
-
-    <div>
-      <label htmlFor="modelDomain">Domain</label>
-      <input type="text" id="modelDomain" name="modelDomain" />
-    </div>
-
-    <div>
-      <label htmlFor="modelFramework">Framework</label>
-      <input type="text" id="modelFramework" name="modelFramework" />
-    </div>
-
-    <div>
-      <label htmlFor="modelOutputs">Outputs</label>
-      <input type="text" id="modelOutputs" name="modelOutputs" />
-    </div>
-
-    <button type="submit">Submit</button>
+      <Row>
+        <Col><label htmlFor="modelName">Name</label></Col>
+        <Col xs={10}><input type="text" id="modelName" name="modelName" /></Col>
+      </Row>
+      <Row>
+        <Col><label htmlFor="modelVersion">Version</label></Col>
+        <Col xs={10}><input type="text" id="modelVersion" name="modelVersion" /></Col>
+      </Row>
+      <Row>
+        <Col><label htmlFor="modelDomain">Domain</label></Col>
+        <Col xs={10}><input type="text" id="modelDomain" name="modelDomain" /></Col>
+      </Row>
+      <Row>
+        <Col><label htmlFor="modelFramework">Framework</label></Col>
+        <Col xs={10}><input type="text" id="modelFramework" name="modelFramework" /></Col>
+      </Row>
+      <Row>
+        <Col><label htmlFor="modelOutputs">Outputs</label></Col>
+        <Col xs={10}><input type="text" id="modelOutputs" name="modelOutputs" /></Col>
+      </Row>
+      <Row>
+        <Col xs={12}><button type="submit">Submit</button></Col>
+      </Row>
   </form>
   }
