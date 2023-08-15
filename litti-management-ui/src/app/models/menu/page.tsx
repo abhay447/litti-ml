@@ -9,8 +9,8 @@ export default function ModelMenu() {
  
   return (
    <Row>
-    <Col style={{display:'flex', justifyContent:'left'}}><Link href="/models/add">Add Model</Link></Col>
     <Col style={{display:'flex', justifyContent:'left'}}><Link href="/models/list">List Models</Link></Col>
+    <Col style={{display:'flex', justifyContent:'left'}}><Link href="/models/add">Add Model</Link></Col>
   </Row>
   )
 

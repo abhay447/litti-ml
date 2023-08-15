@@ -4,9 +4,9 @@ import Link from 'next/link';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Col, Row } from 'reactstrap';
+import RootContainerLayout from './container/layout';
+import { redirect } from 'next/navigation';
+
 export default function Home() {
-  return <Row>
-    <Col style={{display:'flex', justifyContent:'center'}}><Link href="/models/add">Add Model</Link></Col>
-    <Col style={{display:'flex', justifyContent:'center'}}><Link href="/models/list">List Models</Link></Col>
-  </Row>;
+    redirect('/models/list');
 }
