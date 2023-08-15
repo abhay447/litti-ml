@@ -5,6 +5,7 @@ import { Col, Container, Row } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../globals.css'
 import ModelMenu from "../menu/page";
+import RootContainerLayout from "@/app/container/layout";
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export default function Page() {
@@ -37,7 +38,7 @@ export default function Page() {
  
   return (
     
-    <Container>
+    <RootContainerLayout>
       <Row>
         <ModelMenu/>
       </Row>
@@ -56,7 +57,7 @@ export default function Page() {
         )
       }
       </Row>
-    </Container>
+    </RootContainerLayout>
   )
 
 }

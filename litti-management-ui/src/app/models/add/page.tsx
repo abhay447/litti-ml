@@ -5,6 +5,7 @@ import '../../globals.css'
 import {ModelEntity} from '../../entities/modelEntity';
 import ModelMenu from "../menu/page";
 import SidebarProducts from "@/app/sidebar/products/page";
+import RootContainerLayout from "@/app/container/layout";
 
 
 const handleSubmit = async (event:any) => {
@@ -54,9 +55,7 @@ const handleSubmit = async (event:any) => {
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export default function Page() {
-    return <Row>
-      <Col xs={1}><SidebarProducts/></Col>
-      <Col xs={10}>
+    return <RootContainerLayout>
           <Row>
           <ModelMenu/>
           </Row>
@@ -88,6 +87,5 @@ export default function Page() {
               </Row>          
             </form>
           </Row>
-      </Col>
-    </Row>
+      </RootContainerLayout>
   }
