@@ -1,19 +1,19 @@
 export class ModelEntity {
-    name: String
-    version: String
-    domain: String
-    framework: String
-    outputs: String
-    constructor(name: String,version: String,domain: String,framework: String,outputs: String) {
+    id!: string
+    name: string
+    version: string
+    domain: string
+    modelFramework: string
+    outputs: string
+    constructor(name: string,version: string,domain: string,framework: string,outputs: string, id?:string) {
         this.name = name
         this.version = version
         this.domain = domain
-        this.framework = framework
+        this.modelFramework = framework
         this.outputs = outputs
-    }
-
-    toString() {
-        return this.name;
+        if(id){
+            this.id = id
+        }
     }
 
 }
