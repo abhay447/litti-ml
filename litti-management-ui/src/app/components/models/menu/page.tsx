@@ -1,7 +1,7 @@
 "use client";
 import { Col, Row } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../globals.css'
+import '@/app/globals.css'
 import Link from "next/link";
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL

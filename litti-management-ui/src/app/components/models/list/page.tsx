@@ -1,11 +1,11 @@
 "use client";
-import { ModelEntity } from "@/app/entities/modelEntity";
+import { ModelEntity } from "@/app/components/entities/modelEntity";
 import { useEffect, useState } from "react"
 import { Col, Container, Row } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../globals.css'
+import '@/app/globals.css'
 import ModelMenu from "../menu/page";
-import RootContainerLayout from "@/app/container/layout";
+import RootContainerLayout from "@/app/components/container/layout";
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export default function Page() {

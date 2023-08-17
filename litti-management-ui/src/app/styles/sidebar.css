@@ -1,0 +1,10 @@
+.sidebar {
+    background-color:cornflowerblue;
+    padding-right: 0%;
+}
+  
+
+.sidebar-app-title {
+    font-weight: bolder;
+    color: antiquewhite;
+}

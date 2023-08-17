@@ -1,16 +1,14 @@
 "use client";
-import { ModelEntity } from "@/app/entities/modelEntity";
-import { useEffect, useState } from "react"
-import { Col, Container, Row } from "reactstrap";
+import { Container, Row } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../globals.css'
+import '@/app/styles/sidebar.css'
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export default function SidebarProducts() { 
   return (
     
-    <Container>
-      <Row>
+    <Container className="sidebar vh-100 d-flex flex-column">
+      <Row className="sidebar-app-title">
         Litti Management
       </Row>
       <Row>

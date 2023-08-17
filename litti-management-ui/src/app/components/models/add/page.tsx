@@ -1,11 +1,10 @@
 "use client";
 import { Col, Container, Row } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../globals.css'
-import {ModelEntity} from '../../entities/modelEntity';
+import '@/app/globals.css'
+import {ModelEntity} from '@/app/components/entities/modelEntity';
 import ModelMenu from "../menu/page";
-import SidebarProducts from "@/app/sidebar/products/page";
-import RootContainerLayout from "@/app/container/layout";
+import RootContainerLayout from "@/app/components/container/layout";
 
 
 const handleSubmit = async (event:any) => {
