@@ -26,3 +26,7 @@
     font-weight: bold;
     border: 10;
 }
+
+.entity-top-menu-col-selected {
+    background-color:cadetblue;
+}

@@ -6,6 +6,7 @@ import {ModelEntity} from '@/app/components/entities/modelEntity';
 import ModelMenu from "@/app/components/models/menu/page";
 import RootContainerLayout from "@/app/components/container/layout";
 import "@/app/styles/entity.css"
+import ModelContainerLayout from "@/app/components/models/container/layout";
 
 const handleSubmit = async (event:any) => {
   // Stop the form from submitting and refreshing the page.
@@ -54,11 +55,7 @@ const handleSubmit = async (event:any) => {
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export default function Page() {
-    return <RootContainerLayout>
-          <Row>
-          <ModelMenu/>
-          </Row>
-
+    return <ModelContainerLayout>
           <Row>
             <form onSubmit={handleSubmit}>
               <Row className="entity-base-row">
@@ -86,5 +83,5 @@ export default function Page() {
               </Row>          
             </form>
           </Row>
-      </RootContainerLayout>
+      </ModelContainerLayout>
   }
