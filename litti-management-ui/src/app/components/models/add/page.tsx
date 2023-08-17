@@ -3,9 +3,9 @@ import { Col, Container, Row } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
 import {ModelEntity} from '@/app/components/entities/modelEntity';
-import ModelMenu from "../menu/page";
+import ModelMenu from "@/app/components/models/menu/page";
 import RootContainerLayout from "@/app/components/container/layout";
-
+import "@/app/styles/entity.css"
 
 const handleSubmit = async (event:any) => {
   // Stop the form from submitting and refreshing the page.
@@ -61,28 +61,28 @@ export default function Page() {
 
           <Row>
             <form onSubmit={handleSubmit}>
-              <Row>
+              <Row className="entity-base-row">
                 <Col xs={1}><label htmlFor="modelName">Name</label></Col>
-                <Col xs={8}><input type="text" id="modelName" name="modelName" /></Col>
+                <Col xs={8}><input type="text" className="entity-text-input" id="modelName" name="modelName" /></Col>
               </Row>
-              <Row>
+              <Row className="entity-base-row">
                 <Col xs={1}><label htmlFor="modelVersion">Version</label></Col>
-                <Col xs={8}><input type="text" id="modelVersion" name="modelVersion" /></Col>
+                <Col xs={8}><input type="text" className="entity-text-input" id="modelVersion" name="modelVersion" /></Col>
               </Row>
-              <Row>
+              <Row className="entity-base-row">
                 <Col xs={1}><label htmlFor="modelDomain">Domain</label></Col>
-                <Col xs={8}><input type="text" id="modelDomain" name="modelDomain" /></Col>
+                <Col xs={8}><input type="text" className="entity-text-input" id="modelDomain" name="modelDomain" /></Col>
               </Row>
-              <Row>
+              <Row className="entity-base-row">
                 <Col xs={1}><label htmlFor="modelFramework">Framework</label></Col>
-                <Col xs={8}><input type="text" id="modelFramework" name="modelFramework" /></Col>
+                <Col xs={8}><input type="text" className="entity-text-input" id="modelFramework" name="modelFramework" /></Col>
               </Row>
-              <Row>
+              <Row className="entity-base-row">
                 <Col xs={1}><label htmlFor="modelOutputs">Outputs</label></Col>
-                <Col xs={8}><input type="text" id="modelOutputs" name="modelOutputs" /></Col>
+                <Col xs={8}><input type="text" className="entity-text-input" id="modelOutputs" name="modelOutputs" /></Col>
               </Row>
-              <Row>
-                <Col xs={9}><button type="submit">Submit</button></Col>
+              <Row className="entity-base-row">
+                <Col xs={9}><button type="submit" className="entity-submit-button">Submit</button></Col>
               </Row>          
             </form>
           </Row>

@@ -1,5 +1,28 @@
 .entity-base {
-    background-color: darkgray;
+    background-color:antiquewhite ;
     margin-left: 0%;
     margin-right: 0%;
+}
+
+.entity-text-input:focus {
+    border-color: white !important;
+    box-shadow: none !important;
+}
+
+.entity-base-row {
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.entity-submit-button {
+    background-color: darkgoldenrod;
+    color: antiquewhite;
+    font-weight: bold;
+}
+
+.entity-top-menu-col {
+    background-color: darkgoldenrod;
+    color: antiquewhite;
+    font-weight: bold;
+    border: 10;
 }
