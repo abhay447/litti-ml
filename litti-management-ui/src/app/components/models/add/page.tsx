@@ -1,14 +1,14 @@
 "use client";
-import { Col, Container, Row } from "reactstrap";
+import { Col, Row } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
 import {ModelEntity} from '@/app/components/entities/modelEntity';
-import ModelMenu from "@/app/components/models/menu/page";
-import RootContainerLayout from "@/app/components/container/layout";
 import "@/app/styles/entity.css"
 import ModelContainerLayout from "@/app/components/models/container/layout";
+import { useRouter } from "next/navigation";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 
-const handleSubmit = async (event:any) => {
+const handleSubmit = async (event:any, router: AppRouterInstance) => {
   // Stop the form from submitting and refreshing the page.
   event.preventDefault()
 
@@ -51,13 +51,18 @@ const handleSubmit = async (event:any) => {
   // If server returns the name submitted, that means the form works.
   const result = JSON.stringify(await response.json())
   console.log(result)
+
+
+  router.push("/components/models/list");
+  
 }
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export default function Page() {
+    const router = useRouter();
     return <ModelContainerLayout>
           <Row>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={(e) => handleSubmit(e,router)}>
               <Row className="entity-base-row">
                 <Col xs={1}><label htmlFor="modelName">Name</label></Col>
                 <Col xs={8}><input type="text" className="entity-text-input" id="modelName" name="modelName" /></Col>
