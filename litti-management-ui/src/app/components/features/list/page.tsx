@@ -38,6 +38,14 @@ export default function FeatureListComponent() {
  
   return (
       <Row xs={10}>
+        <Row key="HEADER">
+              <Col>NAME</Col>
+              <Col>VERSION</Col>
+              <Col>DATA TYPE</Col>
+              <Col>DEFAULT VALUE</Col>
+              <Col>FEATURE GROUP</Col>
+              <Col>TTL SECONDS</Col>
+            </Row>
       {
         features.map(feature =>{
           console.log(feature);
