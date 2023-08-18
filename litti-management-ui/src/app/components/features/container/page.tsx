@@ -6,8 +6,6 @@ import "@/app/styles/entity.css"
 import { useRouter } from "next/navigation";
 import EntityMenu, { OPTION_LIST } from "@/app/components/common/menu/page";
 import { useState } from "react";
-import ModelListComponent from "@/app/components/models/list/page";
-import ModelAddComponent from "../add/page";
 import FeatureListComponent from "../list/page";
 import FeatureAddComponent from "../add/page";
 

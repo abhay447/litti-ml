@@ -4,12 +4,15 @@ import "@/app/styles/entity.css"
 import "@/app/styles/sidebar.css"
 import { useState } from "react"
 
-export default function RootContainerLayout({
+export default function RootContainerComponent({
     children, // will be a page or nested layout
+    navOption,
+    setNavOption
   }: {
     children: React.ReactNode
+    navOption: string,
+    setNavOption: any,
   }) {
-    let [navOption, setNavOption] = useState(NAV_OPTION_MODELS);
     return (
       <section>
         {/* Include shared UI here e.g. a header or sidebar */}

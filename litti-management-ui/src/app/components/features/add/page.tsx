@@ -11,7 +11,7 @@ const handleSubmit = async (event:any, setSelectedOption: any) => {
   event.preventDefault()
 
   // Get data from the form.
-  const modelEntity = new FeatureEntity(
+  const featureEntity = new FeatureEntity(
     (event.target.featureName as HTMLInputElement).value,
     (event.target.featureVersion as HTMLInputElement).value,
     (event.target.featureDataType as HTMLInputElement).value,
@@ -20,13 +20,9 @@ const handleSubmit = async (event:any, setSelectedOption: any) => {
     Number.parseInt((event.target.ttlSeconds as HTMLInputElement).value)
   );
 
-  const data = {
-    modelEntity: modelEntity,
-    featureIds: []
-  }
-
   // Send the data to the server in JSON format.
-  const JSONdata = JSON.stringify(data)
+  const JSONdata = JSON.stringify(featureEntity)
+  console.log(JSONdata)
 
   // API endpoint where we send form data.
   const endpoint = 'http://localhost:8081/features'
@@ -67,19 +63,19 @@ export default function FeatureAddComponent(props:any) {
                 <Col xs={8}><input type="text" className="entity-text-input" id="featureVersion" name="featureVersion" /></Col>
               </Row>
               <Row className="entity-base-row">
-                <Col xs={1}><label htmlFor="featureDataType">Domain</label></Col>
+                <Col xs={1}><label htmlFor="featureDataType">Data Type</label></Col>
                 <Col xs={8}><input type="text" className="entity-text-input" id="featureDataType" name="featureDataType" /></Col>
               </Row>
               <Row className="entity-base-row">
-                <Col xs={1}><label htmlFor="featureDefaultValue">Framework</label></Col>
+                <Col xs={1}><label htmlFor="featureDefaultValue">Default Value</label></Col>
                 <Col xs={8}><input type="text" className="entity-text-input" id="featureDefaultValue" name="featureDefaultValue" /></Col>
               </Row>
               <Row className="entity-base-row">
-                <Col xs={1}><label htmlFor="featureGroupId">Outputs</label></Col>
+                <Col xs={1}><label htmlFor="featureGroupId">FeatureGroup</label></Col>
                 <Col xs={8}><input type="text" className="entity-text-input" id="featureGroupId" name="featureGroupId" /></Col>
               </Row>
               <Row className="entity-base-row">
-                <Col xs={1}><label htmlFor="ttlSeconds">Outputs</label></Col>
+                <Col xs={1}><label htmlFor="ttlSeconds">TTL</label></Col>
                 <Col xs={8}><input type="text" className="entity-text-input" id="ttlSeconds" name="ttlSeconds" /></Col>
               </Row>
               <Row className="entity-base-row">
