@@ -26,10 +26,10 @@ export default function ModelMenu(props: any) {
   return (
     <Row>
       <Col style={{ display: 'flex', justifyContent: 'center' }} className={getOptionStyle(OPTION_LIST)}>
-        <button type="button" onClick={() => handleOnClick(OPTION_LIST)}>List Models</button>
+        <button type="button" onClick={() => handleOnClick(OPTION_LIST)}>List</button>
       </Col>
       <Col style={{ display: 'flex', justifyContent: 'center' }} className={getOptionStyle(OPTION_ADD)}>
-        <button type="button" onClick={() => handleOnClick(OPTION_ADD)}>Add Model</button>
+        <button type="button" onClick={() => handleOnClick(OPTION_ADD)}>Add</button>
       </Col>
     </Row>
   )

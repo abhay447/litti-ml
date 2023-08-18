@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
 import {ModelEntity} from '@/app/components/entities/modelEntity';
 import "@/app/styles/entity.css"
-import { OPTION_LIST } from "@/app/components/models/menu/page";
+import { OPTION_LIST } from "@/app/components/entities/menu/page";
 
 const handleSubmit = async (event:any, setSelectedOption: any) => {
   // Stop the form from submitting and refreshing the page.
