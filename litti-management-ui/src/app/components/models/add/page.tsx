@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
 import {ModelEntity} from '@/app/components/entities/modelEntity';
 import "@/app/styles/entity.css"
-import ModelContainerLayout from "@/app/components/models/container/layout";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 
@@ -58,10 +57,9 @@ const handleSubmit = async (event:any, router: AppRouterInstance) => {
 }
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
-export default function Page() {
+export default function ModelAddComponent() {
     const router = useRouter();
-    return <ModelContainerLayout>
-          <Row>
+    return <Row>
             <form onSubmit={(e) => handleSubmit(e,router)}>
               <Row className="entity-base-row">
                 <Col xs={1}><label htmlFor="modelName">Name</label></Col>
@@ -88,5 +86,4 @@ export default function Page() {
               </Row>          
             </form>
           </Row>
-      </ModelContainerLayout>
   }

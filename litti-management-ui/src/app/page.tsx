@@ -1,13 +1,12 @@
 "use client"; // This is a client component 
-import Link from 'next/link';
 // add bootstrap css 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Col, Row } from 'reactstrap';
-import RootLayout from '@/app/layout';
-import { redirect } from 'next/navigation';
-import { AppProps } from 'next/app';
+import ModelContainerComponent from '@/app/components/models/container/page';
+import RootContainerLayout from '@/app/components/container/layout';
 
-function Home() {
-    redirect('/models/list');
+export default function Home() {
+    return <RootContainerLayout>
+        <ModelContainerComponent></ModelContainerComponent>
+    </RootContainerLayout>
 }

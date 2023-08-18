@@ -2,24 +2,18 @@
 import { Col, Row } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
-import Link from "next/link";
 import '@/app/styles/entity.css';
-// `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 
-import { createContext, useState } from 'react';
-import { useRouter, usePathname } from "next/navigation";
-const OPTION_ADD = "add";
-const OPTION_LIST = "list";
-export default function ModelMenu() {
+export const OPTION_ADD = "add";
+export const OPTION_LIST = "list";
 
-  const router = useRouter()
-  const pathname = usePathname()
-  const pathTokens = pathname.split("/")
-  let [selectedOption, setSelectedOption] = useState(pathTokens[pathTokens.length - 1]);
+export default function ModelMenu(props: any) {
+
+  const setSelectedOption = props.setSelectedOption;
+  const selectedOption = props.selectedOption;
 
   function handleOnClick(option: string) {
     setSelectedOption(option);
-    router.push("/components/models/"+option)
   }
 
   function getOptionStyle(option: string) {
