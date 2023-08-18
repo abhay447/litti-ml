@@ -14,7 +14,6 @@ public class FeatureGroupEntity {
   @Id @GeneratedValue private UUID id;
   private String name;
   private String dimensions;
-  private UUID featureStoreId;
 
   public FeatureGroupEntity() {}
 
@@ -44,14 +43,6 @@ public class FeatureGroupEntity {
 
   public void setDimensions(String dimensions) {
     this.dimensions = dimensions;
-  }
-
-  public UUID getFeatureStoreId() {
-    return featureStoreId;
-  }
-
-  public void setFeatureStoreId(UUID featureStoreId) {
-    this.featureStoreId = featureStoreId;
   }
 
   public FeatureGroup toFeatureGroupMetadata() {

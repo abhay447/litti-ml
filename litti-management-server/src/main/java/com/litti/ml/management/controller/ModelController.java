@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin(originPatterns = "*")
 public class ModelController {
 
   private final ModelManagementService modelManagementService;

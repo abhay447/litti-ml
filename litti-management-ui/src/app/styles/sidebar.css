@@ -1,0 +1,20 @@
+.sidebar {
+    background-color:cornflowerblue;
+    padding-right: 0%;
+}
+  
+
+.sidebar-app-title {
+    font-weight: bolder;
+    color: antiquewhite;
+}
+
+.sidebar-item {
+    color: antiquewhite;
+    font-weight: bold;
+    border: 10;
+}
+
+.sidebar-item-selected {
+    background-color:gray;
+}
