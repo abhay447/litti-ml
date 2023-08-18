@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
 import "@/app/styles/entity.css"
 import { useRouter } from "next/navigation";
-import ModelMenu, { OPTION_LIST } from "@/app/components/entities/menu/page";
+import ModelMenu, { OPTION_LIST } from "@/app/components/common/menu/page";
 import { useState } from "react";
 import ModelListComponent from "@/app/components/models/list/page";
 import ModelAddComponent from "../add/page";
