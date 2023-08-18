@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
 import "@/app/styles/entity.css"
 import { useRouter } from "next/navigation";
-import RootContainerLayout from "../../container/layout";
 import ModelMenu, { OPTION_LIST } from "@/app/components/models/menu/page";
 import { useState } from "react";
 import ModelListComponent from "@/app/components/models/list/page";
@@ -16,6 +15,6 @@ export default function ModelContainerComponent() {
   let [selectedOption, setSelectedOption] = useState(OPTION_LIST);
   return <Row>
       <ModelMenu setSelectedOption={setSelectedOption} selectedOption={selectedOption} />
-      {selectedOption == OPTION_LIST ? <ModelListComponent/> : <ModelAddComponent/>}
+      {selectedOption == OPTION_LIST ? <ModelListComponent/> : <ModelAddComponent  setSelectedOption={setSelectedOption}/>}
     </Row>
 }

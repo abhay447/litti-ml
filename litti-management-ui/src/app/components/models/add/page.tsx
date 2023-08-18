@@ -4,10 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
 import {ModelEntity} from '@/app/components/entities/modelEntity';
 import "@/app/styles/entity.css"
-import { useRouter } from "next/navigation";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
+import { OPTION_LIST } from "@/app/components/models/menu/page";
 
-const handleSubmit = async (event:any, router: AppRouterInstance) => {
+const handleSubmit = async (event:any, setSelectedOption: any) => {
   // Stop the form from submitting and refreshing the page.
   event.preventDefault()
 
@@ -49,18 +48,15 @@ const handleSubmit = async (event:any, router: AppRouterInstance) => {
   // Get the response data from server as JSON.
   // If server returns the name submitted, that means the form works.
   const result = JSON.stringify(await response.json())
-  console.log(result)
-
-
-  router.push("/components/models/list");
-  
+  console.log(result);
+  setSelectedOption(OPTION_LIST);
 }
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
-export default function ModelAddComponent() {
-    const router = useRouter();
+export default function ModelAddComponent(props:any) {
+    const setSelectedOption = props.setSelectedOption;
     return <Row>
-            <form onSubmit={(e) => handleSubmit(e,router)}>
+            <form onSubmit={(e) => handleSubmit(e,setSelectedOption)}>
               <Row className="entity-base-row">
                 <Col xs={1}><label htmlFor="modelName">Name</label></Col>
                 <Col xs={8}><input type="text" className="entity-text-input" id="modelName" name="modelName" /></Col>
