@@ -1,5 +1,5 @@
 "use client";
-import { ModelEntity } from "@/app/components/entities/modelEntity";
+import { ModelEntity } from "@/app/entities/modelEntity";
 import { useEffect, useState } from "react"
 import { Col, Row } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';

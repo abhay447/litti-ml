@@ -2,7 +2,7 @@
 import { Col, Row } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
-import {ModelEntity} from '@/app/components/entities/modelEntity';
+import {ModelEntity} from '@/app/entities/modelEntity';
 import "@/app/styles/entity.css"
 import { OPTION_LIST } from "@/app/components/common/menu/page";
 
