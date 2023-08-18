@@ -8,3 +8,13 @@
     font-weight: bolder;
     color: antiquewhite;
 }
+
+.sidebar-item {
+    color: antiquewhite;
+    font-weight: bold;
+    border: 10;
+}
+
+.sidebar-item-selected {
+    background-color:gray;
+}
