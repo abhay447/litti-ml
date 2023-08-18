@@ -7,7 +7,7 @@ import '@/app/styles/entity.css';
 export const OPTION_ADD = "add";
 export const OPTION_LIST = "list";
 
-export default function ModelMenu(props: any) {
+export default function EntityMenu(props: any) {
 
   const setSelectedOption = props.setSelectedOption;
   const selectedOption = props.selectedOption;
