@@ -1,5 +1,5 @@
 "use client";
-import { ModelEntity } from "@/app/entities/modelEntity";
+import { FeatureEntity } from "@/app/entities/featureEntity";
 import { useEffect, useState } from "react"
 import { Col, Row } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -24,13 +24,14 @@ export default function FeatureListComponent() {
   if (isLoading) return <p>Loading...</p>
   if (!data) return <p>No profile data</p>
 
-  const models = (data as Array<any>).map(
-    entry => new ModelEntity(
+  const features = (data as Array<any>).map(
+    entry => new FeatureEntity(
       entry.name,
       entry.version,
-      entry.domain,
-      entry.modelFramework,
-      entry.outputs,
+      entry.dataType,
+      entry.defaultValue,
+      entry.featureGroupId,
+      entry.ttlSeconds,
       entry.id
     )
   )
@@ -38,14 +39,15 @@ export default function FeatureListComponent() {
   return (
       <Row xs={10}>
       {
-        models.map(model =>{
-          console.log(model);
-            return <Row key={model.id}>
-              <Col>{model.name}</Col>
-              <Col>{model.version}</Col>
-              <Col>{model.modelFramework}</Col>
-              <Col>{model.domain}</Col>
-              <Col>{model.outputs}</Col>
+        features.map(feature =>{
+          console.log(feature);
+            return <Row key={feature.id}>
+              <Col>{feature.name}</Col>
+              <Col>{feature.version}</Col>
+              <Col>{feature.dataType}</Col>
+              <Col>{feature.defaultValue}</Col>
+              <Col>{feature.featureGroupId}</Col>
+              <Col>{feature.ttlSeconds}</Col>
             </Row>
           }
         )
