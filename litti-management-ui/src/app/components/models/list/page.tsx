@@ -37,19 +37,26 @@ export default function ModelListComponent() {
  
   return (
       <Row xs={10}>
-      {
-        models.map(model =>{
-          console.log(model);
-            return <Row key={model.id}>
-              <Col>{model.name}</Col>
-              <Col>{model.version}</Col>
-              <Col>{model.modelFramework}</Col>
-              <Col>{model.domain}</Col>
-              <Col>{model.outputs}</Col>
-            </Row>
-          }
-        )
-      }
+        <Row key="HEADER">
+          <Col>NAME</Col>
+          <Col>VERSION</Col>
+          <Col>FRAMEWORk</Col>
+          <Col>DOMAIN</Col>
+          <Col>OUTPUTS</Col>
+        </Row>
+        {
+          models.map(model =>{
+            console.log(model);
+              return <Row key={model.id}>
+                <Col>{model.name}</Col>
+                <Col>{model.version}</Col>
+                <Col>{model.modelFramework}</Col>
+                <Col>{model.domain}</Col>
+                <Col>{model.outputs}</Col>
+              </Row>
+            }
+          )
+        }
       </Row>
   )
 
