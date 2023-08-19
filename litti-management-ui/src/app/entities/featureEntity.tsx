@@ -6,7 +6,8 @@ export class FeatureEntity {
     defaultValue: string
     featureGroupId: string
     ttlSeconds: number
-    constructor(name: string,version: string,dataType: string,defaultValue: string,featureGroupId: string,ttlSeconds:number, id?:string) {
+    featureGroupName!: string
+    constructor(name: string,version: string,dataType: string,defaultValue: string,featureGroupId: string,ttlSeconds:number, id?:string, featureGroupName?:string) {
         this.name = name
         this.version = version
         this.dataType = dataType
@@ -15,6 +16,9 @@ export class FeatureEntity {
         this.ttlSeconds = ttlSeconds;
         if(id){
             this.id = id
+        }
+        if(featureGroupName){
+            this.featureGroupName = featureGroupName
         }
     }
 
