@@ -16,6 +16,7 @@ const handleSubmit = async (event:any, setSelectedOption: any) => {
     (event.target.modelVersion as HTMLInputElement).value,
     (event.target.modelDomain as HTMLInputElement).value,
     (event.target.modelFramework as HTMLInputElement).value,
+    (event.target.modelLocation as HTMLInputElement).value,
     (event.target.modelOutputs as HTMLInputElement).value
   );
 
@@ -72,6 +73,10 @@ export default function ModelAddComponent(props:any) {
               <Row className="entity-base-row">
                 <Col xs={1}><label htmlFor="modelFramework">Framework</label></Col>
                 <Col xs={8}><input type="text" className="entity-text-input" id="modelFramework" name="modelFramework" /></Col>
+              </Row>
+              <Row className="entity-base-row">
+                <Col xs={1}><label htmlFor="modelLocation">Location</label></Col>
+                <Col xs={8}><input type="text" className="entity-text-input" id="modelLocation" name="modelLocation" /></Col>
               </Row>
               <Row className="entity-base-row">
                 <Col xs={1}><label htmlFor="modelOutputs">Outputs</label></Col>

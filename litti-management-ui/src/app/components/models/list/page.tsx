@@ -30,6 +30,7 @@ export default function ModelListComponent() {
       entry.version,
       entry.domain,
       entry.modelFramework,
+      entry.modelLocation,
       entry.outputs,
       entry.id
     )
