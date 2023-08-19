@@ -1,5 +1,5 @@
 "use client";
-import { ModelEntity } from "@/app/entities/modelEntity";
+import { FeatureGroupEntity } from "@/app/entities/featureGroupEntity";
 import { useEffect, useState } from "react"
 import { Col, Row } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -7,13 +7,13 @@ import '@/app/globals.css'
 
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
-export default function ModelListComponent() {
+export default function FeatureGroupsListComponent() {
 
   const [data, setData] = useState(null)
   const [isLoading, setLoading] = useState(true)
  
   useEffect(() => {
-    fetch('http://localhost:8081/models')
+    fetch('http://localhost:8081/feature-groups')
       .then((res) => res.json())
       .then((data) => {
         setData(data)
@@ -24,14 +24,10 @@ export default function ModelListComponent() {
   if (isLoading) return <p>Loading...</p>
   if (!data) return <p>No profile data</p>
 
-  const models = (data as Array<any>).map(
-    entry => new ModelEntity(
+  const features = (data as Array<any>).map(
+    entry => new FeatureGroupEntity(
       entry.name,
-      entry.version,
-      entry.domain,
-      entry.modelFramework,
-      entry.outputs,
-      entry.id
+      entry.dimensions
     )
   )
  
@@ -39,20 +35,14 @@ export default function ModelListComponent() {
       <Row xs={10}>
         <Row key="HEADER">
           <Col>NAME</Col>
-          <Col>VERSION</Col>
-          <Col>FRAMEWORK</Col>
-          <Col>DOMAIN</Col>
-          <Col>OUTPUTS</Col>
+          <Col>DIMENSIONS</Col>
         </Row>
         {
-          models.map(model =>{
-            console.log(model);
-              return <Row key={model.id}>
-                <Col>{model.name}</Col>
-                <Col>{model.version}</Col>
-                <Col>{model.modelFramework}</Col>
-                <Col>{model.domain}</Col>
-                <Col>{model.outputs}</Col>
+          features.map(feature =>{
+            console.log(feature);
+              return <Row key={feature.id}>
+                <Col>{feature.name}</Col>
+                <Col>{feature.dimensions}</Col>
               </Row>
             }
           )
