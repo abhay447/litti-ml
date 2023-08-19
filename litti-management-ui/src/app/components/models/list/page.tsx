@@ -36,7 +36,7 @@ export default function ModelListComponent() {
 
  
   return (
-    <DataGrid rows={models} columns={modelTableColumns}/>
+    <DataGrid rows={models} columns={modelTableColumns} showColumnVerticalBorder={true} showCellVerticalBorder={true}/>
   )
 
 }

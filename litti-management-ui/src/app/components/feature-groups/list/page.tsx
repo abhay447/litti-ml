@@ -32,7 +32,7 @@ export default function FeatureGroupsListComponent() {
   if (featureGroups.length == 0) return <p>No profile data</p>
   
   return (
-    <DataGrid rows={featureGroups} columns={featureGroupTableColumns}/>
+    <DataGrid rows={featureGroups} columns={featureGroupTableColumns} showColumnVerticalBorder={true} showCellVerticalBorder={true}/>
   )
 
 }

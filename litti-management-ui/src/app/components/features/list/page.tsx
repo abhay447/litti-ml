@@ -52,6 +52,6 @@ export default function FeatureListComponent() {
   )
  
   return (
-        <DataGrid rows={features} columns={featureTableColumns}/>
+        <DataGrid rows={features} columns={featureTableColumns} showColumnVerticalBorder={true} showCellVerticalBorder={true}/>
   )
 }
