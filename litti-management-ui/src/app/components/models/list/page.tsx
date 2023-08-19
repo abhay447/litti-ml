@@ -4,6 +4,16 @@ import { useEffect, useState } from "react"
 import { Col, Row } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
+import { DataGrid } from "@mui/x-data-grid";
+
+
+const modelTableColumns = [
+  { field: 'name', headerName: 'Name' , width:150},
+  { field: 'version', headerName: 'Version' , width:150},
+  { field: 'modelFramework', headerName: 'Model Framework' , width:150},
+  { field: 'domain', headerName: 'Domain' , width:150},
+  { field: 'outputs', headerName: 'Outputs' , width:400},
+]
 
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
@@ -37,28 +47,7 @@ export default function ModelListComponent() {
   )
  
   return (
-      <Row xs={10}>
-        <Row key="HEADER">
-          <Col>NAME</Col>
-          <Col>VERSION</Col>
-          <Col>FRAMEWORK</Col>
-          <Col>DOMAIN</Col>
-          <Col>OUTPUTS</Col>
-        </Row>
-        {
-          models.map(model =>{
-            console.log(model);
-              return <Row key={model.id}>
-                <Col>{model.name}</Col>
-                <Col>{model.version}</Col>
-                <Col>{model.modelFramework}</Col>
-                <Col>{model.domain}</Col>
-                <Col>{model.outputs}</Col>
-              </Row>
-            }
-          )
-        }
-      </Row>
+    <DataGrid rows={models} columns={modelTableColumns}/>
   )
 
 }
