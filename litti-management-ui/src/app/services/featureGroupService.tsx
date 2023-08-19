@@ -12,3 +12,8 @@ export  async function getFeatureGroups(){
   );
   return features;
 }
+
+export  async function getFeatureGroupsMap(){
+  const featureGroups = await getFeatureGroups();
+  return new Map(featureGroups.map(fg => [fg.id,fg]));
+}

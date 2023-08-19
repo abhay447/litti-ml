@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { Col, Row } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
-import { getFeatureGroups } from "@/app/services/featureGroupService";
+import { getFeatureGroupsMap } from "@/app/services/featureGroupService";
 import { getFeatures } from "@/app/services/featureService";
 import { FeatureGroupEntity } from "@/app/entities/featureGroupEntity";
 
@@ -14,14 +14,14 @@ export default function FeatureListComponent() {
 
   const [data, setData] = useState<FeatureEntity[]>()
   const [isLoading, setLoading] = useState(true)
-  const [featureGroups, setFeatureGroups] = useState<FeatureGroupEntity[]>()
+  const [featureGroupsMap, setFeatureGroupsMap] = useState<Map<string, any>>()
   useEffect(() => {
     Promise.all([
       getFeatures(),
-      getFeatureGroups()
-    ]).then(([features, featureGroups]) => {
+      getFeatureGroupsMap()
+    ]).then(([features, featureGroupsMap]) => {
       setData(features);
-      setFeatureGroups(featureGroups);
+      setFeatureGroupsMap(featureGroupsMap);
       setLoading(false);
     });
   }, [])
@@ -59,7 +59,7 @@ export default function FeatureListComponent() {
                 <Col>{feature.version}</Col>
                 <Col>{feature.dataType}</Col>
                 <Col>{feature.defaultValue}</Col>
-                <Col>{feature.featureGroupId}</Col>
+                <Col>{featureGroupsMap?.get(feature.featureGroupId).name}</Col>
                 <Col>{feature.ttlSeconds}</Col>
               </Row>
             }
