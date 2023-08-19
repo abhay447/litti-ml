@@ -6,8 +6,13 @@ import '@/app/styles/sidebar.css'
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export const NAV_OPTION_MODELS = "Models";
 export const NAV_OPTION_FEATURES = "Features";
+export const NAV_OPTION_FEATURE_GROUPS = "Feature Groups";
 export const NAV_OPTION_MODEL_CLUSTERS = "Model Clusters";
 export const NAV_OPTION_FEATURE_STORES = "Feature Stores";
+
+const sidebarProductOptions = [
+  NAV_OPTION_MODELS,NAV_OPTION_FEATURES,NAV_OPTION_FEATURE_GROUPS,NAV_OPTION_MODEL_CLUSTERS,NAV_OPTION_FEATURE_STORES
+];
 
 export default function SidebarProducts(props: any) {
   const navOption = props.navOption;
@@ -24,31 +29,21 @@ export default function SidebarProducts(props: any) {
     setNavOption(option);
   }
 
+  function SidebarProductEntry(props: any) {
+    const option = props.option;
+    return <Row>
+    <button type="button" className={getOptionStyle(option)} onClick={() => handleOnClick(option)}>
+      {option}
+    </button>
+    </Row>
+  }
+
   return (
     <Container className="sidebar vh-100 d-flex flex-column">
       <Row className="sidebar-app-title">
         Litti Management
       </Row>
-      <Row>
-        <button type="button" className={getOptionStyle(NAV_OPTION_MODELS)} onClick={() => handleOnClick(NAV_OPTION_MODELS)}>
-          {NAV_OPTION_MODELS}
-        </button>
-      </Row>
-      <Row>
-        <button type="button" className={getOptionStyle(NAV_OPTION_FEATURES)} onClick={() => handleOnClick(NAV_OPTION_FEATURES)}>
-          {NAV_OPTION_FEATURES}
-        </button>
-      </Row>
-      <Row>
-        <button type="button" className={getOptionStyle(NAV_OPTION_MODEL_CLUSTERS)} onClick={() => handleOnClick(NAV_OPTION_MODEL_CLUSTERS)}>
-          {NAV_OPTION_MODEL_CLUSTERS}
-        </button>
-      </Row>
-      <Row>
-        <button type="button" className={getOptionStyle(NAV_OPTION_FEATURE_STORES)} onClick={() => handleOnClick(NAV_OPTION_FEATURE_STORES)}>
-          {NAV_OPTION_FEATURE_STORES}
-        </button>
-      </Row>
+        {sidebarProductOptions.map(x => <SidebarProductEntry option={x}/>)}
     </Container>
   )
 
