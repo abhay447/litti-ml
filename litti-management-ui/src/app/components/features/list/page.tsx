@@ -4,21 +4,26 @@ import { useEffect, useState } from "react"
 import { Col, Row } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
+import { getFeatureGroups } from "@/app/services/featureGroupService";
+import { getFeatures } from "@/app/services/featureService";
+import { FeatureGroupEntity } from "@/app/entities/featureGroupEntity";
 
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export default function FeatureListComponent() {
 
-  const [data, setData] = useState(null)
+  const [data, setData] = useState<FeatureEntity[]>()
   const [isLoading, setLoading] = useState(true)
- 
+  const [featureGroups, setFeatureGroups] = useState<FeatureGroupEntity[]>()
   useEffect(() => {
-    fetch('http://localhost:8081/features')
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data)
-        setLoading(false)
-      })
+    Promise.all([
+      getFeatures(),
+      getFeatureGroups()
+    ]).then(([features, featureGroups]) => {
+      setData(features);
+      setFeatureGroups(featureGroups);
+      setLoading(false);
+    });
   }, [])
  
   if (isLoading) return <p>Loading...</p>
