@@ -6,7 +6,8 @@ export  async function getFeatureGroups(){
   const features = (data as Array<any>).map(
     entry => new FeatureGroupEntity(
       entry.name,
-      entry.dimensions
+      entry.dimensions,
+      entry.id
     )
   );
   return features;
