@@ -31,10 +31,10 @@ export default function SidebarProducts(props: any) {
 
   function SidebarProductEntry(props: any) {
     const option = props.option;
-    return <Row>
-    <button type="button" className={getOptionStyle(option)} onClick={() => handleOnClick(option)}>
-      {option}
-    </button>
+    return <Row >
+      <button type="button" className={getOptionStyle(option)} onClick={() => handleOnClick(option)}>
+        {option}
+      </button>
     </Row>
   }
 
@@ -43,7 +43,7 @@ export default function SidebarProducts(props: any) {
       <Row className="sidebar-app-title">
         Litti Management
       </Row>
-        {sidebarProductOptions.map(x => <SidebarProductEntry option={x}/>)}
+        {sidebarProductOptions.map(x => <SidebarProductEntry option={x} key={x}/>)}
     </Container>
   )
 
