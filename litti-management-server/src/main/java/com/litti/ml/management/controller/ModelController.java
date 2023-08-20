@@ -34,7 +34,7 @@ public class ModelController {
     return this.modelManagementService.findById(UUID.fromString(modelId));
   }
 
-  @GetMapping(value = "/models-deployment-meta/{modelId}", produces = "application/json")
+  @GetMapping(value = "/model-deployment-meta/{modelId}", produces = "application/json")
   public ModelMetadata getModelDeploymentMetadata(@PathVariable String modelId) {
     return this.modelManagementService.getModelDeploymentMetadata(UUID.fromString(modelId));
   }
