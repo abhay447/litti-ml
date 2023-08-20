@@ -17,14 +17,14 @@ export  async function getModels(){
   return models;
 }
 
-export async function addModel(modelEntity:ModelEntity){
+export async function addModel(modelEntity:ModelEntity, featureIds:string[]){
   const data = {
     modelEntity: modelEntity,
-    featureIds: []
+    featureIds: featureIds
   }
 
   // Send the data to the server in JSON format.
-  const JSONdata = JSON.stringify(data)
+  const jsonData = JSON.stringify(data)
 
   // API endpoint where we send form data.
   const endpoint = 'http://localhost:8081/models'
@@ -38,7 +38,7 @@ export async function addModel(modelEntity:ModelEntity){
       'Content-Type': 'application/json',
     },
     // Body of the request is the JSON data we created above.
-    body: JSONdata,
+    body: jsonData,
   }
 
   // Send the form data to our forms API on Vercel and get a response.
