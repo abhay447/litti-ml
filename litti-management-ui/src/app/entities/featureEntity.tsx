@@ -22,4 +22,12 @@ export class FeatureEntity {
         }
     }
 
+    equalsRawFeature(f2:any) {
+        return this.name == f2.name &&
+        this.version == f2.version &&
+        this.dataType == f2.dataType &&
+        this.defaultValue == f2.defaultValue &&
+        this.ttlSeconds == f2.ttlSeconds;
+    }
+
 }

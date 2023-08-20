@@ -42,6 +42,8 @@ export async function addFeature(featureEntity:FeatureEntity) {
   
     // Get the response data from server as JSON.
     // If server returns the name submitted, that means the form works.
-    const result = JSON.stringify(await response.json())
+    const jsonResponse = await response.json()
+    const result = JSON.stringify(jsonResponse)
     console.log(result);
+    return jsonResponse.id as string;
 }

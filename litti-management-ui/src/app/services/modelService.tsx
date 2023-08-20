@@ -43,9 +43,11 @@ export async function addModel(modelEntity:ModelEntity, featureIds:string[]){
 
   // Send the form data to our forms API on Vercel and get a response.
   const response = await fetch(endpoint, options)
+  const responseJson = await response.json()
 
   // Get the response data from server as JSON.
   // If server returns the name submitted, that means the form works.
-  const result = JSON.stringify(await response.json())
+  const result = JSON.stringify(responseJson)
   console.log(result);
+  return responseJson.id as string
 }

@@ -18,6 +18,11 @@ export  async function getFeatureGroupsMap(){
   return new Map(featureGroups.map(fg => [fg.id,fg]));
 }
 
+export  async function getFeatureGroupsNameMap(){
+  const featureGroups = await getFeatureGroups();
+  return new Map(featureGroups.map(fg => [fg.name,fg]));
+}
+
 export async function addFeautureGroup(featureGroupEntity:FeatureGroupEntity) {
    // Send the data to the server in JSON format.
    const JSONdata = JSON.stringify(featureGroupEntity)

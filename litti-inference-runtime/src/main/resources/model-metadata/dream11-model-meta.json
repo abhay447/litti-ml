@@ -1,7 +1,8 @@
 {
   "name": "dream11_model",
   "version": "v1",
-  "modelLocation": "model-artifacts/dream11_v1.pmml",
+  "modelLocation": "/home/abhay/IdeaProjects/litti-ml/litti-inference-runtime/src/main/resources/model-artifacts/dream11_v1.pmml",
+  "domain": "test",
   "modelFramework": "PMML",
   "features": [
     {
