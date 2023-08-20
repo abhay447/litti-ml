@@ -8,8 +8,9 @@ import { OPTION_LIST } from "@/app/components/common/menu/page";
 import { useState } from "react";
 import { FeatureGroupEntity } from "@/app/entities/featureGroupEntity";
 import { getFeatureGroups } from "@/app/services/featureGroupService";
-import LoaderComponent from "../../common/loader/loading";
+import LoaderComponent from "@/app/components/common/loader/loading";
 import Select from 'react-select';
+import { addFeature } from "@/app/services/featureService";
 
 const handleSubmit = async (event:any, setSelectedOption: any, selectedFeatureGroup:any) => {
   // Stop the form from submitting and refreshing the page.
@@ -25,33 +26,7 @@ const handleSubmit = async (event:any, setSelectedOption: any, selectedFeatureGr
     selectedFeatureGroup.value,
     Number.parseInt((event.target.ttlSeconds as HTMLInputElement).value)
   );
-
-  // Send the data to the server in JSON format.
-  const JSONdata = JSON.stringify(featureEntity)
-  console.log(JSONdata)
-
-  // API endpoint where we send form data.
-  const endpoint = 'http://localhost:8081/features'
-
-  // Form the request for sending data to the server.
-  const options = {
-    // The method is POST because we are sending data.
-    method: 'POST',
-    // Tell the server we're sending JSON.
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    // Body of the request is the JSON data we created above.
-    body: JSONdata,
-  }
-
-  // Send the form data to our forms API on Vercel and get a response.
-  const response = await fetch(endpoint, options)
-
-  // Get the response data from server as JSON.
-  // If server returns the name submitted, that means the form works.
-  const result = JSON.stringify(await response.json())
-  console.log(result);
+  await addFeature(featureEntity);
   setSelectedOption(OPTION_LIST);
 }
 const featureGroupsPromise = getFeatureGroups();

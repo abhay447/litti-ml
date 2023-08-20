@@ -5,43 +5,19 @@ import '@/app/globals.css'
 import {FeatureGroupEntity} from '@/app/entities/featureGroupEntity';
 import "@/app/styles/entity.css"
 import { OPTION_LIST } from "@/app/components/common/menu/page";
+import { addFeautureGroup } from "@/app/services/featureGroupService";
 
 const handleSubmit = async (event:any, setSelectedOption: any) => {
   // Stop the form from submitting and refreshing the page.
   event.preventDefault()
 
   // Get data from the form.
-  const featureEntity = new FeatureGroupEntity(
+  const featureGroupEntity = new FeatureGroupEntity(
     (event.target.featureGroupName as HTMLInputElement).value,
     (event.target.featureGroupDimensions as HTMLInputElement).value
   );
 
-  // Send the data to the server in JSON format.
-  const JSONdata = JSON.stringify(featureEntity)
-  console.log(JSONdata)
-
-  // API endpoint where we send form data.
-  const endpoint = 'http://localhost:8081/feature-groups'
-
-  // Form the request for sending data to the server.
-  const options = {
-    // The method is POST because we are sending data.
-    method: 'POST',
-    // Tell the server we're sending JSON.
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    // Body of the request is the JSON data we created above.
-    body: JSONdata,
-  }
-
-  // Send the form data to our forms API on Vercel and get a response.
-  const response = await fetch(endpoint, options)
-
-  // Get the response data from server as JSON.
-  // If server returns the name submitted, that means the form works.
-  const result = JSON.stringify(await response.json())
-  console.log(result);
+  await addFeautureGroup(featureGroupEntity)
   setSelectedOption(OPTION_LIST);
 }
 
