@@ -6,6 +6,8 @@ import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.litti.ml.entities.feature.FeatureMetadata;
 
+import java.util.UUID;
+
 @AutoValue
 @JsonDeserialize(builder = AutoValue_ModelMetadata.Builder.class)
 public abstract class ModelMetadata {
@@ -13,6 +15,8 @@ public abstract class ModelMetadata {
   public static Builder builder() {
     return new AutoValue_ModelMetadata.Builder();
   }
+
+  public abstract UUID getId();
 
   public abstract String getName();
 
@@ -29,6 +33,8 @@ public abstract class ModelMetadata {
   @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "")
   @AutoValue.Builder
   public abstract static class Builder {
+
+    public abstract Builder id(UUID value);
 
     public abstract Builder name(String value);
 

@@ -10,7 +10,7 @@ export  async function getModels(){
       entry.domain,
       entry.modelFramework,
       entry.modelLocation,
-      entry.outputs,
+      JSON.stringify(entry.outputs),
       entry.id
     )
   );

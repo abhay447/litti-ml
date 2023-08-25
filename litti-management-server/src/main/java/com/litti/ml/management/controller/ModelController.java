@@ -20,8 +20,10 @@ public class ModelController {
   }
 
   @GetMapping(value = "/models", produces = "application/json")
-  public List<ModelEntity> list() {
-    return this.modelManagementService.findAll();
+  public List<ModelMetadata> list() {
+    return this.modelManagementService.findAll().stream()
+        .map(modelEntity -> this.modelManagementService.getModelDeploymentMetadata(modelEntity))
+        .toList();
   }
 
   @PostMapping(value = "/models", produces = "application/json", consumes = "application/json")
@@ -30,12 +32,8 @@ public class ModelController {
   }
 
   @GetMapping(value = "/models/{modelId}", produces = "application/json")
-  public ModelEntity get(@PathVariable String modelId) {
-    return this.modelManagementService.findById(UUID.fromString(modelId));
-  }
-
-  @GetMapping(value = "/model-deployment-meta/{modelId}", produces = "application/json")
-  public ModelMetadata getModelDeploymentMetadata(@PathVariable String modelId) {
-    return this.modelManagementService.getModelDeploymentMetadata(UUID.fromString(modelId));
+  public ModelMetadata get(@PathVariable String modelId) {
+    return this.modelManagementService.getModelDeploymentMetadata(
+        this.modelManagementService.findById(UUID.fromString(modelId)));
   }
 }

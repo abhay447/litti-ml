@@ -93,6 +93,7 @@ public class ModelEntity {
         gson.fromJson(this.outputs, new TypeToken<List<ModelOutputMetadata>>() {}.getType());
     final ModelMetadata modelMetadata =
         ModelMetadata.builder()
+            .id(this.id)
             .name(this.name)
             .version(this.version)
             .modelLocation(this.modelLocation)

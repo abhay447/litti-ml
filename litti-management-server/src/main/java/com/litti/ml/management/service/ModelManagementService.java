@@ -100,10 +100,10 @@ public class ModelManagementService {
     return modelRepository.findAll();
   }
 
-  public ModelMetadata getModelDeploymentMetadata(UUID modelId) {
-    final ModelEntity modelEntity = modelRepository.findById(modelId).get();
+  public ModelMetadata getModelDeploymentMetadata(ModelEntity modelEntity) {
     final List<ModelFeatureLinkEntity> modelFeatureLinkEntities =
-        this.modelFeatureLinkRepository.findAll(Example.of(new ModelFeatureLinkEntity(modelId)));
+        this.modelFeatureLinkRepository.findAll(
+            Example.of(new ModelFeatureLinkEntity(modelEntity.getId())));
     final List<UUID> featureIds =
         modelFeatureLinkEntities.stream().map(ModelFeatureLinkEntity::getFeatureId).toList();
     final List<FeatureEntity> featureEntities = this.featureRepository.findAllById(featureIds);
