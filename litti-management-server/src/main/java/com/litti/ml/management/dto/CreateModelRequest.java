@@ -1,7 +1,6 @@
 package com.litti.ml.management.dto;
 
 import com.litti.ml.management.entiites.ModelEntity;
-
 import java.util.List;
 
 public class CreateModelRequest {

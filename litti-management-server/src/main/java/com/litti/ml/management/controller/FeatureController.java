@@ -7,10 +7,9 @@ import com.litti.ml.management.entiites.FeatureGroupEntity;
 import com.litti.ml.management.entiites.FeatureGroupStoreLinkEntity;
 import com.litti.ml.management.entiites.FeatureStoreEntity;
 import com.litti.ml.management.service.FeatureManagementService;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(originPatterns = "*")

@@ -1,6 +1,7 @@
 package com.litti.ml.runtime;
 
 import com.litti.ml.entities.dtypes.JsonDataReader;
+import com.litti.ml.entities.management.client.LittiManagementClient;
 import com.litti.ml.feature.FeatureFetchRouter;
 import com.litti.ml.feature.loader.FeatureGroupLoader;
 import com.litti.ml.feature.loader.StaticResourcesFGLoader;
@@ -8,8 +9,8 @@ import com.litti.ml.feature.store.AbstractFeatureStore;
 import com.litti.ml.feature.store.LocalParquetFeatureStore;
 import com.litti.ml.feature.store.RedisFeatureStore;
 import com.litti.ml.model.ModelRegistry;
+import com.litti.ml.model.loader.LittiManagementModelLoader;
 import com.litti.ml.model.loader.ModelLoader;
-import com.litti.ml.model.loader.StaticResourcesModelLoader;
 import com.litti.ml.model.logger.ModelConsoleLogger;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
@@ -41,11 +42,11 @@ public class Main {
         .forEach(fg -> featureFetchRouter.registerFeatureGroup(fg, redisFeatureStore));
     final ModelRegistry modelRegistry =
         new ModelRegistry(new ModelConsoleLogger(), featureFetchRouter);
-    final ModelLoader staticModelLoader = new StaticResourcesModelLoader();
-    staticModelLoader
-        .loadAllModels()
-        .getModelsLoaded()
-        .forEach(modelRegistry::addModelForPrediction);
+    final ModelLoader modelLoader =
+        new LittiManagementModelLoader(
+            new LittiManagementClient(
+                "http://localhost:8081")); // new StaticResourcesModelLoader();
+    modelLoader.loadAllModels().getModelsLoaded().forEach(modelRegistry::addModelForPrediction);
     RuntimeHTTPServer runtimeHTTPServer = new RuntimeHTTPServer(modelRegistry);
   }
 }

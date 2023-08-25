@@ -4,10 +4,9 @@ import com.litti.ml.entities.model.ModelMetadata;
 import com.litti.ml.management.dto.CreateModelRequest;
 import com.litti.ml.management.entiites.ModelEntity;
 import com.litti.ml.management.service.ModelManagementService;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(originPatterns = "*")

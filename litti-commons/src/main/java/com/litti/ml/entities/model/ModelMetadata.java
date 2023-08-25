@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.litti.ml.entities.feature.FeatureMetadata;
-
 import java.util.UUID;
 
 @AutoValue
@@ -29,6 +28,8 @@ public abstract class ModelMetadata {
   public abstract ImmutableList<FeatureMetadata> getFeatures();
 
   public abstract ImmutableList<ModelOutputMetadata> getOutputs();
+
+  public abstract String getDomain();
 
   @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "")
   @AutoValue.Builder
@@ -58,6 +59,8 @@ public abstract class ModelMetadata {
     public abstract Builder outputs(ImmutableList<ModelOutputMetadata> value);
 
     public abstract ImmutableList.Builder<ModelOutputMetadata> outputsBuilder();
+
+    public abstract Builder domain(String value);
 
     public final Builder addOutput(ModelOutputMetadata output) {
       outputsBuilder().add(output);

@@ -1,4 +1,5 @@
 {
+  "id": "ff86a473-96f7-45aa-9ab1-8f4fbe93a829",
   "name": "dream11_model",
   "version": "v1",
   "modelLocation": "/home/abhay/IdeaProjects/litti-ml/litti-inference-runtime/src/main/resources/model-artifacts/dream11_v1.pmml",

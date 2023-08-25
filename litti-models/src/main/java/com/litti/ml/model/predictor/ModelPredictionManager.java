@@ -6,7 +6,6 @@ import com.litti.ml.entities.model.PredictionResponse;
 import com.litti.ml.feature.FeatureFetchRouter;
 import com.litti.ml.model.logger.ModelLogRecord;
 import com.litti.ml.model.logger.ModelLogger;
-
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
