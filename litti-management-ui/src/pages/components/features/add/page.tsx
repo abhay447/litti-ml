@@ -7,7 +7,7 @@ import "@/app/styles/entity.css"
 import { useState } from "react";
 import { FeatureGroupEntity } from "@/app/entities/featureGroupEntity";
 import { getFeatureGroups } from "@/app/services/featureGroupService";
-import LoaderComponent from "@/app/components/common/loader/loading";
+import LoaderComponent from "@/pages/components/common/loader/loading";
 import Select from 'react-select';
 import { addFeature } from "@/app/services/featureService";
 import { OPTION_LIST } from "@/app/common/constants";

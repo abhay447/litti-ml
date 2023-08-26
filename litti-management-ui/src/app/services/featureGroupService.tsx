@@ -1,7 +1,9 @@
 import { FeatureGroupEntity } from "@/app/entities/featureGroupEntity"
+import { getServerSideProps } from "@/app/common/clients_config";
 
-export  async function getFeatureGroups(){
-    const res = await fetch('http://localhost:8081/feature-groups');
+export  async function getFeatureGroups():Promise<FeatureGroupEntity[]>{
+  const endpoint = await (await getServerSideProps()).props.base_url+'/feature-groups'
+    const res = await fetch(endpoint);
   const data = await res.json();
   const features = (data as Array<any>).map(
     entry => new FeatureGroupEntity(
@@ -13,12 +15,12 @@ export  async function getFeatureGroups(){
   return features;
 }
 
-export  async function getFeatureGroupsMap(){
+export  async function getFeatureGroupsMap():Promise<Map<string,FeatureGroupEntity>>{
   const featureGroups = await getFeatureGroups();
   return new Map(featureGroups.map(fg => [fg.id,fg]));
 }
 
-export  async function getFeatureGroupsNameMap(){
+export  async function getFeatureGroupsNameMap():Promise<Map<string,FeatureGroupEntity>>{
   const featureGroups = await getFeatureGroups();
   return new Map(featureGroups.map(fg => [fg.name,fg]));
 }
@@ -29,7 +31,7 @@ export async function addFeautureGroup(featureGroupEntity:FeatureGroupEntity) {
    console.log(JSONdata)
  
    // API endpoint where we send form data.
-   const endpoint = 'http://localhost:8081/feature-groups'
+   const endpoint = await (await getServerSideProps()).props.base_url+'/feature-groups'
  
    // Form the request for sending data to the server.
    const options = {

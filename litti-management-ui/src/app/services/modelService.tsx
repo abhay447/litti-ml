@@ -1,7 +1,9 @@
 import { ModelEntity } from "@/app/entities/modelEntity"
+import { getServerSideProps } from "@/app/common/clients_config";
 
 export  async function getModels(){
-    const res = await fetch('http://localhost:8081/models');
+  const endpoint = (await getServerSideProps()).props.base_url+'/models'
+    const res = await fetch(endpoint);
   const data = await res.json();
   const models = (data as Array<any>).map(
     entry => new ModelEntity(
@@ -27,7 +29,7 @@ export async function addModel(modelEntity:ModelEntity, featureIds:string[]){
   const jsonData = JSON.stringify(data)
 
   // API endpoint where we send form data.
-  const endpoint = 'http://localhost:8081/models'
+  const endpoint = (await getServerSideProps()).props.base_url+'/models'
 
   // Form the request for sending data to the server.
   const options = {

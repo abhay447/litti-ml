@@ -8,7 +8,7 @@ import { addModel } from "@/app/services/modelService";
 import { useState } from "react";
 import { addFeature, getFeatures } from "@/app/services/featureService";
 import { FeatureEntity } from "@/app/entities/featureEntity";
-import LoaderComponent from "@/app/components/common/loader/loading";
+import LoaderComponent from "@/pages/components/common/loader/loading";
 import Multiselect from 'multiselect-react-dropdown';
 import { FeatureGroupEntity } from "@/app/entities/featureGroupEntity";
 import { getFeatureGroupsNameMap } from "@/app/services/featureGroupService";

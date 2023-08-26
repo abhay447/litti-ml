@@ -4,10 +4,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
 import "@/app/styles/entity.css"
 import { useRouter } from "next/navigation";
-import EntityMenu from "@/app/components/common/menu/page";
+import EntityMenu from "@/pages/components/common/menu/page";
 import { useState } from "react";
-import FeatureGroupsListComponent from "@/app/components/feature-groups/list/page";
-import FeatureGroupAddComponent from "@/app/components/feature-groups/add/page";
+import FeatureGroupsListComponent from "@/pages/components/feature-groups/list/page";
+import FeatureGroupAddComponent from "@/pages/components/feature-groups/add/page";
 import { OPTION_LIST } from "@/app/common/constants";
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL

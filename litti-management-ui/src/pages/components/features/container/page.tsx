@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
 import "@/app/styles/entity.css"
 import { useRouter } from "next/navigation";
-import EntityMenu from "@/app/components/common/menu/page";
+import EntityMenu from "@/pages/components/common/menu/page";
 import { useState } from "react";
 import FeatureListComponent from "../list/page";
 import FeatureAddComponent from "../add/page";

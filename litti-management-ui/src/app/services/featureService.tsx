@@ -1,7 +1,9 @@
 import { FeatureEntity } from "@/app/entities/featureEntity"
+import { getServerSideProps } from "@/app/common/clients_config";
 
 export  async function getFeatures(){
-    const res = await fetch('http://localhost:8081/features');
+  const endpoint = await (await getServerSideProps()).props.base_url+'/features'
+  const res = await fetch(endpoint);
   const data = await res.json();
   const features:FeatureEntity[] = (data as Array<any>).map(
     entry => new FeatureEntity(
@@ -23,7 +25,7 @@ export async function addFeature(featureEntity:FeatureEntity) {
     console.log(JSONdata)
   
     // API endpoint where we send form data.
-    const endpoint = 'http://localhost:8081/features'
+    const endpoint = (await getServerSideProps()).props.base_url+'/features'
   
     // Form the request for sending data to the server.
     const options = {
