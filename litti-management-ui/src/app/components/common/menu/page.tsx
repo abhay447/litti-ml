@@ -3,9 +3,7 @@ import { Col, Row } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
 import '@/app/styles/entity.css';
-
-export const OPTION_ADD = "add";
-export const OPTION_LIST = "list";
+import { OPTION_ADD, OPTION_LIST } from "@/app/common/constants";
 
 export default function EntityMenu(props: any) {
 

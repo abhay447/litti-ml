@@ -4,18 +4,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
 import {ModelEntity} from '@/app/entities/modelEntity';
 import "@/app/styles/entity.css"
-import { OPTION_LIST } from "@/app/components/common/menu/page";
 import { addModel } from "@/app/services/modelService";
 import { useState } from "react";
 import { addFeature, getFeatures } from "@/app/services/featureService";
 import { FeatureEntity } from "@/app/entities/featureEntity";
 import LoaderComponent from "@/app/components/common/loader/loading";
 import Multiselect from 'multiselect-react-dropdown';
-import { features } from "process";
-import { Container } from "postcss";
 import { FeatureGroupEntity } from "@/app/entities/featureGroupEntity";
 import { getFeatureGroupsNameMap } from "@/app/services/featureGroupService";
-import { stringify } from "querystring";
+import { OPTION_LIST } from "@/app/common/constants";
 
 const handleSubmit = async (event:any, setSelectedOption: any, selectedFeatureIds: string[]) => {
   // Stop the form from submitting and refreshing the page.
@@ -58,7 +55,7 @@ export default function ModelAddComponent(props:any) {
 
   }
 
-export function chooseRenderComponent(useFormInput:boolean, isLoading: boolean, setSelectedOption:any, features: FeatureEntity[], featureGroupsMap: Map<string, FeatureGroupEntity>, setSelectedFeatureIds:any, selectedFeatureIds:FeatureEntity[]) {
+function chooseRenderComponent(useFormInput:boolean, isLoading: boolean, setSelectedOption:any, features: FeatureEntity[], featureGroupsMap: Map<string, FeatureGroupEntity>, setSelectedFeatureIds:any, selectedFeatureIds:FeatureEntity[]) {
   if(isLoading){
     return <LoaderComponent/>
   }
@@ -69,7 +66,7 @@ export function chooseRenderComponent(useFormInput:boolean, isLoading: boolean, 
   }
 }
 
-export function ModelAddForm(props:any) {
+function ModelAddForm(props:any) {
 
   function onSelectFeature(selectedList:any[], selectedItem:any) {
     selectedList.concat(selectedItem);
@@ -137,7 +134,7 @@ function getFeaturePickerOptions(features:FeatureEntity[]){
   });
 }
 
-export function ModelAddJsonForm(props:any) {
+function ModelAddJsonForm(props:any) {
   return <form onSubmit={(e) => handleJsonSubmit(e,props.features, props.featureGroupsMap)}>
     <Row className="entity-base-row">
       <label htmlFor="addModelJSON">Add model json</label>

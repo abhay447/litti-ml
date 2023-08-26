@@ -4,10 +4,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
 import "@/app/styles/entity.css"
 import { useRouter } from "next/navigation";
-import EntityMenu, { OPTION_LIST } from "@/app/components/common/menu/page";
+import EntityMenu from "@/app/components/common/menu/page";
 import { useState } from "react";
 import ModelListComponent from "@/app/components/models/list/page";
 import ModelAddComponent from "../add/page";
+import { OPTION_LIST } from "@/app/common/constants";
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export default function ModelContainerComponent() {

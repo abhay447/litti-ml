@@ -4,13 +4,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
 import {FeatureEntity} from '@/app/entities/featureEntity';
 import "@/app/styles/entity.css"
-import { OPTION_LIST } from "@/app/components/common/menu/page";
 import { useState } from "react";
 import { FeatureGroupEntity } from "@/app/entities/featureGroupEntity";
 import { getFeatureGroups } from "@/app/services/featureGroupService";
 import LoaderComponent from "@/app/components/common/loader/loading";
 import Select from 'react-select';
 import { addFeature } from "@/app/services/featureService";
+import { OPTION_LIST } from "@/app/common/constants";
 
 const handleSubmit = async (event:any, setSelectedOption: any, selectedFeatureGroup:any) => {
   // Stop the form from submitting and refreshing the page.
@@ -45,7 +45,7 @@ export default function FeatureAddComponent(props:any) {
     return chooseRenderComponent(isLoading, setSelectedOption,featureGroups,selectFeatureGroup, selectedFeatureGroup);
 }
 
-export function chooseRenderComponent(isLoading: boolean, setSelectedOption:any, featureGroups: FeatureGroupEntity[], selectFeatureGroup:any, selectedFeatureGroup:any) {
+function chooseRenderComponent(isLoading: boolean, setSelectedOption:any, featureGroups: FeatureGroupEntity[], selectFeatureGroup:any, selectedFeatureGroup:any) {
   if(isLoading){
     return <LoaderComponent/>
   } else {
@@ -55,7 +55,7 @@ export function chooseRenderComponent(isLoading: boolean, setSelectedOption:any,
   }
 }
 
-export function FeatureAddForm(props:any ) {
+function FeatureAddForm(props:any ) {
   const featureGroups:FeatureGroupEntity[] = props.featureGroups;
   const featureGroupSelectOptions = featureGroups.map(
     x => {return {value:x.id, label:x.name}}

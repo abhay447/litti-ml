@@ -4,8 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
 import {FeatureGroupEntity} from '@/app/entities/featureGroupEntity';
 import "@/app/styles/entity.css"
-import { OPTION_LIST } from "@/app/components/common/menu/page";
 import { addFeautureGroup } from "@/app/services/featureGroupService";
+import { OPTION_LIST } from "@/app/common/constants";
 
 const handleSubmit = async (event:any, setSelectedOption: any) => {
   // Stop the form from submitting and refreshing the page.

@@ -1,5 +1,5 @@
 import { Col, Row } from "reactstrap"
-import SidebarProducts, { NAV_OPTION_MODELS } from "../sidebar/products/page"
+import SidebarProducts from "../sidebar/products/page"
 import "@/app/styles/entity.css"
 import "@/app/styles/sidebar.css"
 import { useState } from "react"
