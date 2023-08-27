@@ -5,7 +5,7 @@ const next = require('next')
 
 // dotenv.config()
 const dev = process.env.NODE_ENV !== 'production'
-const hostname = process.env["HOST"].toString()
+const hostname = process.env["HOSTNAME"].toString()
 const port =  process.env["PORT"].toString()
 // when using middleware `hostname` and `port` must be provided below
 const app = next({ dev, hostname, port })
