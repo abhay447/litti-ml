@@ -1,8 +1,8 @@
 import { FeatureGroupEntity } from "@/app/entities/featureGroupEntity"
-import { getServerSideProps } from "@/app/common/clients_config";
+import { NODE_SERVER_PROXY_PREFIX } from "@/app/common/clients_config";
 
 export  async function getFeatureGroups():Promise<FeatureGroupEntity[]>{
-  const endpoint = await (await getServerSideProps()).props.base_url+'/feature-groups'
+  const endpoint = NODE_SERVER_PROXY_PREFIX+'/feature-groups'
     const res = await fetch(endpoint);
   const data = await res.json();
   const features = (data as Array<any>).map(
@@ -31,7 +31,7 @@ export async function addFeautureGroup(featureGroupEntity:FeatureGroupEntity) {
    console.log(JSONdata)
  
    // API endpoint where we send form data.
-   const endpoint = await (await getServerSideProps()).props.base_url+'/feature-groups'
+   const endpoint = NODE_SERVER_PROXY_PREFIX+'/feature-groups'
  
    // Form the request for sending data to the server.
    const options = {

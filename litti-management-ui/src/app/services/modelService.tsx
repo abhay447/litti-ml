@@ -1,8 +1,8 @@
 import { ModelEntity } from "@/app/entities/modelEntity"
-import { getServerSideProps } from "@/app/common/clients_config";
+import { NODE_SERVER_PROXY_PREFIX } from "@/app/common/clients_config";
 
 export  async function getModels(){
-  const endpoint = (await getServerSideProps()).props.base_url+'/models'
+  const endpoint = NODE_SERVER_PROXY_PREFIX+'/models'
     const res = await fetch(endpoint);
   const data = await res.json();
   const models = (data as Array<any>).map(
@@ -29,7 +29,7 @@ export async function addModel(modelEntity:ModelEntity, featureIds:string[]){
   const jsonData = JSON.stringify(data)
 
   // API endpoint where we send form data.
-  const endpoint = (await getServerSideProps()).props.base_url+'/models'
+  const endpoint = NODE_SERVER_PROXY_PREFIX+'/models'
 
   // Form the request for sending data to the server.
   const options = {

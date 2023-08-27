@@ -1,8 +1,8 @@
 import { FeatureEntity } from "@/app/entities/featureEntity"
-import { getServerSideProps } from "@/app/common/clients_config";
+import { NODE_SERVER_PROXY_PREFIX } from "@/app/common/clients_config";
 
 export  async function getFeatures(){
-  const endpoint = await (await getServerSideProps()).props.base_url+'/features'
+  const endpoint = NODE_SERVER_PROXY_PREFIX+'/features'
   const res = await fetch(endpoint);
   const data = await res.json();
   const features:FeatureEntity[] = (data as Array<any>).map(
@@ -25,7 +25,7 @@ export async function addFeature(featureEntity:FeatureEntity) {
     console.log(JSONdata)
   
     // API endpoint where we send form data.
-    const endpoint = (await getServerSideProps()).props.base_url+'/features'
+    const endpoint = NODE_SERVER_PROXY_PREFIX+'/features'
   
     // Form the request for sending data to the server.
     const options = {

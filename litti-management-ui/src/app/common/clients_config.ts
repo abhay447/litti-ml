@@ -1,5 +1,3 @@
 import { GetServerSideProps } from "next/types";
 
-export async function getServerSideProps() {
-    return {props: {base_url: process.env.LIITI_MANAGEMENT_SERVER_URL}}
-}
+export const NODE_SERVER_PROXY_PREFIX = "/backend"
