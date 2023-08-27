@@ -9,6 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.litti.ml</groupId>
     <artifactId>litti-inference-runtime</artifactId>
 
     <properties>
@@ -55,5 +56,53 @@
         </dependency>
 
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>build-docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>0.43.4</version>
+                        <executions>
+                            <execution>
+                                <phase>docker</phase>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <containerNamePattern>%n</containerNamePattern>
+                            <images>
+                                <image>
+                                    <alias>litti-inference-runtime</alias>
+                                    <name>litti-ml/litti-inference-runtime:${project.version}</name>
+                                    <build>
+                                        <from>openjdk:17-alpine</from>
+                                        <assemblies>
+                                            <assembly>
+                                                <mode>dir</mode>
+                                                <descriptorRef>artifact</descriptorRef>
+                                            </assembly>
+                                        </assemblies>
+                                        <entryPoint>java -jar maven/${project.artifactId}-${project.version}.jar
+                                        </entryPoint>
+                                    </build>
+                                    <run>
+                                        <ports>
+                                            <port>8081:8081</port>
+                                        </ports>
+                                    </run>
+                                </image>
+                            </images>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
