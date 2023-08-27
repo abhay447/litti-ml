@@ -51,3 +51,5 @@ ENV LITTI_MANAGEMENT_SERVER_HOST "localhost"
 ENV LITTI_MANAGEMENT_SERVER_PORT "8081"
 
 CMD ["node", "server.js"]
+
+# docker build -t litti-ml/litti-management-ui .
