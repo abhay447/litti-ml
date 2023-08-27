@@ -33,7 +33,7 @@
                                     <workingDirectory>${project.basedir}</workingDirectory>
                                     <arguments>
                                         <argument>-c</argument>
-                                        <argument>docker build -t litti-ml/litti-management-ui .</argument>
+                                        <argument>docker build -t litti-ml/litti-management-ui:${revision} .</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
