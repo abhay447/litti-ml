@@ -68,7 +68,7 @@
                         <version>0.43.4</version>
                         <executions>
                             <execution>
-                                <phase>docker</phase>
+                                <phase>install</phase>
                                 <goals>
                                     <goal>build</goal>
                                 </goals>
