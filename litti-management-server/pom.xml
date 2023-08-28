@@ -119,22 +119,23 @@
                                     <alias>litti-management-server</alias>
                                     <name>litti-ml/litti-management-server:${project.version}</name>
                                     <build>
-                                    <from>openjdk:17-alpine</from>
-                                    <assemblies>
-                                        <assembly>
-                                            <descriptorRef>dependencies</descriptorRef>
-                                            <name>deps</name>
-                                            <targetDir>/app/lib</targetDir>
-                                        </assembly>
-                                        <assembly>
-                                            <descriptorRef>artifact</descriptorRef>
-                                            <targetDir>/app</targetDir>
-                                        </assembly>
-                                    </assemblies>
-                                    <entryPoint>java -cp \
-                                        /app/${project.artifactId}-${project.version}.jar:/app/lib/* \
-                                        com.litti.ml.management.Application
-                                    </entryPoint>
+                                        <from>openjdk:17-alpine</from>
+                                        <assemblies>
+                                            <assembly>
+                                                <descriptorRef>dependencies</descriptorRef>
+                                                <name>deps</name>
+                                                <targetDir>/app/lib</targetDir>
+                                            </assembly>
+                                            <assembly>
+                                                <descriptorRef>artifact</descriptorRef>
+                                                <targetDir>/app</targetDir>
+                                            </assembly>
+                                        </assemblies>
+                                        <entryPoint>java -cp \
+                                            /app/${project.artifactId}-${project.version}.jar:/app/lib/* \
+                                            com.litti.ml.management.Application
+                                        </entryPoint>
+                                    </build>
                                     <run>
                                         <ports>
                                             <port>8081:8081</port>
