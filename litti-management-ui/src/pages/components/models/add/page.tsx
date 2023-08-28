@@ -1,5 +1,5 @@
 "use client";
-import { ButtonToggle, Col, Row } from "reactstrap";
+import { Button, ButtonToggle, Col, Row } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
 import {ModelEntity} from '@/app/entities/modelEntity';
@@ -103,7 +103,8 @@ function ModelAddForm(props:any) {
     </Row>
     <Row className="entity-base-row">
       <Col xs={1}><label htmlFor="modelLocation">Location</label></Col>
-      <Col xs={8}><input type="text" className="entity-text-input" id="modelLocation" name="modelLocation" /></Col>
+      <Col xs={8}><label id="modelLocation" /></Col>
+      <Col xs={2}><Button id="fileUploadButton" >Upload file</Button></Col>
     </Row>
     <Row className="entity-base-row">
       <Col xs={1}><label htmlFor="modelOutputs">Outputs</label></Col>
