@@ -15,14 +15,22 @@ import com.litti.ml.model.logger.ModelConsoleLogger;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.support.ConnectionPoolSupport;
-import java.io.IOException;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
+
 public class Main {
 
+  public static final String MGMT_SERVER_URL =
+      System.getenv().getOrDefault("MGMT_SERVER_URL", "http://localhost:8081");
+  public static final String REDIS_SERVER_URL =
+      System.getenv().getOrDefault("REDIS_SERVER_URL", "redis://localhost:6379/0");
+  public static final String HOSTNAME = System.getenv().getOrDefault("HOSTNAME", "localhost");
+  public static final Integer PORT =
+      Integer.valueOf(System.getenv().getOrDefault("HOSTNAME", "8001"));
   private static final Logger logger = LogManager.getLogger(Main.class);
 
   public static void main(String[] args) throws IOException {
@@ -30,7 +38,7 @@ public class Main {
     final JsonDataReader jsonDataReader = new JsonDataReader();
     final FeatureFetchRouter featureFetchRouter = new FeatureFetchRouter();
     final LocalParquetFeatureStore localParquetStore = new LocalParquetFeatureStore(jsonDataReader);
-    final RedisClient redisClient = RedisClient.create("redis://localhost:6379/0");
+    final RedisClient redisClient = RedisClient.create(REDIS_SERVER_URL);
     final GenericObjectPool<StatefulRedisConnection<String, String>> redisPool =
         ConnectionPoolSupport.createGenericObjectPool(
             redisClient::connect, new GenericObjectPoolConfig());
@@ -44,9 +52,8 @@ public class Main {
         new ModelRegistry(new ModelConsoleLogger(), featureFetchRouter);
     final ModelLoader modelLoader =
         new LittiManagementModelLoader(
-            new LittiManagementClient(
-                "http://localhost:8081")); // new StaticResourcesModelLoader();
+            new LittiManagementClient(MGMT_SERVER_URL)); // new StaticResourcesModelLoader();
     modelLoader.loadAllModels().getModelsLoaded().forEach(modelRegistry::addModelForPrediction);
-    RuntimeHTTPServer runtimeHTTPServer = new RuntimeHTTPServer(modelRegistry);
+    RuntimeHTTPServer runtimeHTTPServer = new RuntimeHTTPServer(HOSTNAME, PORT, modelRegistry);
   }
 }

@@ -2,12 +2,13 @@ package com.litti.ml.runtime;
 
 import com.litti.ml.model.ModelRegistry;
 import com.sun.net.httpserver.HttpServer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class RuntimeHTTPServer {
 
@@ -19,9 +20,9 @@ public class RuntimeHTTPServer {
 
   private final ModelRegistry modelRegistry;
 
-  public RuntimeHTTPServer(ModelRegistry modelRegistry) throws IOException {
+  public RuntimeHTTPServer(String host, int port, ModelRegistry modelRegistry) throws IOException {
     this.modelRegistry = modelRegistry;
-    server = HttpServer.create(new InetSocketAddress("localhost", 8001), 0);
+    server = HttpServer.create(new InetSocketAddress(host, port), 0);
     threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
     server.createContext("/predict", new MyHttpHandler(modelRegistry));
     server.setExecutor(threadPoolExecutor);
