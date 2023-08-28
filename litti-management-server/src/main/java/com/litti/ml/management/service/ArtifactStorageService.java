@@ -42,6 +42,6 @@ public class ArtifactStorageService {
       throw new RuntimeException("Failed to store file.", e);
     }
 
-    return destinationFile.toAbsolutePath().toString();
+    return destinationFile.getFileName().toString();
   }
 }
