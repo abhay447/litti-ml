@@ -27,9 +27,9 @@ public class Main {
       System.getenv().getOrDefault("MGMT_SERVER_URL", "http://localhost:8081");
   public static final String REDIS_SERVER_URL =
       System.getenv().getOrDefault("REDIS_SERVER_URL", "redis://localhost:6379/0");
-  public static final String HOSTNAME = System.getenv().getOrDefault("HOSTNAME", "localhost");
-  public static final Integer PORT =
-      Integer.valueOf(System.getenv().getOrDefault("HOSTNAME", "8001"));
+  public static final String SERVER_HOST = System.getenv().getOrDefault("SERVER_HOST", "localhost");
+  public static final Integer SERVER_PORT =
+      Integer.valueOf(System.getenv().getOrDefault("SERVER_PORT", "8001"));
   private static final Logger logger = LogManager.getLogger(Main.class);
 
   public static void main(String[] args) throws IOException {
@@ -53,6 +53,7 @@ public class Main {
         new LittiManagementModelLoader(
             new LittiManagementClient(MGMT_SERVER_URL)); // new StaticResourcesModelLoader();
     modelLoader.loadAllModels().getModelsLoaded().forEach(modelRegistry::addModelForPrediction);
-    RuntimeHTTPServer runtimeHTTPServer = new RuntimeHTTPServer(HOSTNAME, PORT, modelRegistry);
+    RuntimeHTTPServer runtimeHTTPServer =
+        new RuntimeHTTPServer(SERVER_HOST, SERVER_PORT, modelRegistry);
   }
 }

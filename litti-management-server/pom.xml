@@ -80,6 +80,27 @@
             <build>
                 <plugins>
                     <plugin>
+                        <!-- Build an executable JAR -->
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <mainClass>com.litti.ml.management.Application</mainClass>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.5.0</version>
+                        <configuration>
+                            <mainClass>com.litti.ml.management.Application</mainClass>
+                        </configuration>
+                    </plugin>
+                    <plugin>
                         <groupId>io.fabric8</groupId>
                         <artifactId>docker-maven-plugin</artifactId>
                         <version>0.43.4</version>
@@ -98,16 +119,22 @@
                                     <alias>litti-management-server</alias>
                                     <name>litti-ml/litti-management-server:${project.version}</name>
                                     <build>
-                                        <from>openjdk:17-alpine</from>
-                                        <assemblies>
-                                            <assembly>
-                                                <mode>dir</mode>
-                                                <descriptorRef>artifact</descriptorRef>
-                                            </assembly>
-                                        </assemblies>
-                                        <entryPoint>java -jar maven/${project.artifactId}-${project.version}.jar
-                                        </entryPoint>
-                                    </build>
+                                    <from>openjdk:17-alpine</from>
+                                    <assemblies>
+                                        <assembly>
+                                            <descriptorRef>dependencies</descriptorRef>
+                                            <name>deps</name>
+                                            <targetDir>/app/lib</targetDir>
+                                        </assembly>
+                                        <assembly>
+                                            <descriptorRef>artifact</descriptorRef>
+                                            <targetDir>/app</targetDir>
+                                        </assembly>
+                                    </assemblies>
+                                    <entryPoint>java -cp \
+                                        /app/${project.artifactId}-${project.version}.jar:/app/lib/* \
+                                        com.litti.ml.management.Application
+                                    </entryPoint>
                                     <run>
                                         <ports>
                                             <port>8081:8081</port>
