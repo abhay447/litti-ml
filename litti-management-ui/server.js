@@ -5,8 +5,8 @@ const next = require('next')
 
 // dotenv.config()
 const dev = process.env.NODE_ENV !== 'production'
-const hostname = process.env["HOSTNAME"].toString()
-const port =  process.env["PORT"].toString()
+const hostname = process.env["HOSTNAME"] || "0.0.0.0"
+const port =  process.env["PORT"] || "3000"
 // when using middleware `hostname` and `port` must be provided below
 const app = next({ dev, hostname, port })
 const handle = app.getRequestHandler()
@@ -15,8 +15,8 @@ const handle = app.getRequestHandler()
 app.prepare().then(() => {
   http.createServer(async (req, res) => {
     try {
-      const managementServerHost = process.env["LITTI_MANAGEMENT_SERVER_HOST"].toString()
-      const managementServerPort = process.env["LITTI_MANAGEMENT_SERVER_PORT"].toString()
+      const managementServerHost = process.env["LITTI_MANAGEMENT_SERVER_HOST"] || "localhost"
+      const managementServerPort = process.env["LITTI_MANAGEMENT_SERVER_PORT"] || "8081"
       // Be sure to pass `true` as the second argument to `url.parse`.
       // This tells it to parse the query portion of the URL.
       const parsedUrl = parse(req.url, true)
