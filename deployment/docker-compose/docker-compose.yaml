@@ -1,0 +1,45 @@
+version: '3.3'
+
+services:
+  postgres:
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+
+  management-server:
+    image: litti-ml/litti-management-server:1.0-SNAPSHOT
+    #    ports:
+    #      - 8001:8081
+    volumes:
+      - ~/apps/litti-ml-artifacts:/var/litti-ml-artifacts
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+
+  inference-runtime:
+    image: litti-ml/litti-inference-runtime:1.0-SNAPSHOT
+    ports:
+      - 8001:8001
+    volumes:
+      - ~/apps/litti-ml-artifacts:/var/litti-ml-artifacts
+    environment:
+      - MGMT_SERVER_URL="http://management-server:8081"
+
+  management-ui:
+    image: litti-ml/litti-management-ui:1.0-SNAPSHOT
+    ports:
+      - 3000:3000
+    volumes:
+      - ~/apps/litti-ml-artifacts:/var/litti-ml-artifacts
+    environment:
+      - LITTI_MANAGEMENT_SERVER_HOST=management-server
+      - LITTI_MANAGEMENT_SERVER_PORT=8081
