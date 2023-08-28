@@ -4,7 +4,7 @@ import com.litti.ml.entities.dtypes.JsonDataReader;
 import com.litti.ml.entities.management.client.LittiManagementClient;
 import com.litti.ml.feature.FeatureFetchRouter;
 import com.litti.ml.feature.loader.FeatureGroupLoader;
-import com.litti.ml.feature.loader.StaticResourcesFGLoader;
+import com.litti.ml.feature.loader.LittiManagementFGLoader;
 import com.litti.ml.feature.store.AbstractFeatureStore;
 import com.litti.ml.feature.store.RedisFeatureStore;
 import com.litti.ml.model.ModelRegistry;
@@ -14,11 +14,12 @@ import com.litti.ml.model.logger.ModelConsoleLogger;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.support.ConnectionPoolSupport;
-import java.io.IOException;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.IOException;
 
 public class Main {
 
@@ -37,21 +38,21 @@ public class Main {
     final FeatureFetchRouter featureFetchRouter = new FeatureFetchRouter();
     //    final LocalParquetFeatureStore localParquetStore = new
     // LocalParquetFeatureStore(jsonDataReader);
+    final LittiManagementClient littiManagementClient = new LittiManagementClient(MGMT_SERVER_URL);
     final RedisClient redisClient = RedisClient.create(REDIS_SERVER_URL);
     final GenericObjectPool<StatefulRedisConnection<String, String>> redisPool =
         ConnectionPoolSupport.createGenericObjectPool(
             redisClient::connect, new GenericObjectPoolConfig());
     final AbstractFeatureStore redisFeatureStore = new RedisFeatureStore(jsonDataReader, redisPool);
-    final FeatureGroupLoader featureGroupLoader = new StaticResourcesFGLoader();
+    final FeatureGroupLoader featureGroupLoader =
+        new LittiManagementFGLoader(littiManagementClient);
     featureGroupLoader
         .loadAllFeatureGroups()
         .getFeatureGroupsLoaded()
         .forEach(fg -> featureFetchRouter.registerFeatureGroup(fg, redisFeatureStore));
     final ModelRegistry modelRegistry =
         new ModelRegistry(new ModelConsoleLogger(), featureFetchRouter);
-    final ModelLoader modelLoader =
-        new LittiManagementModelLoader(
-            new LittiManagementClient(MGMT_SERVER_URL)); // new StaticResourcesModelLoader();
+    final ModelLoader modelLoader = new LittiManagementModelLoader(littiManagementClient);
     modelLoader.loadAllModels().getModelsLoaded().forEach(modelRegistry::addModelForPrediction);
     RuntimeHTTPServer runtimeHTTPServer =
         new RuntimeHTTPServer(SERVER_HOST, SERVER_PORT, modelRegistry);

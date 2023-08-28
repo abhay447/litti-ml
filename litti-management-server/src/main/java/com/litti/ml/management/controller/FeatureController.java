@@ -1,5 +1,6 @@
 package com.litti.ml.management.controller;
 
+import com.litti.ml.entities.feature.FeatureGroup;
 import com.litti.ml.management.dto.FeatureGroupStoreDeleteRequest;
 import com.litti.ml.management.dto.FeatureGroupStoresSwapRequest;
 import com.litti.ml.management.entiites.FeatureEntity;
@@ -7,9 +8,10 @@ import com.litti.ml.management.entiites.FeatureGroupEntity;
 import com.litti.ml.management.entiites.FeatureGroupStoreLinkEntity;
 import com.litti.ml.management.entiites.FeatureStoreEntity;
 import com.litti.ml.management.service.FeatureManagementService;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.UUID;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(originPatterns = "*")
@@ -37,8 +39,10 @@ public class FeatureController {
   }
 
   @GetMapping(value = "/feature-groups", produces = "application/json")
-  public List<FeatureGroupEntity> listFeatureGroups() {
-    return this.featureManagementService.findAllFeatureGroups();
+  public List<FeatureGroup> listFeatureGroups() {
+    return this.featureManagementService.findAllFeatureGroups().stream()
+        .map(FeatureGroupEntity::toFeatureGroupMetadata)
+        .toList();
   }
 
   @PostMapping(
