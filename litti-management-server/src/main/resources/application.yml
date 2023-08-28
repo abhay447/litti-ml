@@ -2,9 +2,9 @@ server:
   port: 8081
 spring:
   datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
-    username: ${POSTGRES_USER}
-    password: ${POSTGRES_PASSWORD}
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:postgres}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
   jpa:
     spring.jpa.database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
@@ -12,3 +12,6 @@ spring:
 
 logging:
   config: classpath:log4j2.xml
+
+artifact-storage:
+  root-location: ${ARTIFACT_STORAGE_PATH:/var/litti-ml-artifacts}
