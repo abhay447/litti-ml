@@ -2,13 +2,12 @@ package com.litti.ml.runtime;
 
 import com.litti.ml.model.ModelRegistry;
 import com.sun.net.httpserver.HttpServer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class RuntimeHTTPServer {
 
