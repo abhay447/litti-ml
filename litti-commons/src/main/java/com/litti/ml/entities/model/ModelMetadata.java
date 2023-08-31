@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
+import com.litti.ml.entities.artifact.ArtifactMetadata;
 import com.litti.ml.entities.feature.FeatureMetadata;
+
 import java.util.UUID;
 
 @AutoValue
@@ -21,7 +23,7 @@ public abstract class ModelMetadata {
 
   public abstract String getVersion();
 
-  public abstract String getModelLocation();
+  public abstract ArtifactMetadata getModelArtifact();
 
   public abstract String getModelFramework();
 
@@ -41,7 +43,7 @@ public abstract class ModelMetadata {
 
     public abstract Builder version(String value);
 
-    public abstract Builder modelLocation(String value);
+    public abstract Builder modelArtifact(ArtifactMetadata value);
 
     public abstract Builder modelFramework(String value);
 

@@ -9,6 +9,7 @@ import com.litti.ml.entities.model.ModelOutputMetadata;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ public class ModelEntity {
   private String name;
   private String version;
   private String domain;
-  private String modelLocation;
+  private String modelArtifactId;
   private String modelFramework;
   private String outputs;
 
@@ -62,12 +63,12 @@ public class ModelEntity {
     this.domain = domain;
   }
 
-  public String getModelLocation() {
-    return modelLocation;
+  public String getModelArtifactId() {
+    return modelArtifactId;
   }
 
-  public void setModelLocation(String modelLocation) {
-    this.modelLocation = modelLocation;
+  public void setModelArtifactId(String modelArtifactId) {
+    this.modelArtifactId = modelArtifactId;
   }
 
   public String getModelFramework() {
@@ -86,7 +87,8 @@ public class ModelEntity {
     this.outputs = outputs;
   }
 
-  public ModelMetadata toModelDeploymentMetadata(List<FeatureMetadata> features) {
+  public ModelMetadata toModelDeploymentMetadata(
+      List<FeatureMetadata> features, ArtifactEntity artifactEntity) {
     final Gson gson = new Gson();
     final List<ModelOutputMetadata> outputs =
         gson.fromJson(this.outputs, new TypeToken<List<ModelOutputMetadata>>() {}.getType());
@@ -95,7 +97,7 @@ public class ModelEntity {
             .id(this.id)
             .name(this.name)
             .version(this.version)
-            .modelLocation(this.modelLocation)
+            .modelArtifact(artifactEntity.toArtifactMetadata())
             .modelFramework(this.modelFramework)
             .features(ImmutableList.copyOf(features))
             .outputs(ImmutableList.copyOf(outputs))

@@ -14,11 +14,13 @@ import { FeatureGroupEntity } from "@/app/entities/featureGroupEntity";
 import { getFeatureGroupsNameMap } from "@/app/services/featureGroupService";
 import { OPTION_LIST } from "@/app/common/constants";
 import { useFilePicker } from "use-file-picker";
+import { ArtifactEntity } from "@/app/entities/artifactEntity";
 
 const handleSubmit = async (event:any, setSelectedOption: any, selectedFeatureIds: string[], plainFiles: File[]) => {
-  const modelLocation = await uploadArtifact(plainFiles[0])
   // Stop the form from submitting and refreshing the page.
   event.preventDefault()
+  const modelArtifactId = await uploadArtifact(plainFiles[0])
+
 
   // Get data from the form.
   const modelEntity = new ModelEntity(
@@ -26,10 +28,11 @@ const handleSubmit = async (event:any, setSelectedOption: any, selectedFeatureId
     (event.target.modelVersion as HTMLInputElement).value,
     (event.target.modelDomain as HTMLInputElement).value,
     (event.target.modelFramework as HTMLInputElement).value,
-    modelLocation,
-    (event.target.modelOutputs as HTMLInputElement).value
+    (event.target.modelOutputs as HTMLInputElement).value,
+    undefined,
+    new ArtifactEntity(modelArtifactId, undefined,undefined)
   );
-
+  console.log(modelEntity)
   await addModel(modelEntity, selectedFeatureIds)
   setSelectedOption(OPTION_LIST);
 }

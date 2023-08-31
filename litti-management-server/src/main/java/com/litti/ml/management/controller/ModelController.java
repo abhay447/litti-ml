@@ -2,6 +2,7 @@ package com.litti.ml.management.controller;
 
 import com.litti.ml.entities.model.ModelMetadata;
 import com.litti.ml.management.dto.CreateModelRequest;
+import com.litti.ml.management.entiites.ArtifactEntity;
 import com.litti.ml.management.entiites.ModelEntity;
 import com.litti.ml.management.service.ArtifactStorageService;
 import com.litti.ml.management.service.ModelManagementService;
@@ -30,7 +31,13 @@ public class ModelController {
   @GetMapping(value = "/models", produces = "application/json")
   public List<ModelMetadata> list() {
     return this.modelManagementService.findAll().stream()
-        .map(modelEntity -> this.modelManagementService.getModelDeploymentMetadata(modelEntity))
+        .map(
+            modelEntity -> {
+              final ArtifactEntity artifactEntity =
+                  this.artifactStorageService.get(modelEntity.getModelArtifactId()).get();
+              return this.modelManagementService.getModelDeploymentMetadata(
+                  modelEntity, artifactEntity);
+            })
         .toList();
   }
 
@@ -41,15 +48,15 @@ public class ModelController {
 
   @GetMapping(value = "/models/{modelId}", produces = "application/json")
   public ModelMetadata get(@PathVariable String modelId) {
-    return this.modelManagementService.getModelDeploymentMetadata(
-        this.modelManagementService.findById(UUID.fromString(modelId)));
+    final ModelEntity modelEntity = this.modelManagementService.findById(UUID.fromString(modelId));
+    final ArtifactEntity artifactEntity =
+        this.artifactStorageService.get(modelEntity.getModelArtifactId()).get();
+    return this.modelManagementService.getModelDeploymentMetadata(modelEntity, artifactEntity);
   }
 
   @PostMapping("/litti-artifacts")
-  public String handleFileUpload(
+  public ArtifactEntity handleFileUpload(
       @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
-
-    final String artifactStoragePath = artifactStorageService.store(file);
-    return artifactStoragePath;
+    return artifactStorageService.store(file);
   }
 }

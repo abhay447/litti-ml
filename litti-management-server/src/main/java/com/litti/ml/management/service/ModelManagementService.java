@@ -5,6 +5,7 @@ import com.litti.ml.entities.feature.FeatureGroup;
 import com.litti.ml.entities.feature.FeatureMetadata;
 import com.litti.ml.entities.model.ModelMetadata;
 import com.litti.ml.management.dto.CreateModelRequest;
+import com.litti.ml.management.entiites.ArtifactEntity;
 import com.litti.ml.management.entiites.FeatureEntity;
 import com.litti.ml.management.entiites.ModelEntity;
 import com.litti.ml.management.entiites.ModelFeatureLinkEntity;
@@ -12,13 +13,14 @@ import com.litti.ml.management.repository.FeatureGroupRepository;
 import com.litti.ml.management.repository.FeatureRepository;
 import com.litti.ml.management.repository.ModelFeatureLinkRepository;
 import com.litti.ml.management.repository.ModelRepository;
-import java.util.*;
-import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ModelManagementService {
@@ -99,7 +101,8 @@ public class ModelManagementService {
     return modelRepository.findAll();
   }
 
-  public ModelMetadata getModelDeploymentMetadata(ModelEntity modelEntity) {
+  public ModelMetadata getModelDeploymentMetadata(
+      ModelEntity modelEntity, ArtifactEntity artifactEntity) {
     final List<ModelFeatureLinkEntity> modelFeatureLinkEntities =
         this.modelFeatureLinkRepository.findAll(
             Example.of(new ModelFeatureLinkEntity(modelEntity.getId())));
@@ -122,6 +125,6 @@ public class ModelManagementService {
                     featureEntity.toFeatureDeploymentMetadata(
                         featureGroupMap.get(featureEntity.getFeatureGroupId())))
             .toList();
-    return modelEntity.toModelDeploymentMetadata(featureMetadataList);
+    return modelEntity.toModelDeploymentMetadata(featureMetadataList, artifactEntity);
   }
 }

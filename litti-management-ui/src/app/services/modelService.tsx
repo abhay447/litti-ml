@@ -11,9 +11,9 @@ export  async function getModels(){
       entry.version,
       entry.domain,
       entry.modelFramework,
-      entry.modelLocation,
       JSON.stringify(entry.outputs),
-      entry.id
+      entry.id,
+      entry.modelArtifact
     )
   );
   return models;
@@ -73,11 +73,11 @@ export async function uploadArtifact(file:File){
 
   // Send the form data to our forms API on Vercel and get a response.
   const response = await fetch(endpoint, options)
-  const result = await response.text()
+  const responseJson = await response.json()
 
   // Get the response data from server as JSON.
   // If server returns the name submitted, that means the form works.
-  // const result = JSON.stringify(responseJson)
+  const result = JSON.stringify(responseJson)
   console.log(result);
-  return result as string
+  return responseJson.id as string
 }
