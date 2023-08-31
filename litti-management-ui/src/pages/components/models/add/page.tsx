@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/app/globals.css'
 import {ModelEntity} from '@/app/entities/modelEntity';
 import "@/app/styles/entity.css"
-import { addModel } from "@/app/services/modelService";
+import { addModel, uploadArtifact } from "@/app/services/modelService";
 import { useState } from "react";
 import { addFeature, getFeatures } from "@/app/services/featureService";
 import { FeatureEntity } from "@/app/entities/featureEntity";
@@ -13,8 +13,10 @@ import Multiselect from 'multiselect-react-dropdown';
 import { FeatureGroupEntity } from "@/app/entities/featureGroupEntity";
 import { getFeatureGroupsNameMap } from "@/app/services/featureGroupService";
 import { OPTION_LIST } from "@/app/common/constants";
+import { useFilePicker } from "use-file-picker";
 
-const handleSubmit = async (event:any, setSelectedOption: any, selectedFeatureIds: string[]) => {
+const handleSubmit = async (event:any, setSelectedOption: any, selectedFeatureIds: string[], plainFiles: File[]) => {
+  const modelLocation = await uploadArtifact(plainFiles[0])
   // Stop the form from submitting and refreshing the page.
   event.preventDefault()
 
@@ -24,7 +26,7 @@ const handleSubmit = async (event:any, setSelectedOption: any, selectedFeatureId
     (event.target.modelVersion as HTMLInputElement).value,
     (event.target.modelDomain as HTMLInputElement).value,
     (event.target.modelFramework as HTMLInputElement).value,
-    (event.target.modelLocation as HTMLInputElement).value,
+    modelLocation,
     (event.target.modelOutputs as HTMLInputElement).value
   );
 
@@ -41,6 +43,7 @@ export default function ModelAddComponent(props:any) {
     const [selectedFeatureIds, setSelectedFeatures] = useState<FeatureEntity[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [useFormInput, setUseFormInput] = useState<boolean>(true)
+
     Promise.all([getFeatures(),getFeatureGroupsNameMap()])
       .then(([featureData,featureGroupsMap]) => {
       setFeatures(featureData);
@@ -68,6 +71,10 @@ function chooseRenderComponent(useFormInput:boolean, isLoading: boolean, setSele
 
 function ModelAddForm(props:any) {
 
+  const [openFileSelector, { plainFiles, loading }] = useFilePicker({
+    multiple: false,
+  });
+
   function onSelectFeature(selectedList:any[], selectedItem:any) {
     selectedList.concat(selectedItem);
     updateSelectedFeatureIds(selectedList)
@@ -84,7 +91,7 @@ function ModelAddForm(props:any) {
   }
   
   return <Row>
-  <form onSubmit={(e) => handleSubmit(e,props.setSelectedOption, props.selectedFeatureIds)}>
+  <form onSubmit={(e) => handleSubmit(e,props.setSelectedOption, props.selectedFeatureIds, plainFiles)}>
     <Row className="entity-base-row">
       <Col xs={1}><label htmlFor="modelName">Name</label></Col>
       <Col xs={8}><input type="text" className="entity-text-input" id="modelName" name="modelName" /></Col>
@@ -102,9 +109,9 @@ function ModelAddForm(props:any) {
       <Col xs={8}><input type="text" className="entity-text-input" id="modelFramework" name="modelFramework" /></Col>
     </Row>
     <Row className="entity-base-row">
-      <Col xs={1}><label htmlFor="modelLocation">Location</label></Col>
-      <Col xs={8}><label id="modelLocation" /></Col>
-      <Col xs={2}><Button id="fileUploadButton" >Upload file</Button></Col>
+      <Col xs={2}><label htmlFor="modelLocation">Location</label></Col>
+      <Col xs={2}><label id="modelLocation" />{plainFiles?.at(0)?.name}</Col>
+      <Col xs={2}><Button id="fileUploadButton" onClick={() => openFileSelector()}>Select Model File</Button></Col>
     </Row>
     <Row className="entity-base-row">
       <Col xs={1}><label htmlFor="modelOutputs">Outputs</label></Col>

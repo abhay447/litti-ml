@@ -53,3 +53,31 @@ export async function addModel(modelEntity:ModelEntity, featureIds:string[]){
   console.log(result);
   return responseJson.id as string
 }
+
+export async function uploadArtifact(file:File){
+
+  const formData = new FormData();
+  formData.append("file", file, file.name);
+
+  // API endpoint where we send form data.
+  const endpoint = NODE_SERVER_PROXY_PREFIX+'/litti-artifacts'
+
+  // Form the request for sending data to the server.
+  const options = {
+    // The method is POST because we are sending data.
+    method: 'POST',
+    // Tell the server we're sending JSON.
+    // Body of the request is the JSON data we created above.
+    body: formData,
+  }
+
+  // Send the form data to our forms API on Vercel and get a response.
+  const response = await fetch(endpoint, options)
+  const result = await response.text()
+
+  // Get the response data from server as JSON.
+  // If server returns the name submitted, that means the form works.
+  // const result = JSON.stringify(responseJson)
+  console.log(result);
+  return result as string
+}

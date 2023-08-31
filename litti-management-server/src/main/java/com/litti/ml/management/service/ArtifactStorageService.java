@@ -29,14 +29,11 @@ public class ArtifactStorageService {
     }
     Path destinationFile =
         rootLocation
-            .resolve(Paths.get(UUID.randomUUID() + "-" + file.getOriginalFilename()))
+            .resolve(Paths.get(UUID.randomUUID() + "/" + file.getOriginalFilename()))
             .normalize()
             .toAbsolutePath();
-    if (!destinationFile.getParent().equals(rootLocation.toAbsolutePath())) {
-      // This is a security check
-      throw new RuntimeException("Cannot store file outside current directory.");
-    }
     try (InputStream inputStream = file.getInputStream()) {
+      Files.createDirectories(destinationFile);
       Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
     } catch (IOException e) {
       throw new RuntimeException("Failed to store file.", e);
