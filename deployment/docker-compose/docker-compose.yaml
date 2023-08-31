@@ -1,6 +1,13 @@
 version: '3.3'
 
 services:
+  redis:
+    image: redis:7.2.0-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+
   postgres:
     image: postgres:14-alpine
     ports:
@@ -24,6 +31,8 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432
+    depends_on:
+      - postgres
 
   inference-runtime:
     image: litti-ml/litti-inference-runtime:1.0-SNAPSHOT
@@ -34,8 +43,10 @@ services:
     environment:
       - MGMT_SERVER_URL=http://management-server:8081
       - SERVER_HOST=0.0.0.0
+      - REDIS_SERVER_URL=redis://redis:6379/0
     depends_on:
       - management-server
+      - redis
 
   management-ui:
     image: litti-ml/litti-management-ui:1.0-SNAPSHOT
