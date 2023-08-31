@@ -33,6 +33,9 @@ services:
       - ~/apps/litti-ml-artifacts:/var/litti-ml-artifacts
     environment:
       - MGMT_SERVER_URL=http://management-server:8081
+      - SERVER_HOST=0.0.0.0
+    depends_on:
+      - management-server
 
   management-ui:
     image: litti-ml/litti-management-ui:1.0-SNAPSHOT

@@ -121,7 +121,7 @@
                                     </build>
                                     <run>
                                         <ports>
-                                            <port>8081:8081</port>
+                                            <port>8001:8001</port>
                                         </ports>
                                     </run>
                                 </image>
