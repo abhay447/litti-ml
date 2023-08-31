@@ -16,12 +16,17 @@ import { OPTION_LIST } from "@/app/common/constants";
 import { useFilePicker } from "use-file-picker";
 import { ArtifactEntity } from "@/app/entities/artifactEntity";
 
+async function uploadModel(modelEntity:ModelEntity, plainFiles:File[], featureIds:string[],setSelectedOption: any){
+  const modelArtifactId = await uploadArtifact(plainFiles[0])
+  modelEntity.modelArtifactId = modelArtifactId
+  console.log(modelEntity)
+  await addModel(modelEntity, featureIds)
+  setSelectedOption(OPTION_LIST);
+}
+
 const handleSubmit = async (event:any, setSelectedOption: any, selectedFeatureIds: string[], plainFiles: File[]) => {
   // Stop the form from submitting and refreshing the page.
   event.preventDefault()
-  const modelArtifactId = await uploadArtifact(plainFiles[0])
-
-
   // Get data from the form.
   const modelEntity = new ModelEntity(
     (event.target.modelName as HTMLInputElement).value,
@@ -29,12 +34,9 @@ const handleSubmit = async (event:any, setSelectedOption: any, selectedFeatureId
     (event.target.modelDomain as HTMLInputElement).value,
     (event.target.modelFramework as HTMLInputElement).value,
     (event.target.modelOutputs as HTMLInputElement).value,
-    undefined,
-    new ArtifactEntity(modelArtifactId, undefined,undefined)
+    undefined
   );
-  console.log(modelEntity)
-  await addModel(modelEntity, selectedFeatureIds)
-  setSelectedOption(OPTION_LIST);
+  await uploadModel(modelEntity,plainFiles,selectedFeatureIds,setSelectedOption)
 }
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
@@ -68,7 +70,7 @@ function chooseRenderComponent(useFormInput:boolean, isLoading: boolean, setSele
   if(useFormInput){
       return <ModelAddForm setSelectedOption={setSelectedOption} features={features} setSelectedFeatureIds={setSelectedFeatureIds} selectedFeatureIds={selectedFeatureIds}/>
   } else {
-    return <ModelAddJsonForm features={features} featureGroupsMap={featureGroupsMap}/>
+    return <ModelAddJsonForm features={features} featureGroupsMap={featureGroupsMap} setSelectedOption={setSelectedOption} />
   }
 }
 
@@ -146,10 +148,18 @@ function getFeaturePickerOptions(features:FeatureEntity[]){
 }
 
 function ModelAddJsonForm(props:any) {
-  return <form onSubmit={(e) => handleJsonSubmit(e,props.features, props.featureGroupsMap)}>
+  const [openFileSelector, { plainFiles, loading }] = useFilePicker({
+    multiple: false,
+  });
+  return <form onSubmit={(e) => handleJsonSubmit(e,props.features, props.featureGroupsMap,plainFiles,props.setSelectedOption)}>
     <Row className="entity-base-row">
       <label htmlFor="addModelJSON">Add model json</label>
       <textarea className="entity-text-input" id="addModelJSON" name="addModelJSON" rows={20}/>
+    </Row>
+    <Row className="entity-base-row">
+      <Col xs={2}><label htmlFor="modelLocation">Location</label></Col>
+      <Col xs={2}><label id="modelLocation" />{plainFiles?.at(0)?.name}</Col>
+      <Col xs={2}><Button id="fileUploadButton" onClick={() => openFileSelector()}>Select Model File</Button></Col>
     </Row>
     <Row className="entity-base-row">
       <Col xs={9}><button type="submit" className="entity-submit-button">Submit</button></Col>
@@ -158,7 +168,7 @@ function ModelAddJsonForm(props:any) {
 
 }
 
-const handleJsonSubmit = async (event:any, allFeatures:FeatureEntity[], featureGroupsMap: Map<String,FeatureGroupEntity>) => {
+const handleJsonSubmit = async (event:any, allFeatures:FeatureEntity[], featureGroupsMap: Map<String,FeatureGroupEntity>, plainFiles:File[],setSelectedOption:any) => {
   event.preventDefault();
   const jsonString = (event.target.addModelJSON as HTMLInputElement).value
   const data = JSON.parse(jsonString);
@@ -167,7 +177,6 @@ const handleJsonSubmit = async (event:any, allFeatures:FeatureEntity[], featureG
     data.version,
     data?.domain,
     data.modelFramework,
-    data.modelLocation,
     JSON.stringify(data.outputs)
   );
   const rawFeatures = data.features;
@@ -199,7 +208,7 @@ const handleJsonSubmit = async (event:any, allFeatures:FeatureEntity[], featureG
     console.log(modelEntity)
     console.log(rawFeatures.length)
     console.log(featureIds)
-    return addModel(modelEntity,featureIds)
+    return uploadModel(modelEntity,plainFiles,featureIds,setSelectedOption)
   }).then((modelId) => {
     console.log(modelId);
   })
