@@ -7,11 +7,12 @@ import com.litti.ml.entities.feature.FeatureGroup;
 import com.litti.ml.entities.feature.FeatureMetadata;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.sync.RedisCommands;
-import java.util.*;
-import java.util.stream.Collectors;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class RedisFeatureStore extends AbstractFeatureStore {
 
@@ -156,7 +157,9 @@ public class RedisFeatureStore extends AbstractFeatureStore {
   private String createFeatureGroupRedisKey(Map<String, ?> featureRow, FeatureGroup featureGroup) {
     final List<String> sortedDims = featureGroup.getDimensions().stream().sorted().toList();
     final List<String> sortedDimVals =
-        sortedDims.stream().map(x -> featureRow.get(x).toString()).collect(Collectors.toList());
+        sortedDims.stream()
+            .map(x -> featureRow.get(x.strip()).toString())
+            .collect(Collectors.toList());
     return String.format("%s|%s", String.join("#", sortedDims), String.join("#", sortedDimVals));
   }
 }
