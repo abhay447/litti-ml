@@ -13,6 +13,7 @@ import com.litti.ml.model.loader.StaticResourcesModelLoader;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.support.ConnectionPoolSupport;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,7 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 public class LocalDataHelper {
 
   // class to used in local deployments to load data to redis from parquet
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
 
     final JsonDataReader jsonDataReader = new JsonDataReader();
     final LocalParquetFeatureStore localParquetStore = new LocalParquetFeatureStore(jsonDataReader);

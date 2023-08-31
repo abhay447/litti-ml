@@ -6,12 +6,11 @@ import com.litti.ml.management.entiites.ArtifactEntity;
 import com.litti.ml.management.entiites.ModelEntity;
 import com.litti.ml.management.service.ArtifactStorageService;
 import com.litti.ml.management.service.ModelManagementService;
+import java.util.List;
+import java.util.UUID;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
-import java.util.UUID;
 
 @RestController
 @CrossOrigin(originPatterns = "*")

@@ -3,7 +3,6 @@ package com.litti.ml.management.entiites;
 import com.litti.ml.entities.artifact.ArtifactMetadata;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-
 import java.nio.file.Path;
 import java.util.UUID;
 

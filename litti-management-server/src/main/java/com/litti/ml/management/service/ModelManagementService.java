@@ -13,14 +13,13 @@ import com.litti.ml.management.repository.FeatureGroupRepository;
 import com.litti.ml.management.repository.FeatureRepository;
 import com.litti.ml.management.repository.ModelFeatureLinkRepository;
 import com.litti.ml.management.repository.ModelRepository;
+import java.util.*;
+import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class ModelManagementService {

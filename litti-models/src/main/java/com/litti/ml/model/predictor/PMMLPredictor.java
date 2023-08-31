@@ -28,7 +28,9 @@ public class PMMLPredictor extends AbstractPredictor {
       throws JAXBException, IOException, ParserConfigurationException, SAXException {
     super(modelMetadata, featureFetchRouter);
     this.evaluator =
-        new LoadingModelEvaluatorBuilder().load(new File(modelMetadata.getModelLocation())).build();
+        new LoadingModelEvaluatorBuilder()
+            .load(new File(modelMetadata.getModelArtifact().getStorageLocation()))
+            .build();
     evaluator.verify();
 
     this.outputFieldsMap =

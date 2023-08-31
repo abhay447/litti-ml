@@ -6,7 +6,6 @@ import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.litti.ml.entities.artifact.ArtifactMetadata;
 import com.litti.ml.entities.feature.FeatureMetadata;
-
 import java.util.UUID;
 
 @AutoValue
