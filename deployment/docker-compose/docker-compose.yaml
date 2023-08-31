@@ -14,8 +14,8 @@ services:
 
   management-server:
     image: litti-ml/litti-management-server:1.0-SNAPSHOT
-    #    ports:
-    #      - 8001:8081
+    ports:
+      - 8081:8081
     volumes:
       - ~/apps/litti-ml-artifacts:/var/litti-ml-artifacts
     environment:
@@ -32,7 +32,7 @@ services:
     volumes:
       - ~/apps/litti-ml-artifacts:/var/litti-ml-artifacts
     environment:
-      - MGMT_SERVER_URL="http://management-server:8081"
+      - MGMT_SERVER_URL=http://management-server:8081
 
   management-ui:
     image: litti-ml/litti-management-ui:1.0-SNAPSHOT
