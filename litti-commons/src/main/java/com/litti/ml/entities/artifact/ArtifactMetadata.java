@@ -1,8 +1,10 @@
 package com.litti.ml.entities.artifact;
 
+import autovalue.shaded.org.checkerframework.checker.nullness.qual.Nullable;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.auto.value.AutoValue;
+
 import java.util.UUID;
 
 @AutoValue
@@ -12,6 +14,7 @@ public abstract class ArtifactMetadata {
     return new AutoValue_ArtifactMetadata.Builder();
   }
 
+  @Nullable
   public abstract UUID getId();
 
   public abstract String getStorageType();
@@ -22,7 +25,7 @@ public abstract class ArtifactMetadata {
   @AutoValue.Builder
   public abstract static class Builder {
 
-    public abstract ArtifactMetadata.Builder id(UUID value);
+    public abstract ArtifactMetadata.Builder id(@Nullable UUID value);
 
     public abstract ArtifactMetadata.Builder storageType(String value);
 
