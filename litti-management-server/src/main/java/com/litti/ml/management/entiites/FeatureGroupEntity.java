@@ -48,6 +48,7 @@ public class FeatureGroupEntity {
     return FeatureGroup.builder()
         .name(this.name)
         .dimensions(ImmutableList.copyOf(this.dimensions.split(",")))
+        .id(this.id)
         .build();
   }
 }

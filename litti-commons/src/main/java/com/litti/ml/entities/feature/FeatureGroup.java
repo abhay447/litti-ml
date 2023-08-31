@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
+import java.util.UUID;
 
 @AutoValue
 @JsonDeserialize(builder = AutoValue_FeatureGroup.Builder.class)
@@ -13,6 +14,8 @@ public abstract class FeatureGroup {
     return new AutoValue_FeatureGroup.Builder();
   }
 
+  public abstract UUID getId();
+
   public abstract String getName();
 
   public abstract ImmutableList<String> getDimensions();
@@ -20,6 +23,8 @@ public abstract class FeatureGroup {
   @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "")
   @AutoValue.Builder
   public abstract static class Builder {
+
+    public abstract FeatureGroup.Builder id(UUID value);
 
     public abstract FeatureGroup.Builder name(String value);
 
