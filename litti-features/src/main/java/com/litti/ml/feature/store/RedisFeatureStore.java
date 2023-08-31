@@ -7,11 +7,12 @@ import com.litti.ml.entities.feature.FeatureGroup;
 import com.litti.ml.entities.feature.FeatureMetadata;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.sync.RedisCommands;
-import java.util.*;
-import java.util.stream.Collectors;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class RedisFeatureStore extends AbstractFeatureStore {
 
@@ -59,7 +60,6 @@ public class RedisFeatureStore extends AbstractFeatureStore {
       Map<String, String> dimensions) {
 
     final Gson gson = new Gson();
-    logger.info(dimensions);
     final String featureGroupKey = this.createFeatureGroupRedisKey(dimensions, featureGroup);
     try (StatefulRedisConnection<String, String> redisConnection = redisPool.borrowObject()) {
       final RedisCommands<String, String> syncCommands = redisConnection.sync();
