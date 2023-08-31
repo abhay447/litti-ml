@@ -59,6 +59,7 @@ public class RedisFeatureStore extends AbstractFeatureStore {
       Map<String, String> dimensions) {
 
     final Gson gson = new Gson();
+    logger.info(dimensions);
     final String featureGroupKey = this.createFeatureGroupRedisKey(dimensions, featureGroup);
     try (StatefulRedisConnection<String, String> redisConnection = redisPool.borrowObject()) {
       final RedisCommands<String, String> syncCommands = redisConnection.sync();
