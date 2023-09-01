@@ -1,0 +1,1 @@
+$GOPATH/bin/litti-inference-router
