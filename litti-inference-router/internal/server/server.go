@@ -2,6 +2,7 @@ package server
 
 import (
 	"bytes"
+	"com/litti/ml/litti-inference-router/internal/config"
 	"com/litti/ml/litti-inference-router/internal/dto"
 	"com/litti/ml/litti-inference-router/internal/model"
 	"encoding/json"
@@ -64,9 +65,13 @@ func predict(w http.ResponseWriter, r *http.Request) {
 		PredictionRequests: model.EnrichModelFeatures(modelName, version, batchReq),
 	}
 	batchReqJSON, err := json.Marshal(enrichedBatchReq)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 
 	fmt.Printf("got /predict request for model: %s version: %s\n", modelName, version)
-	requestURL := fmt.Sprintf("http://localhost:8001/predict/%s/%s", modelName, version)
+	requestURL := fmt.Sprintf(config.RouterConfig.INFERENCE_SERVER_URL+"/predict/%s/%s", modelName, version)
 	req, err := http.NewRequest(http.MethodPost, requestURL, bytes.NewBuffer(batchReqJSON))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -94,7 +99,7 @@ func StartServer() {
 	http.HandleFunc("/", getRoot)
 	http.HandleFunc("/predict/", predict)
 
-	err := http.ListenAndServe(":3333", nil)
+	err := http.ListenAndServe(config.RouterConfig.SERVER_HOST+":"+config.RouterConfig.SERVER_PORT, nil)
 	if errors.Is(err, http.ErrServerClosed) {
 		fmt.Printf("server closed\n")
 	} else if err != nil {

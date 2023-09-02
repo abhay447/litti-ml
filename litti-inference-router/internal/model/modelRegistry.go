@@ -1,6 +1,7 @@
 package model
 
 import (
+	"com/litti/ml/litti-inference-router/internal/config"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -9,7 +10,7 @@ import (
 var modelMap map[string]ModelDeploymentMetadata = make(map[string]ModelDeploymentMetadata)
 
 func LoadModelRegistry() {
-	resp, err := http.Get("http://localhost:8081/models")
+	resp, err := http.Get(config.RouterConfig.MGMT_SERVER_URL + "/models")
 	if err != nil {
 		panic("Error occured in loading model metadata: " + err.Error())
 	}

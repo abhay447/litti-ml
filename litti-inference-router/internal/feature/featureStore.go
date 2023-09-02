@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"strings"
 
+	"com/litti/ml/litti-inference-router/internal/config"
 	"com/litti/ml/litti-inference-router/internal/dto"
 	"com/litti/ml/litti-inference-router/internal/util"
 
@@ -14,7 +15,7 @@ import (
 )
 
 var redisClient = redis.NewClient(&redis.Options{
-	Addr:     "localhost:6379",
+	Addr:     config.RouterConfig.REDIS_URL,
 	Password: "", // no password set
 	DB:       0,  // use default DB
 })
