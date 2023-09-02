@@ -3,7 +3,7 @@ package dto
 type FeatureStoreRecord struct {
 	FeatureName    string
 	FeatureVersion string
-	Value          string
+	RawValue       string
 	ValidFrom      int
 	ValidTo        int
 }

@@ -8,8 +8,8 @@ import (
 
 func ParseFeatureRecordValue(featureStoreRecord dto.FeatureStoreRecord, featureFound bool, featureEntry dto.FeatureEntry) interface{} {
 	rawValue := featureEntry.DefaultValue
-	if featureFound && featureStoreRecord.ValidTo < int(time.Now().Unix()) {
-		rawValue = featureStoreRecord.Value
+	if featureFound && featureStoreRecord.ValidTo >= int(time.Now().Unix()) {
+		rawValue = featureStoreRecord.RawValue
 	}
 	switch featureEntry.DataType {
 	case "PRIMITIVE#DOUBLE":

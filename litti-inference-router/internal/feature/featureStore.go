@@ -76,13 +76,13 @@ func mapFeatureGroupKeys(featureGroupSet map[string]bool, req dto.BatchPredictio
 		}
 		for featureGroupName, _ := range featureGroupSet {
 			featureGroup := featureGroupMap[featureGroupName]
-			prefix := make([]string, len(featureGroup.Dimensions))
-			suffix := make([]string, len(featureGroup.Dimensions))
+			var prefix = []string{}
+			var suffix = []string{}
 			for _, dim := range featureGroup.Dimensions {
 				prefix = append(prefix, dim)
 				suffix = append(suffix, fmt.Sprint(predictionReq.Inputs[dim]))
 			}
-			featureGroupKey := strings.Join(prefix, "#") + "-" + strings.Join(suffix, "#")
+			featureGroupKey := strings.Join(prefix, "#") + "|" + strings.Join(suffix, "#")
 			featureGroupKeys[featureGroupKey] = true
 			reqFeatureGroupKeysMap[predictionReq.Id] = append(reqFeatureGroupKeysMap[predictionReq.Id], featureGroupKey)
 		}
