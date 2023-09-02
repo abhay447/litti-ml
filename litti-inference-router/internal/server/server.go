@@ -81,8 +81,6 @@ func predict(w http.ResponseWriter, r *http.Request) {
 	}
 	w.WriteHeader(resStatus)
 	w.Write(resBodyBytes)
-	fmt.Fprintf(w, "Response: %+v", resBody)
-	// io.WriteString(w, "Hello, HTTP!\n")
 }
 
 func StartServer() {
