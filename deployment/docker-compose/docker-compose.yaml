@@ -48,6 +48,21 @@ services:
       - management-server
       - redis
 
+  inference-router:
+    image: litti-ml/litti-inference-router:1.0-SNAPSHOT
+    ports:
+      - 3333:3333
+    environment:
+      - MGMT_SERVER_URL=http://management-server:8081
+      - SERVER_HOST=0.0.0.0
+      - SERVER_PORT=3333
+      - REDIS_URL=redis:6379
+      - INFERENCE_SERVER_URL=http://inference-runtime:8001
+    depends_on:
+      - management-server
+      - redis
+      - inference-runtime
+
   management-ui:
     image: litti-ml/litti-management-ui:1.0-SNAPSHOT
     ports:
