@@ -58,6 +58,7 @@ func predict(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+
 	fmt.Printf("got /predict request for model: %s version: %s\n", model, version)
 	requestURL := fmt.Sprintf("http://localhost:8001/predict/%s/%s", model, version)
 	req, err := http.NewRequest(http.MethodPost, requestURL, bytes.NewReader(reqBytes))

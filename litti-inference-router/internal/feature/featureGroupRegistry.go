@@ -34,9 +34,13 @@ func LoadModelRegistry() {
 	}
 }
 
-func FetchFeatureGroupRows(featureGroupSet map[string]bool, req dto.BatchPredictionRequest) {
+func FetchRawFeatureRows(featureGroupSet map[string]bool, req dto.BatchPredictionRequest) (map[string]map[string]FeatureStoreRecord, error) {
 	featureGroupKeys := make(map[string]bool)
+	reqFeatureGroupKeysMap := make(map[string][]string)
 	for _, predictionReq := range req.PredictionRequests {
+		if reqFeatureGroupKeysMap[predictionReq.Id] == nil {
+			reqFeatureGroupKeysMap[predictionReq.Id] = []string{}
+		}
 		for featureGroupName, _ := range featureGroupSet {
 			featureGroup := featureGroupMap[featureGroupName]
 			prefix := make([]string, len(featureGroup.Dimensions))
@@ -47,6 +51,40 @@ func FetchFeatureGroupRows(featureGroupSet map[string]bool, req dto.BatchPredict
 			}
 			featureGroupKey := strings.Join(prefix, "#") + "-" + strings.Join(suffix, "#")
 			featureGroupKeys[featureGroupKey] = true
+			reqFeatureGroupKeysMap[predictionReq.Id] = append(reqFeatureGroupKeysMap[predictionReq.Id], featureGroupKey)
 		}
 	}
+	// key os feature group key
+	featureGroupsMap := make(map[string]map[string]FeatureStoreRecord)
+	for featureGroupKey := range featureGroupKeys {
+		featureStoreRecords, err := FetchFeatureGroupRow(featureGroupKey)
+		if err != nil {
+			return nil, err
+		}
+		if featureStoreRecords != nil {
+			featureGroupsMap[featureGroupKey] = featureStoreRecords
+		}
+	}
+	// key is reqId
+	// value is map[string]FeatureStoreRecord -> each entry in map represents a feature
+	reqFeatureRowsMap := make(map[string]map[string]FeatureStoreRecord)
+	for reqId, fgKeys := range reqFeatureGroupKeysMap {
+		if reqFeatureRowsMap[reqId] == nil {
+			reqFeatureRowsMap[reqId] = map[string]FeatureStoreRecord{}
+		}
+		for _, fgKey := range fgKeys {
+			reqFeatureRowsMap[reqId] = MergeMaps(reqFeatureRowsMap[reqId], featureGroupsMap[fgKey])
+		}
+	}
+	return reqFeatureRowsMap, nil
+}
+
+func MergeMaps[V FeatureStoreRecord | interface{}](ms ...map[string]V) map[string]V {
+	res := map[string]V{}
+	for _, m := range ms {
+		for k, v := range m {
+			res[k] = v
+		}
+	}
+	return res
 }
