@@ -1,4 +1,4 @@
-package feature
+package dto
 
 type FeatureStoreRecord struct {
 	FeatureName    string

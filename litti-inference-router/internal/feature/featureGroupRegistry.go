@@ -2,6 +2,7 @@ package feature
 
 import (
 	"com/litti/ml/litti-inference-router/internal/dto"
+	"com/litti/ml/litti-inference-router/internal/util"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -34,7 +35,7 @@ func LoadModelRegistry() {
 	}
 }
 
-func FetchRawFeatureRows(featureGroupSet map[string]bool, req dto.BatchPredictionRequest) (map[string]map[string]FeatureStoreRecord, error) {
+func FetchRawFeatureRows(featureGroupSet map[string]bool, req dto.BatchPredictionRequest) (map[string]map[string]dto.FeatureStoreRecord, error) {
 	featureGroupKeys := make(map[string]bool)
 	reqFeatureGroupKeysMap := make(map[string][]string)
 	for _, predictionReq := range req.PredictionRequests {
@@ -55,7 +56,7 @@ func FetchRawFeatureRows(featureGroupSet map[string]bool, req dto.BatchPredictio
 		}
 	}
 	// key os feature group key
-	featureGroupsMap := make(map[string]map[string]FeatureStoreRecord)
+	featureGroupsMap := make(map[string]map[string]dto.FeatureStoreRecord)
 	for featureGroupKey := range featureGroupKeys {
 		featureStoreRecords, err := FetchFeatureGroupRow(featureGroupKey)
 		if err != nil {
@@ -67,24 +68,14 @@ func FetchRawFeatureRows(featureGroupSet map[string]bool, req dto.BatchPredictio
 	}
 	// key is reqId
 	// value is map[string]FeatureStoreRecord -> each entry in map represents a feature
-	reqFeatureRowsMap := make(map[string]map[string]FeatureStoreRecord)
+	reqFeatureRowsMap := make(map[string]map[string]dto.FeatureStoreRecord)
 	for reqId, fgKeys := range reqFeatureGroupKeysMap {
 		if reqFeatureRowsMap[reqId] == nil {
-			reqFeatureRowsMap[reqId] = map[string]FeatureStoreRecord{}
+			reqFeatureRowsMap[reqId] = map[string]dto.FeatureStoreRecord{}
 		}
 		for _, fgKey := range fgKeys {
-			reqFeatureRowsMap[reqId] = MergeMaps(reqFeatureRowsMap[reqId], featureGroupsMap[fgKey])
+			reqFeatureRowsMap[reqId] = util.MergeMaps(reqFeatureRowsMap[reqId], featureGroupsMap[fgKey])
 		}
 	}
 	return reqFeatureRowsMap, nil
-}
-
-func MergeMaps[V FeatureStoreRecord | interface{}](ms ...map[string]V) map[string]V {
-	res := map[string]V{}
-	for _, m := range ms {
-		for k, v := range m {
-			res[k] = v
-		}
-	}
-	return res
 }

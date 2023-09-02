@@ -3,6 +3,7 @@ package model
 import (
 	"com/litti/ml/litti-inference-router/internal/dto"
 	"com/litti/ml/litti-inference-router/internal/feature"
+	"com/litti/ml/litti-inference-router/internal/util"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -48,13 +49,13 @@ func EnrichModelFeatures(model string, version string, batchReq dto.BatchPredict
 	}
 	newReqs := []dto.PredictionRequest{}
 	for _, req := range batchReq.PredictionRequests {
-		req.Inputs = feature.MergeMaps(req.Inputs, extractFeatureValues(reqRawFeaturesMap[req.Id], featureMetaMap))
+		req.Inputs = util.MergeMaps(req.Inputs, extractFeatureValues(reqRawFeaturesMap[req.Id], featureMetaMap))
 		newReqs = append(newReqs, dto.PredictionRequest{Id: req.Id, Inputs: req.Inputs})
 	}
 	return newReqs
 }
 
-func extractFeatureValues(rawFeatures map[string]feature.FeatureStoreRecord, featureMetaMap map[string]FeatureEntry) map[string]interface{} {
+func extractFeatureValues(rawFeatures map[string]dto.FeatureStoreRecord, featureMetaMap map[string]FeatureEntry) map[string]interface{} {
 	var featureValsMap = map[string]interface{}{}
 	for featureKey, featureEntry := range featureMetaMap {
 		record, ok := rawFeatures[featureKey]
@@ -63,7 +64,7 @@ func extractFeatureValues(rawFeatures map[string]feature.FeatureStoreRecord, fea
 	return featureValsMap
 }
 
-func parseFeatureRecordValue(featureStoreRecord feature.FeatureStoreRecord, featureFound bool, featureEntry FeatureEntry) interface{} {
+func parseFeatureRecordValue(featureStoreRecord dto.FeatureStoreRecord, featureFound bool, featureEntry FeatureEntry) interface{} {
 	rawValue := featureEntry.DefaultValue
 	if featureFound && featureStoreRecord.ValidTo < int(time.Now().Unix()) {
 		rawValue = featureStoreRecord.Value
