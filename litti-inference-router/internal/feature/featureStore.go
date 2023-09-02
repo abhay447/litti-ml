@@ -74,7 +74,7 @@ func mapFeatureGroupKeys(featureGroupSet map[string]bool, req dto.BatchPredictio
 		if reqFeatureGroupKeysMap[predictionReq.Id] == nil {
 			reqFeatureGroupKeysMap[predictionReq.Id] = []string{}
 		}
-		for featureGroupName, _ := range featureGroupSet {
+		for featureGroupName := range featureGroupSet {
 			featureGroup := featureGroupMap[featureGroupName]
 			var prefix = []string{}
 			var suffix = []string{}
