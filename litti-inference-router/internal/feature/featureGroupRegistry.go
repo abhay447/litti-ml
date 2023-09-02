@@ -9,7 +9,6 @@ import (
 	"strings"
 
 	"golang.org/x/exp/slices"
-	"k8s.io/utils/strings/slices"
 )
 
 var featureGroupMap = make(map[string]FeatureGroupMetadata)
