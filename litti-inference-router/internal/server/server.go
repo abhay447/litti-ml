@@ -7,7 +7,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"strings"
@@ -38,7 +37,7 @@ func predict(w http.ResponseWriter, r *http.Request) {
 	}
 	// read request for validation
 	// TODO: add feature fetch using request body
-	reqBytes, _ := ioutil.ReadAll(r.Body)
+	reqBytes, _ := io.ReadAll(r.Body)
 	var p dto.BatchPredictionRequest
 	err = json.Unmarshal(reqBytes, &p)
 	if err != nil {
@@ -66,7 +65,7 @@ func predict(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	resBodyBytes, _ := ioutil.ReadAll(res.Body)
+	resBodyBytes, _ := io.ReadAll(res.Body)
 	resBody := string(resBodyBytes)
 	resStatus := res.StatusCode
 	if resStatus != 200 {
