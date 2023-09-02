@@ -9,6 +9,8 @@ import (
 	"net/http"
 	"os"
 	"strings"
+
+	"github.com/go-playground/validator/v10"
 )
 
 func getRoot(w http.ResponseWriter, r *http.Request) {
@@ -31,6 +33,13 @@ func predict(w http.ResponseWriter, r *http.Request) {
 	var version = tokens[2]
 	var p dto.BatchPredictionRequest
 	err := json.NewDecoder(r.Body).Decode(&p)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	// validate
+	validate := validator.New()
+	err = validate.Struct(p)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
