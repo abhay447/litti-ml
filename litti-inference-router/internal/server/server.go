@@ -29,6 +29,22 @@ func validatePath(r *http.Request) (string, string, error) {
 	return tokens[1], tokens[2], nil
 }
 
+func validateRequest(r *http.Request) ([]byte, error) {
+	reqBytes, _ := io.ReadAll(r.Body)
+	var p dto.BatchPredictionRequest
+	err := json.Unmarshal(reqBytes, &p)
+	if err != nil {
+		return []byte{}, err
+	}
+	// validate
+	validate := validator.New()
+	err = validate.Struct(p)
+	if err != nil {
+		return []byte{}, err
+	}
+	return reqBytes, nil
+}
+
 func predict(w http.ResponseWriter, r *http.Request) {
 	model, version, err := validatePath(r)
 	if err != nil {
@@ -37,16 +53,7 @@ func predict(w http.ResponseWriter, r *http.Request) {
 	}
 	// read request for validation
 	// TODO: add feature fetch using request body
-	reqBytes, _ := io.ReadAll(r.Body)
-	var p dto.BatchPredictionRequest
-	err = json.Unmarshal(reqBytes, &p)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-	// validate
-	validate := validator.New()
-	err = validate.Struct(p)
+	reqBytes, err := validateRequest(r)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
