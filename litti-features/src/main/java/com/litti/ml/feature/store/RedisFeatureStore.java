@@ -120,7 +120,7 @@ public class RedisFeatureStore extends AbstractFeatureStore {
                     Map.entry(
                         entry.getKey(),
                         FeatureStoreRecord.fromValueAndFeatureMetadata(
-                            entry.getValue(), featureMetadataMap.get(entry.getKey()))))
+                            entry.getValue().toString(), featureMetadataMap.get(entry.getKey()))))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     final Map<String, FeatureStoreRecord> redisWriteRow = new HashMap<>();
