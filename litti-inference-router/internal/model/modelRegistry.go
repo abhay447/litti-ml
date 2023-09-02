@@ -8,8 +8,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"strconv"
-	"time"
 )
 
 var modelMap map[string]ModelDeploymentMetadata = make(map[string]ModelDeploymentMetadata)
@@ -38,7 +36,7 @@ func LoadModelRegistry() {
 func EnrichModelFeatures(model string, version string, batchReq dto.BatchPredictionRequest) []dto.PredictionRequest {
 	deployedModel := modelMap[model+"#"+version]
 	var featureGroups map[string]bool = make(map[string]bool)
-	var featureMetaMap = map[string]FeatureEntry{}
+	var featureMetaMap = map[string]dto.FeatureEntry{}
 	for _, feature := range deployedModel.Features {
 		featureGroups[feature.FeatureGroup] = true
 		featureMetaMap[feature.Name+"#"+feature.Version] = feature
@@ -55,31 +53,11 @@ func EnrichModelFeatures(model string, version string, batchReq dto.BatchPredict
 	return newReqs
 }
 
-func extractFeatureValues(rawFeatures map[string]dto.FeatureStoreRecord, featureMetaMap map[string]FeatureEntry) map[string]interface{} {
+func extractFeatureValues(rawFeatures map[string]dto.FeatureStoreRecord, featureMetaMap map[string]dto.FeatureEntry) map[string]interface{} {
 	var featureValsMap = map[string]interface{}{}
 	for featureKey, featureEntry := range featureMetaMap {
 		record, ok := rawFeatures[featureKey]
-		featureValsMap[featureEntry.Name] = parseFeatureRecordValue(record, ok, featureEntry)
+		featureValsMap[featureEntry.Name] = util.ParseFeatureRecordValue(record, ok, featureEntry)
 	}
 	return featureValsMap
-}
-
-func parseFeatureRecordValue(featureStoreRecord dto.FeatureStoreRecord, featureFound bool, featureEntry FeatureEntry) interface{} {
-	rawValue := featureEntry.DefaultValue
-	if featureFound && featureStoreRecord.ValidTo < int(time.Now().Unix()) {
-		rawValue = featureStoreRecord.Value
-	}
-	switch featureEntry.DataType {
-	case "PRIMITIVE#DOUBLE":
-		val, _ := strconv.ParseFloat(rawValue, 64)
-		return val
-	case "PRIMITIVE#BOOL":
-		val, _ := strconv.ParseBool(rawValue)
-		return val
-	case "PRIMITIVE#LONG":
-		val, _ := strconv.ParseInt(rawValue, 10, 64)
-		return val
-	default:
-		return rawValue
-	}
 }
