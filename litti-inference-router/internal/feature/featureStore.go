@@ -40,7 +40,34 @@ func fetchRedisFeatureGroup(featureGroupKey string) (map[string]dto.FeatureStore
 	return records, nil
 }
 
+/*
+For each prediction request in batch request fetch the Feature Store records using feature store.
+*/
 func FetchRawFeatureRows(featureGroupSet map[string]bool, req dto.BatchPredictionRequest) (map[string]map[string]dto.FeatureStoreRecord, error) {
+	featureGroupKeys, reqFeatureGroupKeysMap := mapFeatureGroupKeys(featureGroupSet, req)
+
+	featureGroupRecordsMap, err := fetchFeatureGroupRecordsMap(featureGroupKeys)
+	if err != nil {
+		return nil, err
+	}
+	reqFeatureRowsMap := make(map[string]map[string]dto.FeatureStoreRecord)
+	for reqId, fgKeys := range reqFeatureGroupKeysMap {
+		if reqFeatureRowsMap[reqId] == nil {
+			reqFeatureRowsMap[reqId] = map[string]dto.FeatureStoreRecord{}
+		}
+		for _, fgKey := range fgKeys {
+			reqFeatureRowsMap[reqId] = util.MergeMaps(reqFeatureRowsMap[reqId], featureGroupRecordsMap[fgKey])
+		}
+	}
+	return reqFeatureRowsMap, nil
+}
+
+/*
+Iterates over the prediction request and featureGrooup set to create:
+1. Set of feature group keys to be sent to feature store for querying
+2. List of feature group keys required for each prediction request in batch request.
+*/
+func mapFeatureGroupKeys(featureGroupSet map[string]bool, req dto.BatchPredictionRequest) (map[string]bool, map[string][]string) {
 	featureGroupKeys := make(map[string]bool)
 	reqFeatureGroupKeysMap := make(map[string][]string)
 	for _, predictionReq := range req.PredictionRequests {
@@ -60,7 +87,13 @@ func FetchRawFeatureRows(featureGroupSet map[string]bool, req dto.BatchPredictio
 			reqFeatureGroupKeysMap[predictionReq.Id] = append(reqFeatureGroupKeysMap[predictionReq.Id], featureGroupKey)
 		}
 	}
-	// key os feature group key
+	return featureGroupKeys, reqFeatureGroupKeysMap
+}
+
+/*
+For each Featuregroupkey fetch the relevant map[string] -> FeatureStoreRecords by querying the feature store.
+*/
+func fetchFeatureGroupRecordsMap(featureGroupKeys map[string]bool) (map[string]map[string]dto.FeatureStoreRecord, error) {
 	featureGroupsMap := make(map[string]map[string]dto.FeatureStoreRecord)
 	for featureGroupKey := range featureGroupKeys {
 		featureStoreRecords, err := FetchFeatureGroupRow(featureGroupKey)
@@ -71,16 +104,5 @@ func FetchRawFeatureRows(featureGroupSet map[string]bool, req dto.BatchPredictio
 			featureGroupsMap[featureGroupKey] = featureStoreRecords
 		}
 	}
-	// key is reqId
-	// value is map[string]FeatureStoreRecord -> each entry in map represents a feature
-	reqFeatureRowsMap := make(map[string]map[string]dto.FeatureStoreRecord)
-	for reqId, fgKeys := range reqFeatureGroupKeysMap {
-		if reqFeatureRowsMap[reqId] == nil {
-			reqFeatureRowsMap[reqId] = map[string]dto.FeatureStoreRecord{}
-		}
-		for _, fgKey := range fgKeys {
-			reqFeatureRowsMap[reqId] = util.MergeMaps(reqFeatureRowsMap[reqId], featureGroupsMap[fgKey])
-		}
-	}
-	return reqFeatureRowsMap, nil
+	return featureGroupsMap, nil
 }
