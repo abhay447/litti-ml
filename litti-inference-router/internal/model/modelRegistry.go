@@ -27,7 +27,7 @@ func LoadModelRegistry() {
 	if err != nil {
 		panic("Error occured in loading model metadata: " + err.Error())
 	}
-	fmt.Printf("%+v", deployedModels)
+	// fmt.Printf("%+v", deployedModels)
 	for _, deployedModel := range deployedModels {
 		modelKey := deployedModel.Name + "#" + deployedModel.Version
 		modelMap[modelKey] = deployedModel
@@ -43,7 +43,7 @@ func EnrichModelFeatures(model string, version string, batchReq dto.BatchPredict
 		featureMetaMap[feature.Name+"#"+feature.Version] = feature
 	}
 	reqRawFeaturesMap, err := feature.FetchRawFeatureRows(featureGroups, batchReq)
-	if err == nil {
+	if err != nil {
 		fmt.Println(err.Error())
 	}
 	newReqs := []dto.PredictionRequest{}

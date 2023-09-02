@@ -27,7 +27,7 @@ func LoadModelRegistry() {
 	if err != nil {
 		panic("Error occured in loading model metadata: " + err.Error())
 	}
-	fmt.Printf("%+v", featureGroups)
+	// fmt.Printf("%+v", featureGroups)
 	for _, featureGroup := range featureGroups {
 		slices.Sort(featureGroup.Dimensions)
 		featureGroupMap[featureGroup.Name] = featureGroup

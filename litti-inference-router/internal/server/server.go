@@ -3,6 +3,7 @@ package server
 import (
 	"bytes"
 	"com/litti/ml/litti-inference-router/internal/dto"
+	"com/litti/ml/litti-inference-router/internal/model"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -29,39 +30,44 @@ func validatePath(r *http.Request) (string, string, error) {
 	return tokens[1], tokens[2], nil
 }
 
-func validateRequest(r *http.Request) ([]byte, error) {
+func validateRequest(r *http.Request) (dto.BatchPredictionRequest, error) {
 	reqBytes, _ := io.ReadAll(r.Body)
 	var p dto.BatchPredictionRequest
 	err := json.Unmarshal(reqBytes, &p)
 	if err != nil {
-		return []byte{}, err
+		return p, err
 	}
 	// validate
 	validate := validator.New()
 	err = validate.Struct(p)
 	if err != nil {
-		return []byte{}, err
+		return p, err
 	}
-	return reqBytes, nil
+	return p, nil
 }
 
 func predict(w http.ResponseWriter, r *http.Request) {
-	model, version, err := validatePath(r)
+	modelName, version, err := validatePath(r)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	// read request for validation
 	// TODO: add feature fetch using request body
-	reqBytes, err := validateRequest(r)
+	batchReq, err := validateRequest(r)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	enrichedBatchReq := dto.BatchPredictionRequest{
+		BatchPredictionId:  batchReq.BatchPredictionId,
+		PredictionRequests: model.EnrichModelFeatures(modelName, version, batchReq),
+	}
+	batchReqJSON, err := json.Marshal(enrichedBatchReq)
 
-	fmt.Printf("got /predict request for model: %s version: %s\n", model, version)
-	requestURL := fmt.Sprintf("http://localhost:8001/predict/%s/%s", model, version)
-	req, err := http.NewRequest(http.MethodPost, requestURL, bytes.NewReader(reqBytes))
+	fmt.Printf("got /predict request for model: %s version: %s\n", modelName, version)
+	requestURL := fmt.Sprintf("http://localhost:8001/predict/%s/%s", modelName, version)
+	req, err := http.NewRequest(http.MethodPost, requestURL, bytes.NewBuffer(batchReqJSON))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
