@@ -1,15 +1,19 @@
 package com.litti.ml.runtime;
 
+import static com.litti.ml.runtime.Main.MGMT_SERVER_URL;
+
 import com.litti.ml.entities.dtypes.JsonDataReader;
 import com.litti.ml.entities.feature.FeatureGroup;
 import com.litti.ml.entities.feature.FeatureMetadata;
+import com.litti.ml.entities.management.client.LittiManagementClient;
 import com.litti.ml.entities.model.ModelMetadata;
 import com.litti.ml.feature.loader.FeatureGroupLoader;
-import com.litti.ml.feature.loader.StaticResourcesFGLoader;
+import com.litti.ml.feature.loader.LittiManagementFGLoader;
 import com.litti.ml.feature.store.AbstractFeatureStore;
 import com.litti.ml.feature.store.LocalParquetFeatureStore;
 import com.litti.ml.feature.store.RedisFeatureStore;
-import com.litti.ml.model.loader.StaticResourcesModelLoader;
+import com.litti.ml.model.loader.LittiManagementModelLoader;
+import com.litti.ml.model.loader.ModelLoader;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.support.ConnectionPoolSupport;
@@ -27,6 +31,7 @@ public class LocalDataHelper {
   // class to used in local deployments to load data to redis from parquet
   public static void main(String[] args) throws IOException {
 
+    final LittiManagementClient littiManagementClient = new LittiManagementClient(MGMT_SERVER_URL);
     final JsonDataReader jsonDataReader = new JsonDataReader();
     final LocalParquetFeatureStore localParquetStore = new LocalParquetFeatureStore(jsonDataReader);
     final RedisClient redisClient = RedisClient.create("redis://localhost:6379/0");
@@ -34,15 +39,16 @@ public class LocalDataHelper {
         ConnectionPoolSupport.createGenericObjectPool(
             () -> redisClient.connect(), new GenericObjectPoolConfig());
     final AbstractFeatureStore redisFeatureStore = new RedisFeatureStore(jsonDataReader, redisPool);
-    final FeatureGroupLoader featureGroupLoader = new StaticResourcesFGLoader();
+    final FeatureGroupLoader featureGroupLoader =
+        new LittiManagementFGLoader(littiManagementClient);
     final Map<String, FeatureGroup> fgMap =
         featureGroupLoader.loadAllFeatureGroups().getFeatureGroupsLoaded().stream()
             .map(fg -> Map.entry(fg.getName(), fg))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-    final StaticResourcesModelLoader staticModelLoader = new StaticResourcesModelLoader();
+    final ModelLoader modelLoader = new LittiManagementModelLoader(littiManagementClient);
     final Map<String, ModelMetadata> modelsMap =
-        staticModelLoader.loadAllModels().getModelsLoaded().stream()
+        modelLoader.loadAllModels().getModelsLoaded().stream()
             .map(model -> Map.entry(model.getName() + "#" + model.getVersion(), model))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 

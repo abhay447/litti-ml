@@ -31,10 +31,11 @@ public class ModelPredictionManager {
         batchPredictionRequest.getPredictionRequests().stream()
             .map(
                 input -> {
-                  final Map<String, ?> featureStoreFeatures =
-                      this.featureFetchRouter.fetchFeatures(
-                          modelPredictor.getModelMetadata().getFeatures(), input.getInputs());
-                  return Map.entry(input.getId(), featureStoreFeatures);
+                  //                  final Map<String, ?> featureStoreFeatures =
+                  //                      this.featureFetchRouter.fetchFeatures(
+                  //                          modelPredictor.getModelMetadata().getFeatures(),
+                  // input.getInputs());
+                  return Map.entry(input.getId(), input.getInputs());
                 })
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     final Set<PredictionResponse> predictionResponseSet =

@@ -15,6 +15,7 @@
         <module>litti-models</module>
         <module>litti-management-server</module>
         <module>litti-management-ui</module>
+        <module>litti-inference-router</module>
     </modules>
 
     <properties>

@@ -7,12 +7,11 @@ import com.litti.ml.entities.feature.FeatureGroup;
 import com.litti.ml.entities.feature.FeatureMetadata;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.sync.RedisCommands;
+import java.util.*;
+import java.util.stream.Collectors;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 public class RedisFeatureStore extends AbstractFeatureStore {
 
@@ -121,7 +120,7 @@ public class RedisFeatureStore extends AbstractFeatureStore {
                     Map.entry(
                         entry.getKey(),
                         FeatureStoreRecord.fromValueAndFeatureMetadata(
-                            entry.getValue(), featureMetadataMap.get(entry.getKey()))))
+                            entry.getValue().toString(), featureMetadataMap.get(entry.getKey()))))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     final Map<String, FeatureStoreRecord> redisWriteRow = new HashMap<>();
