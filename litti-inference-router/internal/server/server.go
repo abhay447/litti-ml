@@ -120,7 +120,7 @@ func predict(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	logging.LogModelBatchPrediction(logging.BatchModelLogRecord{
+	go logging.LogModelBatchPrediction(logging.BatchModelLogRecord{
 		ModelName:    modelName,
 		ModelVersion: version,
 		BatchReq:     *batchReq,

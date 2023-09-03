@@ -5,24 +5,9 @@ import (
 	"fmt"
 )
 
-var loggingChannel = make(chan BatchModelLogRecord, 100)
-
 func LogModelBatchPrediction(batchModelLogRecord BatchModelLogRecord) {
-	select {
-	case loggingChannel <- batchModelLogRecord:
-	default:
-	}
-}
-
-func StartLoggingConsumer() {
-	for {
-		select {
-		case batchModelLogRecord := <-loggingChannel:
-			modelLogRecords := buildmodelLogRecords(batchModelLogRecord)
-			logToConsole(modelLogRecords)
-		default:
-		}
-	}
+	modelLogRecords := buildmodelLogRecords(batchModelLogRecord)
+	logToConsole(modelLogRecords)
 }
 
 func buildmodelLogRecords(batchModelLogRecord BatchModelLogRecord) []ModelLogRecord {
