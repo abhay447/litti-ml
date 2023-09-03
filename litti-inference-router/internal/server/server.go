@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"com/litti/ml/litti-inference-router/internal/config"
 	"com/litti/ml/litti-inference-router/internal/dto"
+	"com/litti/ml/litti-inference-router/internal/logging"
 	"com/litti/ml/litti-inference-router/internal/model"
 	"encoding/json"
 	"errors"
@@ -47,18 +48,10 @@ func validateRequest(r *http.Request) (dto.BatchPredictionRequest, error) {
 	return p, nil
 }
 
-func predict(w http.ResponseWriter, r *http.Request) {
-	modelName, version, err := validatePath(r)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-	// read request for validation
-	// TODO: add feature fetch using request body
+func createForwardingRequest(r *http.Request, modelName string, version string) (*dto.BatchPredictionRequest, []byte, error) {
 	batchReq, err := validateRequest(r)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		return nil, nil, err
 	}
 	enrichedBatchReq := dto.BatchPredictionRequest{
 		BatchPredictionId:  batchReq.BatchPredictionId,
@@ -66,33 +59,75 @@ func predict(w http.ResponseWriter, r *http.Request) {
 	}
 	batchReqJSON, err := json.Marshal(enrichedBatchReq)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		return nil, nil, err
 	}
+	return &enrichedBatchReq, batchReqJSON, nil
+}
 
-	fmt.Printf("got /predict request for model: %s version: %s\n", modelName, version)
-	requestURL := fmt.Sprintf(config.RouterConfig.INFERENCE_SERVER_URL+"/predict/%s/%s", modelName, version)
-	req, err := http.NewRequest(http.MethodPost, requestURL, bytes.NewBuffer(batchReqJSON))
+func validateResponse(respBytes []byte) (*dto.BatchPredictionResponse, error) {
+	var p dto.BatchPredictionResponse
+	err := json.Unmarshal(respBytes, &p)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		return nil, err
 	}
+	// validate
+	validate := validator.New()
+	err = validate.Struct(p)
+	if err != nil {
+		return nil, err
+	}
+	return &p, nil
+}
 
+func forwardRequestToRuntime(modelName string, version string, batchReqBytes []byte) (*dto.BatchPredictionResponse, []byte, int, error) {
+	requestURL := fmt.Sprintf(config.RouterConfig.INFERENCE_SERVER_URL+"/predict/%s/%s", modelName, version)
+	req, err := http.NewRequest(http.MethodPost, requestURL, bytes.NewBuffer(batchReqBytes))
+	if err != nil {
+		return nil, nil, 400, err
+	}
 	client := &http.Client{}
 	res, err := client.Do(req)
 	if err != nil {
+		return nil, nil, 400, err
+	}
+	resBodyBytes, _ := io.ReadAll(res.Body)
+	resStatus := res.StatusCode
+	if resStatus != 200 {
+		errorMsg := fmt.Sprintf("Non 200 status code: %d, body: %s", res.StatusCode, string(resBodyBytes))
+		return nil, nil, 503, errors.New(errorMsg)
+	}
+	resp, err := validateResponse(resBodyBytes)
+	if err != nil {
+		return nil, nil, 503, err
+	}
+	return resp, resBodyBytes, 200, nil
+}
+
+func predict(w http.ResponseWriter, r *http.Request) {
+	modelName, version, err := validatePath(r)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	fmt.Printf("got /predict request for model: %s version: %s\n", modelName, version)
+	batchReq, batchReqBytes, err := createForwardingRequest(r, modelName, version)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	resp, respBytes, status, err := forwardRequestToRuntime(modelName, version, batchReqBytes)
+	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	resBodyBytes, _ := io.ReadAll(res.Body)
-	resBody := string(resBodyBytes)
-	resStatus := res.StatusCode
-	if resStatus != 200 {
-		http.Error(w, resBody, http.StatusInternalServerError)
-		return
-	}
-	w.WriteHeader(resStatus)
-	w.Write(resBodyBytes)
+	logging.LogModelBatchPrediction(logging.BatchModelLogRecord{
+		ModelName:    modelName,
+		ModelVersion: version,
+		BatchReq:     *batchReq,
+		BatchRes:     *resp,
+	})
+	w.WriteHeader(status)
+	w.Write(respBytes)
 }
 
 func StartServer() {
