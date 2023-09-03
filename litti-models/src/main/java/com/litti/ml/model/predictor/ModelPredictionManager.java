@@ -3,7 +3,6 @@ package com.litti.ml.model.predictor;
 import com.litti.ml.entities.model.BatchPredictionRequest;
 import com.litti.ml.entities.model.BatchPredictionResponse;
 import com.litti.ml.entities.model.PredictionResponse;
-
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;

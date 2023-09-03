@@ -1,16 +1,15 @@
 package com.litti.ml.model.predictor;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.litti.ml.entities.model.ModelMetadata;
-import org.apache.curator.shaded.com.google.common.io.Resources;
-import org.junit.jupiter.api.Test;
-
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import org.apache.curator.shaded.com.google.common.io.Resources;
+import org.junit.jupiter.api.Test;
 
 public class TestModelLoad {
 
