@@ -3,29 +3,22 @@ package com.litti.ml.model;
 import com.litti.ml.entities.model.BatchPredictionRequest;
 import com.litti.ml.entities.model.BatchPredictionResponse;
 import com.litti.ml.entities.model.ModelMetadata;
-import com.litti.ml.feature.FeatureFetchRouter;
-import com.litti.ml.model.logger.ModelLogger;
 import com.litti.ml.model.predictor.AbstractPredictor;
 import com.litti.ml.model.predictor.ModelPredictionManager;
 import com.litti.ml.model.predictor.PMMLPredictor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class ModelRegistry {
 
   static Logger logger = LogManager.getLogger(ModelRegistry.class);
   private final Map<String, ModelPredictionManager> predictionRegistry;
 
-  private final ModelLogger modelLogger;
-
-  private final FeatureFetchRouter featureFetchRouter;
-
-  public ModelRegistry(ModelLogger modelLogger, FeatureFetchRouter featureFetchRouter) {
-    this.modelLogger = modelLogger;
-    this.featureFetchRouter = featureFetchRouter;
+  public ModelRegistry() {
     predictionRegistry = new HashMap<>();
   }
 
@@ -33,10 +26,9 @@ public class ModelRegistry {
     try {
       switch (modelMetadata.getModelFramework()) {
         case "PMML":
-          final AbstractPredictor modelPredictor =
-              new PMMLPredictor(modelMetadata, featureFetchRouter);
+          final AbstractPredictor modelPredictor = new PMMLPredictor(modelMetadata);
           final ModelPredictionManager modelPredictionManager =
-              new ModelPredictionManager(featureFetchRouter, modelPredictor, modelLogger);
+              new ModelPredictionManager(modelPredictor);
           predictionRegistry.put(
               String.format("%s#%s", modelMetadata.getName(), modelMetadata.getVersion()),
               modelPredictionManager);
