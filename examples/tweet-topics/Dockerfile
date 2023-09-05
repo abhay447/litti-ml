@@ -5,7 +5,7 @@ FROM python:3.8
 COPY ./requirements.txt /app/requirements.txt
 
 # install the dependencies and packages in the requirements file
-RUN pip install -r /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
 
 RUN python -c "import tweetnlp; tweetnlp.load_model('topic_classification',multi_label=False)"
 
