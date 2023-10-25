@@ -7,18 +7,13 @@ context.
 
 ![Diagram](docs/resources/generated-images/prediction-flow.png)
 
-1. Request is sent from client to API Server, which sends it model registry.
-2. Model Registry picks a relevant ModelPredictionManager based on request path for relevant model name and version.
-3. ModelPredictionManager firstly send requst to a FeatureFetchRouter which has 3 main responsibilities:
-    1. Extract Features from feature store
-    2. Override feature store fetched features with any value for same feature supplied by input
-    3. Add default values for any feature that was not fetched from feature store and not present in request inputs.
-4. The final featureRow value its then returned to ModelPredictionManager which forwards it to an appropriate
-   ModelPredictor.
-5. ModelPredictor uses the trained model to transform the featureRow into predictions and returns outputs to
-   ModelPredictionManager.
-6. ModelPredictionManager logs predictions and featureRow and returns predictions back through prediction call stack
-   finally to the client.
+1. Request is sent from client to inference router.
+    1. Inference router is already aware of features required for inferencing because it can access management server at
+       startup.
+    2. Inference router queries the relevant feature stores to add feature values to prediction request.
+2. Inference router forwards the request to prediction runtime.
+3. Prediction Runtime does model computation and returns result to inference router.
+4. Inference router logs model prediction and returns response.
 
 ## Goals:
 
