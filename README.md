@@ -5,7 +5,7 @@ context.
 
 ## High Level Prediction flow
 
-![Diagram](docs/resources/generated-images/prediction-flow.png)
+![Diagram](docs/resources/generated-images/prediction-flow?.png)
 
 1. Request is sent from client to inference router.
     1. Inference router is already aware of features required for inferencing because it can access management server at
