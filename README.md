@@ -21,3 +21,11 @@ context.
 2. Define specifications and add examples for multi-framework inference support for non-jvm based frameworks.
 3. Define specifications for an extensible integration of inference feature stores.
 4. Define specifications for model and feature store inference telemetry for platform engineers.
+
+## Local Dev setup
+
+1. Install maven
+2. Install docker
+3. Build modules and publish docker images: `mvn clean install -am -Pbuild-docker`
+    1. Build only single module image : `mvn clean install -pl :litti-management-ui -am -Pbuild-docker`
+4. Start service using docker-compose.yaml under deployment/docker-compose folder.
